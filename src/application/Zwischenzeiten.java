@@ -4,28 +4,20 @@ import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
-import org.controlsfx.property.editor.*;
-import org.controlsfx.control.spreadsheet.GridChange;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Zwischenzeiten extends SpreadsheetView {
 
-	private int[][] zz_array;
-	private int[][] vr_matrix;
 	GridBase grid;
+	private Zwischenzeitbeziehungen[] zzb;
 	
-	public Zwischenzeiten(int[][] v) {
-		vr_matrix=v;
+	public Zwischenzeiten(Zwischenzeitbeziehungen[] zzb) {
+		this.zzb=zzb;
 		
 	}
 
-	public int[][] getZz_array() {
-		return zz_array;
-	}
 	public void pruef_zz(int s){
-		String zz;
 		int rowCount = s;
         int columnCount = s+1;
         

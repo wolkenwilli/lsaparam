@@ -29,11 +29,14 @@ import javafx.util.converter.FloatStringConverter;
 
 public class MainWindowController implements Initializable {
 	public Kreuzung kr = new Kreuzung();
+	
+	
 	public Zufahrt z1;
 	public Zufahrt z2;
 	public Zufahrt z3;
 	public Zufahrt z4;
 	public static Spur[] s = new Spur[16];
+	public static Zwischenzeitbeziehungen[] zzb;
 	public Verriegelungsmatrix vm = new Verriegelungsmatrix();
 	public Zwischenzeiten zz;
 	public static MenuItem[] menuitem = new MenuItem[7];
@@ -151,8 +154,8 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setRightAnchor(this.spane, 0.0);
 		AnchorPane.setBottomAnchor(this.spane, 0.0);
 		System.out.println(kr.getAlleSpuren());
-		vm.create_matrix(kr);
-		zz=new Zwischenzeiten(vm.getVr_array());
+		vm.create_matrix(kr, zzb);
+		zz=new Zwischenzeiten(zzb);
 	/*	this.spane2 = new StackPane(zz);
 		this.zz_pane.getChildren().add(this.spane2);
 		AnchorPane.setTopAnchor(this.spane2, 0.0);

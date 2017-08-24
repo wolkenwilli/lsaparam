@@ -1,22 +1,21 @@
 package application;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 import org.controlsfx.control.spreadsheet.GridBase;
+import org.controlsfx.control.spreadsheet.GridChange;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.layout.Pane;
+import javafx.event.EventHandler;
 
 class Verriegelungsmatrix extends SpreadsheetView {
 	private int[][] array_ungerade = new int[7][7];
-	private int[][] array_gerade = new int[7][7];
-	private int[][] vr_array;
-
-	
+	private int[][] array_gerade = new int[7][7];	
 
 	public Verriegelungsmatrix()
 	{
@@ -62,9 +61,6 @@ class Verriegelungsmatrix extends SpreadsheetView {
 		array_gerade[2][4]=0;
 		array_gerade[2][5]=0;
 		array_gerade[2][6]=0;
-	}
-	public int[][] getVr_array() {
-		return vr_array;
 	}
 	int pruef_verriegelung(int id_spur1, int id_spur2, int kat_spur1, int kat_spur2) {
 		int verriegelung=2;
@@ -118,16 +114,14 @@ class Verriegelungsmatrix extends SpreadsheetView {
 		return array_ungerade;
 	}
 	
-	public void create_matrix(Kreuzung kr){
+	public void create_matrix(Kreuzung kr, Zwischenzeitbeziehungen[] zzb){
 		
 		HashMap <Zufahrt, Spur> hm = kr.getAlleSpuren();
 		int s=hm.size();
 		int rowCount = s;
         int columnCount = s+1;
-        int i=0; int j=0;
-        vr_array = new int[s][s];
-        System.out.println(s);
-         
+        int i=0; int j=0; int x=0;
+        zzb = new Zwischenzeitbeziehungen[s];
         
         GridBase grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
@@ -139,13 +133,12 @@ class Verriegelungsmatrix extends SpreadsheetView {
         		int pruef=0;
         		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
 				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		                
-				vr_array[i][j]=pruef;
-				vr_array[j][i]=pruef;
-				System.out.println("i:"+i+" j:"+j+" Prüf:"+pruef);
-				System.out.println(vr_array);
+				zzb[x].setVerriegelung(pruef);
+		
 				cell.setEditable(true);
 				Row.add(cell);
 				i++;
+				x++;
         	}
         	rows.add(Row);
         	j++;
@@ -154,6 +147,13 @@ class Verriegelungsmatrix extends SpreadsheetView {
         setGrid(grid);
 
         getFixedRows().add(0);
+        Stack<GridChange> st = new Stack<GridChange>();
+        grid.addEventHandler(GridChange.GRID_CHANGE_EVENT, new EventHandler<GridChange>() {
+            
+            public void handle(GridChange change) {
+                    st.push(change);
+                }
+            });
         //getColumns().get(0).setFixed(true);
         //getColumns().get(1).setPrefWidth(250);
 

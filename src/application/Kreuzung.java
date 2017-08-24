@@ -6,9 +6,6 @@ import java.util.LinkedList;
 import javafx.scene.control.TextField;
 
 class Kreuzung {
-	private float calc_qs;
-	private float calc_f1;
-	private float calc_f2;
 	private float calc_qsn;
 
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
@@ -24,7 +21,7 @@ class Kreuzung {
 		System.out.println("Spur gespeichert.");
 	}
 	
-	public HashMap getAlleSpuren(){
+	public HashMap<Zufahrt, Spur> getAlleSpuren(){
 		return allespuren;
 	}
 	
