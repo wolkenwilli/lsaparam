@@ -36,7 +36,7 @@ public class Spur {
 		
 	public Spur (Zufahrt zf, int kat, int id, float q)
 	{
-		//Werteinitalisierung
+		System.out.println("Test1");//Werteinitalisierung
 		this.id = new SimpleIntegerProperty(id);
 		this.typ = new SimpleIntegerProperty(kat);
 		this.sumoid = new SimpleIntegerProperty(0);
@@ -72,6 +72,7 @@ public class Spur {
 		view.setFitHeight(150);
 		zf.pane.getChildren().addAll(view);
 		zf.spurlist.add(this);
+		System.out.println("Test");
 	}
 	
 

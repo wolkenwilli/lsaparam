@@ -271,25 +271,4 @@ public class MainWindowController implements Initializable {
 	{
 		System.exit(0);		
 	}
-	
-	@FXML
-	public void do_calc_zf1()
-	{
-		z1.calc_erftf();
-	}
-	@FXML
-	public void do_calc_zf2()
-	{
-		z2.calc_erftf();
-	}
-	@FXML
-	public void do_calc_zf3()
-	{
-		z3.calc_erftf();
-	}
-	@FXML
-	public void do_calc_zf4()
-	{
-		z4.calc_erftf();
-	}
 }
