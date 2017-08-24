@@ -41,7 +41,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 		        	cell.setEditable(false);	
 		        }
 		        else {
-		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "W");
+		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "Wert");
 		        	cell.setEditable(true);
 		        }
 		 		Row.add(cell);
