@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +25,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.FloatStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 
 public class MainWindowController implements Initializable {
@@ -147,28 +144,23 @@ public class MainWindowController implements Initializable {
 	
 	@FXML
 	public void do_menu_probe(){
-		int sum_spuren=0;
-		for (int i=0;i<kr.anz_Zufahrt();i++)
-		{
-			sum_spuren=sum_spuren+kr.return_zufahrt(i).get_anzahl_spuren();
-		}
 		this.spane = new StackPane(vm);
 		this.vm_pane.getChildren().add(this.spane);
 		AnchorPane.setTopAnchor(this.spane, 0.0);
 		AnchorPane.setLeftAnchor(this.spane, 0.0);
 		AnchorPane.setRightAnchor(this.spane, 0.0);
 		AnchorPane.setBottomAnchor(this.spane, 0.0);
-		vm.create_matrix(sum_spuren, kr);
+		System.out.println(kr.getAlleSpuren());
+		vm.create_matrix(kr);
 		zz=new Zwischenzeiten(vm.getVr_array());
-		this.spane2 = new StackPane(zz);
-		this.spane2 = new StackPane(zz);
+	/*	this.spane2 = new StackPane(zz);
 		this.zz_pane.getChildren().add(this.spane2);
 		AnchorPane.setTopAnchor(this.spane2, 0.0);
 		AnchorPane.setLeftAnchor(this.spane2, 0.0);
 		AnchorPane.setRightAnchor(this.spane2, 0.0);
 		AnchorPane.setBottomAnchor(this.spane2, 0.0);
 		zz.pruef_zz(sum_spuren);
-		
+	*/		
 	}
 	
 	@FXML

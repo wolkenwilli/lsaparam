@@ -1,5 +1,6 @@
 package application;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javafx.scene.control.TextField;
@@ -11,11 +12,22 @@ class Kreuzung {
 	private float calc_qsn;
 
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
+	HashMap<Zufahrt, Spur> allespuren = new HashMap<Zufahrt, Spur>();
 	public void putZufahrt (Zufahrt zf) {
 		
 		zufahrten.add(zf);
 		System.out.println("Zufahrt erzeugt!");
 	}
+	
+	public void putSpur(Zufahrt z, Spur s) {
+		allespuren.put(z, s);
+		System.out.println("Spur gespeichert.");
+	}
+	
+	public HashMap getAlleSpuren(){
+		return allespuren;
+	}
+	
 	
 	public int anz_Zufahrt () {
 		return (zufahrten.size());

@@ -1,5 +1,7 @@
 package application;
 
+import java.util.HashMap;
+
 import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
@@ -116,49 +118,45 @@ class Verriegelungsmatrix extends SpreadsheetView {
 		return array_ungerade;
 	}
 	
-	public void create_matrix(int s, Kreuzung kr){
+	public void create_matrix(Kreuzung kr){
 		
-		 int rowCount = s;
-         int columnCount = s+1;
-         vr_array = new int[s][s];
+		HashMap <Zufahrt, Spur> hm = kr.getAlleSpuren();
+		int s=hm.size();
+		int rowCount = s;
+        int columnCount = s+1;
+        int i=0; int j=0;
+        vr_array = new int[s][s];
+        System.out.println(s);
+         
         
-         GridBase grid = new GridBase(rowCount, columnCount);
-         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
+        GridBase grid = new GridBase(rowCount, columnCount);
+        ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
 
-        for (int i=0;i<kr.anz_Zufahrt();i++)
- 		{
-        	for (int j=0;j<kr.return_zufahrt(i).get_anzahl_spuren();j++)
- 			{
-        		System.out.println("Nächste Zufahrt!");
-        		final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
- 				for (int k=0;k<kr.anz_Zufahrt();k++)
- 				{
- 					for (int l=0;l<kr.return_zufahrt(k).get_anzahl_spuren();l++)
- 					{
- 						int pruef=0;
- 						int i_id=kr.return_zufahrt(i).getNummer(); int j_kat=kr.return_zufahrt(i).return_spur(j).getTyp();
- 						int k_id=kr.return_zufahrt(k).getNummer(); int l_kat=kr.return_zufahrt(k).return_spur(l).getTyp();
- 						pruef=pruef_verriegelung(i_id, k_id, j_kat, l_kat);
- 						//DEBUG: System.out.println("Prüfung: Ausgangszufahrt:"+i+"(Nr:"+i_id+") mit Spur:"+j+"(Kat:"+j_kat+") in Verriegelung mit Zufahrt:"+k+"(Nr:"+k_id+") und Spur:"+l+"(Kat:"+l_kat+") ergab das Ergebnis:"+pruef);
- 						SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i_id, 0, 0, 0, pruef); 		                
- 						vr_array[i_id-1][k_id-1]=pruef;
- 						vr_array[k_id-1][i_id-1]=pruef;
- 						cell.setEditable(true);
- 						Row.add(cell);
+        for (Zufahrt z1 : hm.keySet()) {
+        	final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
+        	i=0;
+        	for (Zufahrt z2 : hm.keySet()) {
+        		int pruef=0;
+        		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
+				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		                
+				vr_array[i][j]=pruef;
+				vr_array[j][i]=pruef;
+				System.out.println("i:"+i+" j:"+j+" Prüf:"+pruef);
+				System.out.println(vr_array);
+				cell.setEditable(true);
+				Row.add(cell);
+				i++;
+        	}
+        	rows.add(Row);
+        	j++;
+        }
+        grid.setRows(rows);
+        setGrid(grid);
 
- 					}
- 				}
- 				rows.add(Row);
- 			}
- 		}
-   
-         grid.setRows(rows);
-         setGrid(grid);
+        getFixedRows().add(0);
+        //getColumns().get(0).setFixed(true);
+        //getColumns().get(1).setPrefWidth(250);
 
-         getFixedRows().add(0);
-         getColumns().get(0).setFixed(true);
-         //getColumns().get(1).setPrefWidth(250);
-      
 	}
 }
 

@@ -4,6 +4,8 @@ import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
+import org.controlsfx.property.editor.*;
+import org.controlsfx.control.spreadsheet.GridChange;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +14,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 
 	private int[][] zz_array;
 	private int[][] vr_matrix;
+	GridBase grid;
 	
 	public Zwischenzeiten(int[][] v) {
 		vr_matrix=v;
@@ -26,7 +29,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 		int rowCount = s;
         int columnCount = s+1;
         
-        GridBase grid = new GridBase(rowCount, columnCount);
+        grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
 		for(int i=0;i<vr_matrix.length;i++) 
 		{
@@ -53,7 +56,8 @@ public class Zwischenzeiten extends SpreadsheetView {
         getFixedRows().add(0);
         getColumns().get(0).setFixed(true);
         //getColumns().get(1).setPrefWidth(250);
-
+    	
 	}
+
 
 }

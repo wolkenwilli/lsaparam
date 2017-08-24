@@ -34,9 +34,8 @@ public class Spur {
 	Image p6 = new Image("http://www.eventtechnik-schmidt.de/6.png");
 	
 		
-	public Spur (Zufahrt zf, int kat, int id, float q)
+	public Spur (Kreuzung k, Zufahrt zf, int kat, int id, float q)
 	{
-		System.out.println("Test1");
 		//Werteinitalisierung
 		this.id = new SimpleIntegerProperty(id);
 		this.typ = new SimpleIntegerProperty(kat);
@@ -44,6 +43,7 @@ public class Spur {
 		this.q=new SimpleFloatProperty(q);
 		this.erftf=new SimpleFloatProperty(0.0f);
 		zf.putSpur(this);	//Spur der Zufahrt hinzufügen
+		k.putSpur(zf, this);
 		switch (typ.get()) {
 		case 0:
 			view.setImage(p0);
@@ -73,7 +73,6 @@ public class Spur {
 		view.setFitHeight(150);
 		zf.pane.getChildren().addAll(view);
 		zf.spurlist.add(this);
-		System.out.println("Test");
 	}
 	
 

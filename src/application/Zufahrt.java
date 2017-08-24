@@ -70,7 +70,7 @@ public class Zufahrt {
 				// Traditional way to get the response value.
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
-					MainWindowController.s[kr.get_anz_spuren()]=new Spur(this, kat, kr.get_anz_spuren(),Float.parseFloat(result.get()));
+					MainWindowController.s[kr.get_anz_spuren()]=new Spur(kr, this, kat, kr.get_anz_spuren(),Float.parseFloat(result.get()));
 				} 
 			} catch (Exception e) {
 				// TODO: handle exception
