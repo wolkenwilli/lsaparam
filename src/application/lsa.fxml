@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="800.0" minWidth="1200.0" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
+   <children>
+      <TabPane layoutY="76.0" prefHeight="924.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
+         <tabs>
+            <Tab text="Grundeinstellungen">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TableView fx:id="table_options1" prefHeight="695.0" prefWidth="357.0" />
+                              <Separator orientation="VERTICAL" prefHeight="895.0" prefWidth="17.0" />
+                              <TableView fx:id="table_options2" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+            <Tab text="Initialisierung">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="883.0" prefWidth="1243.0">
+                     <children>
+                        <Group>
+                           <children>
+                              <ImageView fitHeight="952.0" fitWidth="949.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../kreuzung.png" />
+                                 </image>
+                              </ImageView>
+                              <HBox fx:id="gui_zufahrt1" alignment="BOTTOM_CENTER" layoutX="482.0" layoutY="679.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="156.0" spacing="8.0" AnchorPane.leftAnchor="482.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="679.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                              <HBox fx:id="gui_zufahrt3" alignment="BOTTOM_CENTER" layoutX="324.0" layoutY="131.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="151.0" rotate="180.0" spacing="8.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                              <HBox fx:id="gui_zufahrt4" alignment="BOTTOM_CENTER" layoutX="106.0" layoutY="486.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="156.0" rotate="90.0" spacing="8.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                              <HBox fx:id="gui_zufahrt2" alignment="BOTTOM_CENTER" layoutX="698.0" layoutY="317.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="156.0" rotate="-90.0" spacing="8.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                              <Group layoutX="401.0" layoutY="407.0" />
+                              <HBox alignment="CENTER" layoutX="370.0" layoutY="387.0" prefHeight="212.0" prefWidth="253.0">
+                                 <children>
+                                    <VBox prefHeight="182.0" prefWidth="52.0" spacing="11.0">
+                                       <children>
+                                          <Label text="qs=">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
+                                          <Label text="f1=">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
+                                          <Label text="f2=">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
+                                          <Label text="qsN=">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" spacing="6.0">
+                                       <children>
+                                          <TextField fx:id="qs" prefHeight="25.0" prefWidth="112.0" text="2000" />
+                                          <TextField fx:id="f1" prefHeight="25.0" prefWidth="115.0" text="0.90" />
+                                          <TextField fx:id="f2" prefHeight="25.0" prefWidth="116.0" text="1.00" />
+                                          <TextField fx:id="qsn" editable="false" prefHeight="25.0" prefWidth="118.0" />
+                                          <Button fx:id="calc" mnemonicParsing="false" onAction="#handlecalc" prefHeight="25.0" prefWidth="102.0" text="Berechnen" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <VBox fx:id="gui_vbox_z2" layoutX="652.0" layoutY="116.0" prefHeight="182.0" prefWidth="290.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#do_calc_zf2" prefHeight="25.0" prefWidth="317.0" text="Berechnen" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="gui_vbox_z3" layoutX="21.0" layoutY="66.0" prefHeight="182.0" prefWidth="290.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#do_calc_zf3" prefHeight="25.0" prefWidth="317.0" text="Berechnen" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="gui_vbox_z4" layoutX="21.0" layoutY="647.0" prefHeight="182.0" prefWidth="290.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#do_calc_zf4" prefHeight="25.0" prefWidth="317.0" text="Berechnen" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="gui_vbox_z1" layoutX="652.0" layoutY="656.0" prefHeight="213.0" prefWidth="290.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#do_calc_zf1" prefHeight="25.0" prefWidth="317.0" text="Berechnen" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Group>
+                        <AnchorPane layoutX="293.0" layoutY="585.0" />
+                        <Button fx:id="createzf" layoutX="989.0" layoutY="372.0" mnemonicParsing="false" onAction="#erzeuge3Zufahrten" text="3 Zufahrten erzeugen" />
+                        <Button fx:id="createzf1" layoutX="989.0" layoutY="416.0" mnemonicParsing="false" onAction="#erzeugeZufahrten" text="4 Zufahrten erzeugen" />
+                     </children>
+                  </AnchorPane>
+               </content>
+               <contextMenu>
+                  <ContextMenu fx:id="gui_contextmenu" />
+               </contextMenu>
+               <tooltip>
+                  <Tooltip text="Empty Tooltip" />
+               </tooltip>
+            </Tab>
+            <Tab text="Verriegelungsmatrix">
+               <content>
+                  <AnchorPane fx:id="vm_pane" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Zwischenzeiten">
+               <content>
+                  <AnchorPane fx:id="zz_pane" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Phasendefinition">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Phasenplan">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Export">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <MenuBar layoutX="132.0" layoutY="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu fx:id="menu_datei" mnemonicParsing="false" text="Datei">
+            <items>
+              <MenuItem fx:id="menu_init" mnemonicParsing="false" onAction="#do_menu_init" text="Init" />
+                  <MenuItem fx:id="menu_probe" mnemonicParsing="false" onAction="#do_menu_probe" text="Probe" />
+            </items>
+          </Menu>
+          <Menu fx:id="menu_export" mnemonicParsing="false" text="Export">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu fx:id="menu_hilfe" mnemonicParsing="false" text="Hilfe">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+            <Menu fx:id="menu_beenden" mnemonicParsing="false" onAction="#do_menu_beenden" onMenuValidation="#do_menu_beenden" text="Beenden" />
+        </menus>
+      </MenuBar>
+      <Label fx:id="label_info" alignment="CENTER" contentDisplay="TOP" layoutY="23.0" prefHeight="53.0" prefWidth="1200.0" text="Bitte erzeugen Sie nun Spuren in den Zufahrten!" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
