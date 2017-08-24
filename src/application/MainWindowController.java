@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -66,6 +67,9 @@ public class MainWindowController implements Initializable {
 	//----
 	@FXML private Pane vm_pane;
 	@FXML private Pane zz_pane;
+	//----
+	@FXML private ComboBox combo_spur;
+	@FXML private TableView tree_phasen;
 	
 	public Main main;
 	
@@ -101,7 +105,7 @@ public class MainWindowController implements Initializable {
             new Option("Überfahrzeit Rad [s]", 1f)
     );
 	table_options1.setEditable(true);
-	TableColumn<Option, String> NameCol = new TableColumn("Name");
+	TableColumn<Option, String> NameCol = new TableColumn<Option, String>("Name");
     NameCol.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));
     NameCol.setCellFactory(TextFieldTableCell.<Option>forTableColumn());
     NameCol.setOnEditCommit(
@@ -113,7 +117,7 @@ public class MainWindowController implements Initializable {
 		        }
 		    }
 		);
-	TableColumn<Option, Float> WertCol = new TableColumn("Wert");
+	TableColumn<Option, Float> WertCol = new TableColumn<Option, Float>("Wert");
     WertCol.setCellValueFactory(new PropertyValueFactory<Option,Float>("wert"));
     WertCol.setCellFactory(TextFieldTableCell.<Option, Float>forTableColumn(new FloatStringConverter()));
     WertCol.setOnEditCommit(
@@ -134,9 +138,9 @@ public class MainWindowController implements Initializable {
 	ObservableList<Option> data2 = FXCollections.observableArrayList(
             
     );
-	TableColumn<Option, String> Name2Col = new TableColumn("Name");
+	TableColumn<Option, String> Name2Col = new TableColumn<Option, String>("Name");
     Name2Col.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));
-	TableColumn<Option, Float> Wert2Col = new TableColumn("Wert");
+	TableColumn<Option, Float> Wert2Col = new TableColumn<Option, Float>("Wert");
     Wert2Col.setCellValueFactory(new PropertyValueFactory<Option,Float>("wert"));
     table_options2.getColumns().addAll(Name2Col, Wert2Col);
     table_options2.setItems(data2);
@@ -256,6 +260,18 @@ public class MainWindowController implements Initializable {
 		gui_zufahrt4.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
 		{public void handle(MouseEvent e){contextMenu(gui_zufahrt4,e.getScreenX(), e.getScreenY());}});
 	}
+	
+	@FXML
+	public void button_phase_add(){
+		
+	}
+	
+	@FXML
+	public void button_spur_phase_add(){
+		
+	}
+	
+	
 	
 	@FXML
 	public void do_menu_beenden()
