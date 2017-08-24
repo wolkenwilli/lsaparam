@@ -72,7 +72,7 @@ public class Zufahrt {
 				// TODO: handle exception
 			}
 			updateTable();
-			System.out.println("Spur mit Kategorie "+kat+" wurde erfolgreich hinzugefügt.");
+			//System.out.println("Spur mit Kategorie "+kat+" wurde erfolgreich hinzugefügt.");
 			check=1;
 		}
 		else

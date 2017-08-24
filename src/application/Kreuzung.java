@@ -13,12 +13,12 @@ class Kreuzung {
 	public void putZufahrt (Zufahrt zf) {
 		
 		zufahrten.add(zf);
-		System.out.println("Zufahrt erzeugt!");
+		//System.out.println("Zufahrt erzeugt!");
 	}
 	
 	public void putSpur(Zufahrt z, Spur s) {
 		allespuren.put(z, s);
-		System.out.println("Spur gespeichert.");
+		//System.out.println("Spur gespeichert.");
 	}
 	
 	public HashMap<Zufahrt, Spur> getAlleSpuren(){

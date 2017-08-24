@@ -120,7 +120,6 @@ class Verriegelungsmatrix extends SpreadsheetView {
 		
 		HashMap <Zufahrt, Spur> hm = kr.getAlleSpuren();
 		int s=hm.size();
-		System.out.println(hm.size());
 		int rowCount = s;
         int columnCount = s+1;
         vr_array = new Zwischenzeitbeziehungen[s][s];

@@ -84,8 +84,8 @@ public class Spur {
 	}
 	
 
-	public SimpleStringProperty getBezeichnung() {
-		return bezeichnung;
+	public String getBezeichnung() {
+		return bezeichnung.get();
 	}
 
 

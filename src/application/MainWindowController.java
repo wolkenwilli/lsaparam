@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -17,11 +18,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -70,8 +74,14 @@ public class MainWindowController implements Initializable {
 	@FXML private Pane vm_pane;
 	@FXML private Pane zz_pane;
 	//----
-	@FXML private ComboBox combo_spur;
-	@FXML private TableView tree_phasen;
+	@FXML private TreeView tree_phasen;
+	@FXML private VBox vbox_phase;
+	@FXML private HBox hbox_phasen;
+	private ComboBox<String> comboBox;
+	@FXML private Pane anchor_left;
+	@FXML private Pane anchor_right;
+	HashMap<String, Spur> spurbezeichnung = new HashMap<String, Spur>(); 
+	
 	
 	public Main main;
 	
@@ -265,16 +275,48 @@ public class MainWindowController implements Initializable {
 	
 	@FXML
 	public void button_phase_add(){
+		anchor_left.getChildren().clear();
 		p[anz_phasen]=new Phase();
 		anz_phasen++;
-		
-		
-		
+		ObservableList<String> options = FXCollections.observableArrayList();
+		for (Zufahrt z1 : kr.allespuren.keySet()) {
+			String bezeichnung="Zufahrt:"+z1.getNummer()+" Spur:"+kr.allespuren.get(z1).getBezeichnung();
+			options.add(bezeichnung);
+			spurbezeichnung.put(bezeichnung, kr.allespuren.get(z1));
+		}
+		comboBox = new ComboBox(options);
+		comboBox.getValue();
+		anchor_left.getChildren().addAll(comboBox);
+		update_tree_phase();
 	}
+	
+	private void update_tree_phase() {
+		anchor_right.getChildren().clear();
+		TreeItem<String> rootItem = new TreeItem<String> ("Phasen");
+        rootItem.setExpanded(true);
+        for (int i = 0; i < anz_phasen; i++) {
+            TreeItem<String> pitem = new TreeItem<String> ("Phase" + i);
+            pitem.setExpanded(true);
+            for (int j=0;j<p[i].spuren.size();j++) {
+            	TreeItem<String> sitem = new TreeItem<String> ("Spur" + p[i].spuren.get(j).getBezeichnung());
+            	sitem.setExpanded(true);
+            	pitem.getChildren().add(sitem);
+            }
+            rootItem.getChildren().add(pitem);
+        }        
+        TreeView<String> tree = new TreeView<String> (rootItem);        
+        StackPane root = new StackPane();
+        root.getChildren().add(tree);
+        anchor_right.getChildren().addAll(root);
+	}
+	
+	
 	
 	@FXML
 	public void button_spur_phase_add(){
-		
+		Spur s = spurbezeichnung.get(comboBox.getValue());
+		p[anz_phasen-1].putSpuren(s);
+		update_tree_phase();
 	}
 	
 	

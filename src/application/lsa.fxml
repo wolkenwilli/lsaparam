@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -15,7 +14,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -147,24 +145,28 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox fx:id="hbox_phasen" layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox prefHeight="695.0" prefWidth="248.0">
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#button_phase_add" prefHeight="25.0" prefWidth="204.0" text="Phase hinzufügen">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Button>
-                                    <ComboBox fx:id="combo_spur" prefHeight="25.0" prefWidth="203.0">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </ComboBox>
-                                    <Button mnemonicParsing="false" onAction="#button_spur_phase_add" prefHeight="25.0" prefWidth="204.0" text="Spur zur Phase hinzufügen" />
+                                    <VBox prefHeight="695.0" prefWidth="248.0">
+                                       <children>
+                                          <VBox fx:id="vbox_phase" prefHeight="31.0" prefWidth="248.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#button_phase_add" prefHeight="25.0" prefWidth="204.0" text="Phase hinzufügen">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                          <AnchorPane fx:id="anchor_left" prefHeight="48.0" prefWidth="248.0" />
+                                          <Button mnemonicParsing="false" onAction="#button_spur_phase_add" prefHeight="25.0" prefWidth="204.0" text="Spur zur Phase hinzufügen" />
+                                       </children>
+                                    </VBox>
                                  </children>
-                              </VBox>
-                              <TreeView fx:id="tree_phasen" prefHeight="200.0" prefWidth="200.0" />
+                              </AnchorPane>
+                              <AnchorPane fx:id="anchor_right" prefHeight="200.0" prefWidth="200.0" />
                            </children></HBox>
                      </children>
                   </AnchorPane>

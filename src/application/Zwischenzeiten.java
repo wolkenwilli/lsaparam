@@ -35,10 +35,7 @@ public class Zwischenzeiten extends SpreadsheetView {
         for(int i=0;i<vr_matrix.length;i++) 
 		{
 			final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
-			System.out.println("Nächste Zufahrt!");
 			for(int j=0;j<vr_matrix.length;j++){
-				System.out.println("Nächste Spur:"+vr_matrix[i][j]);
-				System.out.println("i:"+i+" j:"+j);
 				SpreadsheetCell cell;
 		        if ((vr_matrix[i][j].getVerriegelung()==9)||(vr_matrix[i][j].getVerriegelung()==0)) {
 		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "X");
