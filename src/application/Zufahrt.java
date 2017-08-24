@@ -60,7 +60,6 @@ public class Zufahrt {
 		int check=0;
 		if (kr.checkspur(this, kat)==1)
 		{
-			
 			//----------------------------
 			TextInputDialog dialog = new TextInputDialog("600");
 			dialog.setTitle("Abfrage der Verkehrsstärke");
