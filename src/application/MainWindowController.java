@@ -80,9 +80,6 @@ public class MainWindowController implements Initializable {
 
 	}
 
-
-	
-	
 	@FXML
 	public void do_menu_init(){
 				

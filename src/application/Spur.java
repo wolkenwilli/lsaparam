@@ -25,18 +25,19 @@ public class Spur {
 
 	ImageView view = new ImageView();
 	
-	Image p0 = new Image("@../../img/0.png");
-	Image p1 = new Image("@../../img/1.png");
-	Image p2 = new Image("@../../img/2.png");
-	Image p3 = new Image("@../../img/3.png");
-	Image p4 = new Image("@../../img/4.png");
-	Image p5 = new Image("@../../img/5.png");
-	Image p6 = new Image("@../../img/6.png");
+	Image p0 = new Image("http://www.eventtechnik-schmidt.de/0.png");
+	Image p1 = new Image("http://www.eventtechnik-schmidt.de/1.png");
+	Image p2 = new Image("http://www.eventtechnik-schmidt.de/2.png");
+	Image p3 = new Image("http://www.eventtechnik-schmidt.de/3.png");
+	Image p4 = new Image("http://www.eventtechnik-schmidt.de/4.png");
+	Image p5 = new Image("http://www.eventtechnik-schmidt.de/5.png");
+	Image p6 = new Image("http://www.eventtechnik-schmidt.de/6.png");
 	
 		
 	public Spur (Zufahrt zf, int kat, int id, float q)
 	{
-		System.out.println("Test1");//Werteinitalisierung
+		System.out.println("Test1");
+		//Werteinitalisierung
 		this.id = new SimpleIntegerProperty(id);
 		this.typ = new SimpleIntegerProperty(kat);
 		this.sumoid = new SimpleIntegerProperty(0);

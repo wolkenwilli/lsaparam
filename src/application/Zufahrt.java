@@ -70,7 +70,7 @@ public class Zufahrt {
 				// Traditional way to get the response value.
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
-					MainWindowController.s[kr.get_anz_spuren()]=new Spur(this, kat, kr.get_anz_spuren(), Float.parseFloat((result.get())));
+					MainWindowController.s[kr.get_anz_spuren()]=new Spur(this, kat, kr.get_anz_spuren(),Float.parseFloat(result.get()));
 				} 
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -136,7 +136,7 @@ public class Zufahrt {
 		erftfCol.setMinWidth(10);
 		erftfCol.setCellValueFactory(new PropertyValueFactory<Spur,Float>("erftf"));
 	    table.setItems(spurlist);
-	    //table.getColumns().addAll(idCol, imageCol, sumoidCol, qCol, erftfCol); 	Mit Bild
+	    //table.getColumns().addAll(idCol, imageCol, sumoidCol, qCol, erftfCol); 	//mit Bild
 	    table.getColumns().addAll(idCol, typCol, sumoidCol, qCol, erftfCol);
         v.setSpacing(5);
         v.setPadding(new Insets(10, 0, 0, 10));
