@@ -2,6 +2,7 @@ package application;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -11,6 +12,7 @@ public class Spur {
 	private final SimpleIntegerProperty sumoid;
 	private final SimpleFloatProperty q;
 	private final SimpleFloatProperty erftf;
+	private final SimpleStringProperty bezeichnung;
 	
 	public ImageView getView() {
 		return view;
@@ -45,27 +47,35 @@ public class Spur {
 		switch (typ.get()) {
 		case 0:
 			view.setImage(p0);
+			this.bezeichnung=new SimpleStringProperty("Gerade-Rechts");
 			break;
 		case 1:
 			view.setImage(p1);
+			this.bezeichnung=new SimpleStringProperty("Gerade");
 			break;
 		case 2:
 			view.setImage(p2);
+			this.bezeichnung=new SimpleStringProperty("Rechts");
 			break;
 		case 3:
 			view.setImage(p3);
+			this.bezeichnung=new SimpleStringProperty("Links");
 			break;
 		case 4:
 			view.setImage(p4);
+			this.bezeichnung=new SimpleStringProperty("Links-Rechts");
 			break;
 		case 5:
 			view.setImage(p5);
+			this.bezeichnung=new SimpleStringProperty("Links-Gerade");
 			break;
 		case 6:
 			view.setImage(p6);
+			this.bezeichnung=new SimpleStringProperty("Links-Gerade-Rechts");
 			break;
 		default:
 			view.setImage(p1);
+			this.bezeichnung=new SimpleStringProperty("Gerade");
 		}
 		view.setFitWidth(23);
 		view.setFitHeight(150);
@@ -73,6 +83,11 @@ public class Spur {
 		zf.spurlist.add(this);
 	}
 	
+
+	public SimpleStringProperty getBezeichnung() {
+		return bezeichnung;
+	}
+
 
 	public int getTyp() {
 		return typ.get();

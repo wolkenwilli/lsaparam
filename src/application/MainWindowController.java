@@ -36,7 +36,9 @@ public class MainWindowController implements Initializable {
 	public Zufahrt z2;
 	public Zufahrt z3;
 	public Zufahrt z4;
-	public static Spur[] s = new Spur[16];
+	public static Spur[] s = new Spur[16];		//Maximum 16 da 4x4 Spuren
+	public static Phase[] p = new Phase[10];	//Maximum 10 angenommen
+	int anz_phasen=0; 
 	public Verriegelungsmatrix vm = new Verriegelungsmatrix();
 	public Zwischenzeiten zz;
 	public static MenuItem[] menuitem = new MenuItem[7];
@@ -263,6 +265,10 @@ public class MainWindowController implements Initializable {
 	
 	@FXML
 	public void button_phase_add(){
+		p[anz_phasen]=new Phase();
+		anz_phasen++;
+		
+		
 		
 	}
 	
