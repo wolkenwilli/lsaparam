@@ -1,5 +1,7 @@
 package application;
 
+import java.util.HashMap;
+
 import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
@@ -10,20 +12,27 @@ import javafx.collections.ObservableList;
 public class Zwischenzeiten extends SpreadsheetView {
 
 	GridBase grid;
-	private Zwischenzeitbeziehungen[] zzb;
+	private Zwischenzeitbeziehungen[][] vr_matrix;
 	
-	public Zwischenzeiten(Zwischenzeitbeziehungen[] zzb) {
-		this.zzb=zzb;
+	
+	public Zwischenzeiten(Zwischenzeitbeziehungen[][] zzb) {
+		vr_matrix=zzb;
 		
 	}
-
-	public void pruef_zz(int s){
+	
+	
+	public void pruef_zz(Kreuzung kr, Verriegelungsmatrix vm){
+		HashMap <Zufahrt, Spur> hm = kr.getAlleSpuren();
+		int s=hm.size();
 		int rowCount = s;
         int columnCount = s+1;
         
+        
+    
         grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
-		for(int i=0;i<vr_matrix.length;i++) 
+        
+        for(int i=0;i<vr_matrix.length;i++) 
 		{
 			final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
 			System.out.println("Nächste Zufahrt!");
@@ -31,7 +40,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 				System.out.println("Nächste Spur:"+vr_matrix[i][j]);
 				System.out.println("i:"+i+" j:"+j);
 				SpreadsheetCell cell;
-		        if ((vr_matrix[i][j]==9)||(vr_matrix[i][j]==0)) {
+		        if ((vr_matrix[i][j].getVerriegelung()==9)||(vr_matrix[i][j].getVerriegelung()==0)) {
 		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "X");
 		        	cell.setEditable(false);	
 		        }
@@ -42,7 +51,12 @@ public class Zwischenzeiten extends SpreadsheetView {
 		 		Row.add(cell);
 			}
 			rows.add(Row);
- 		}
+		}
+        
+        
+        
+        
+        
 	    grid.setRows(rows);
 	    setGrid(grid);
         getFixedRows().add(0);

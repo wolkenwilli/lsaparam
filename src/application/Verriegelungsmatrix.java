@@ -16,6 +16,8 @@ import javafx.event.EventHandler;
 class Verriegelungsmatrix extends SpreadsheetView {
 	private int[][] array_ungerade = new int[7][7];
 	private int[][] array_gerade = new int[7][7];	
+	private Zwischenzeitbeziehungen[] zzb;
+	private Zwischenzeitbeziehungen[][] vr_array;
 
 	public Verriegelungsmatrix()
 	{
@@ -114,14 +116,16 @@ class Verriegelungsmatrix extends SpreadsheetView {
 		return array_ungerade;
 	}
 	
-	public void create_matrix(Kreuzung kr, Zwischenzeitbeziehungen[] zzb){
+	public void create_matrix(Kreuzung kr){
 		
 		HashMap <Zufahrt, Spur> hm = kr.getAlleSpuren();
 		int s=hm.size();
+		System.out.println(hm.size());
 		int rowCount = s;
         int columnCount = s+1;
+        vr_array = new Zwischenzeitbeziehungen[s][s];
         int i=0; int j=0; int x=0;
-        zzb = new Zwischenzeitbeziehungen[s];
+        zzb = new Zwischenzeitbeziehungen[s*s];
         
         GridBase grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
@@ -133,7 +137,12 @@ class Verriegelungsmatrix extends SpreadsheetView {
         		int pruef=0;
         		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
 				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		                
+				zzb[x] = new Zwischenzeitbeziehungen();
 				zzb[x].setVerriegelung(pruef);
+				zzb[x].setEinfahrend(hm.get(z1));
+				zzb[x].setAusfahrend(hm.get(z2));
+				vr_array[i][j]=zzb[x];
+				vr_array[j][i]=zzb[x];
 		
 				cell.setEditable(true);
 				Row.add(cell);
@@ -156,7 +165,19 @@ class Verriegelungsmatrix extends SpreadsheetView {
             });
         //getColumns().get(0).setFixed(true);
         //getColumns().get(1).setPrefWidth(250);
-
 	}
+	public Zwischenzeitbeziehungen[] getZzb() {
+		return zzb;
+	}
+	public void setZzb(Zwischenzeitbeziehungen[] zzb) {
+		this.zzb = zzb;
+	}
+	public Zwischenzeitbeziehungen[][] getVr_array() {
+		return vr_array;
+	}
+	public void setVr_array(Zwischenzeitbeziehungen[][] vr_array) {
+		this.vr_array = vr_array;
+	}
+
 }
 
