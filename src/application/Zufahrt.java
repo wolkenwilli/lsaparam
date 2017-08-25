@@ -3,6 +3,9 @@ package application;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardDownRightHandler;
+import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardEndHandler;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -13,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.FloatStringConverter;
@@ -138,6 +142,10 @@ public class Zufahrt {
         v.setPadding(new Insets(10, 0, 0, 10));
         v.getChildren().clear();
         v.getChildren().addAll(table);
+        
+//        table.addEventHandler(KeyboardDownRightHandler.onKeyReleased, arg1);
+        
+        
 	}
 
 	public void calc_erftf() {

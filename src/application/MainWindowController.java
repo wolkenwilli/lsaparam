@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,8 +35,6 @@ import javafx.util.converter.FloatStringConverter;
 
 public class MainWindowController implements Initializable {
 	public Kreuzung kr = new Kreuzung();
-	
-	
 	public Zufahrt z1;
 	public Zufahrt z2;
 	public Zufahrt z3;
@@ -49,9 +48,12 @@ public class MainWindowController implements Initializable {
 	private LinkedList<String> kats;
 	StackPane spane;
 	StackPane spane2;
+	@FXML Tab tab_vm;
+	@FXML Tab tab_zz;
+	@FXML Tab tab_ph;
+	@FXML Tab tab_pp;
+	@FXML Tab tab_exp;
 	
-	
-
 	//Views
 	@FXML TableView<Option> table_options1;
 	@FXML TableView<Option> table_options2;	
@@ -74,7 +76,7 @@ public class MainWindowController implements Initializable {
 	@FXML private Pane vm_pane;
 	@FXML private Pane zz_pane;
 	//----
-	@FXML private TreeView tree_phasen;
+	@FXML private TreeView<String> tree_phasen;
 	@FXML private VBox vbox_phase;
 	@FXML private HBox hbox_phasen;
 	private ComboBox<String> comboBox;
@@ -90,94 +92,19 @@ public class MainWindowController implements Initializable {
 	}
 	
 	public static void main(String[] args) {
-	
-		
+	//	menu_init.getOnAction();
 
 	}
 
 	@FXML
 	public void do_menu_init(){
-				
-	//	label_info.setText("Bitte erzeugen Sie nun Spuren in den Zufahrten!");
 		
-	table_options1.getColumns().clear();
-	ObservableList<Option> data1 = FXCollections.observableArrayList(
-            new Option("Angleichsfaktor f1", 0.90f),
-            new Option("Angleichsfaktor f2", 0.85f),
-            new Option("Dauer Signalbild Gelb [s]", 3f),
-            new Option("Dauer Sigalbild Rot-Gelb [s]", 2f),
-            new Option("Räumgeschwindigkeit KFZ gerade [m/s]", 10f),
-            new Option("Räumgeschwindigkeit KFZ abb. [m/s]", 7f),
-            new Option("Räumgeschwindigkeit Radfahrer [m/s]", 4f),
-            new Option("Einfahrgeschwindigkeit KFZ gerade [m/s]", 11.1f),
-            new Option("Einfahrgeschwindigkeit KFZ abb. [m/s]", 11.1f),
-            new Option("Einfahrgeschwindigkeit Radfahrer [m/s]", 5f),
-            new Option("Überfahrzeit KFZ gerade [s]", 3f),
-            new Option("Überfahrzeit KFZ abb. [s]", 2f),
-            new Option("Überfahrzeit Rad [s]", 1f)
-    );
-	table_options1.setEditable(true);
-	TableColumn<Option, String> NameCol = new TableColumn<Option, String>("Name");
-    NameCol.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));
-    NameCol.setCellFactory(TextFieldTableCell.<Option>forTableColumn());
-    NameCol.setOnEditCommit(
-		    new EventHandler<CellEditEvent<Option, String>>() {
-		        public void handle(CellEditEvent<Option, String> t) {
-		            ((Option) t.getTableView().getItems().get(
-		                t.getTablePosition().getRow())
-		                ).setName(t.getNewValue());
-		        }
-		    }
-		);
-	TableColumn<Option, Float> WertCol = new TableColumn<Option, Float>("Wert");
-    WertCol.setCellValueFactory(new PropertyValueFactory<Option,Float>("wert"));
-    WertCol.setCellFactory(TextFieldTableCell.<Option, Float>forTableColumn(new FloatStringConverter()));
-    WertCol.setOnEditCommit(
-		    new EventHandler<CellEditEvent<Option, Float>>() {
-		        public void handle(CellEditEvent<Option, Float> t) {
-		            ((Option) t.getTableView().getItems().get(
-		                t.getTablePosition().getRow())
-		                ).setWert(t.getNewValue());
-		        }
-		    }
-		);
-    table_options1.getColumns().addAll(NameCol, WertCol);
-    table_options1.setItems(data1);
-
-    
-    //----------------------------------
-    table_options2.getColumns().clear();
-	ObservableList<Option> data2 = FXCollections.observableArrayList(
-            
-    );
-	TableColumn<Option, String> Name2Col = new TableColumn<Option, String>("Name");
-    Name2Col.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));
-	TableColumn<Option, Float> Wert2Col = new TableColumn<Option, Float>("Wert");
-    Wert2Col.setCellValueFactory(new PropertyValueFactory<Option,Float>("wert"));
-    table_options2.getColumns().addAll(Name2Col, Wert2Col);
-    table_options2.setItems(data2);
-	
 
 	}
 	
 	@FXML
 	public void do_menu_probe(){
-		this.spane = new StackPane(vm);
-		this.vm_pane.getChildren().add(this.spane);
-		AnchorPane.setTopAnchor(this.spane, 0.0);
-		AnchorPane.setLeftAnchor(this.spane, 0.0);
-		AnchorPane.setRightAnchor(this.spane, 0.0);
-		AnchorPane.setBottomAnchor(this.spane, 0.0);
-		System.out.println(kr.getAlleSpuren());
-		vm.create_matrix(kr);
-		zz=new Zwischenzeiten(vm.getVr_array());
-		this.spane2 = new StackPane(zz);
-		this.zz_pane.getChildren().add(this.spane2);
-		AnchorPane.setTopAnchor(this.spane2, 0.0);
-		AnchorPane.setLeftAnchor(this.spane2, 0.0);
-		AnchorPane.setRightAnchor(this.spane2, 0.0);
-		AnchorPane.setBottomAnchor(this.spane2, 0.0);
-		zz.pruef_zz(kr, vm);
+		
 			
 	}
 	
@@ -195,7 +122,9 @@ public class MainWindowController implements Initializable {
 		kats.add("Links + Rechts");			//4
 		kats.add("Links + Gerade");			//5
 		kats.add("Links + Gerade+ Rechts");	//6
-		
+		tab_vm.setDisable(false);
+		tab_zz.setDisable(false);
+		tab_ph.setDisable(false);
 	}
 	
 	@FXML
@@ -211,7 +140,9 @@ public class MainWindowController implements Initializable {
 		kats.add("Links + Rechts");			//4
 		kats.add("Links + Gerade");			//5
 		kats.add("Links + Gerade+ Rechts");	//6
-		
+		tab_vm.setDisable(false);
+		tab_zz.setDisable(false);
+		tab_ph.setDisable(false);
 	}
 	
 	@FXML
@@ -257,7 +188,29 @@ public class MainWindowController implements Initializable {
 		gui_contextmenu.show(p, x, y);
 	
 	}
-
+	@FXML
+	public void tab_vm_clicked() {
+		this.spane = new StackPane(vm);
+		this.vm_pane.getChildren().add(this.spane);
+		AnchorPane.setTopAnchor(this.spane, 0.0);
+		AnchorPane.setLeftAnchor(this.spane, 0.0);
+		AnchorPane.setRightAnchor(this.spane, 0.0);
+		AnchorPane.setBottomAnchor(this.spane, 0.0);
+		System.out.println(kr.getAlleSpuren());
+		vm.create_matrix(kr);
+			
+	}
+	@FXML
+	public void tab_zz_clicked() {
+		zz=new Zwischenzeiten(vm.getVr_array());
+		this.spane2 = new StackPane(zz);
+		this.zz_pane.getChildren().add(this.spane2);
+		AnchorPane.setTopAnchor(this.spane2, 0.0);
+		AnchorPane.setLeftAnchor(this.spane2, 0.0);
+		AnchorPane.setRightAnchor(this.spane2, 0.0);
+		AnchorPane.setBottomAnchor(this.spane2, 0.0);
+		zz.pruef_zz(kr, vm);
+	}
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		gui_zufahrt1.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
@@ -284,7 +237,7 @@ public class MainWindowController implements Initializable {
 			options.add(bezeichnung);
 			spurbezeichnung.put(bezeichnung, kr.allespuren.get(z1));
 		}
-		comboBox = new ComboBox(options);
+		comboBox = new ComboBox<String>(options);
 		comboBox.getValue();
 		anchor_left.getChildren().addAll(comboBox);
 		update_tree_phase();
@@ -317,9 +270,75 @@ public class MainWindowController implements Initializable {
 		Spur s = spurbezeichnung.get(comboBox.getValue());
 		p[anz_phasen-1].putSpuren(s);
 		update_tree_phase();
+		tab_pp.setDisable(false);
 	}
 	
 	
+	
+	@FXML
+	public void tab_ge_clicked() {
+		
+		//	label_info.setText("Bitte erzeugen Sie nun Spuren in den Zufahrten!");
+		table_options1.getColumns().clear();
+		ObservableList<Option> data1 = FXCollections.observableArrayList(
+			new Option("Angleichsfaktor f1", 0.90f),
+			new Option("Angleichsfaktor f2", 0.85f),
+			new Option("Dauer Signalbild Gelb [s]", 3f),
+			new Option("Dauer Sigalbild Rot-Gelb [s]", 2f)
+		/*	Vorerst nicht erforderlich, da keine Berechnung der Zwischenzeit
+      		new Option("Räumgeschwindigkeit KFZ gerade [m/s]", 10f),
+        	new Option("Räumgeschwindigkeit KFZ abb. [m/s]", 7f),
+        	new Option("Räumgeschwindigkeit Radfahrer [m/s]", 4f),
+        	new Option("Einfahrgeschwindigkeit KFZ gerade [m/s]", 11.1f),
+        	new Option("Einfahrgeschwindigkeit KFZ abb. [m/s]", 11.1f),
+        	new Option("Einfahrgeschwindigkeit Radfahrer [m/s]", 5f),
+        	new Option("Überfahrzeit KFZ gerade [s]", 3f),
+        	new Option("Überfahrzeit KFZ abb. [s]", 2f),
+        	new Option("Überfahrzeit Rad [s]", 1f)
+		*/            
+		);
+		table_options1.setEditable(true);
+		TableColumn<Option, String> NameCol = new TableColumn<Option, String>("Name");
+		NameCol.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));
+		NameCol.setCellFactory(TextFieldTableCell.<Option>forTableColumn());
+		NameCol.setOnEditCommit(
+				new EventHandler<CellEditEvent<Option, String>>() {
+	        public void handle(CellEditEvent<Option, String> t) {
+	            ((Option) t.getTableView().getItems().get(
+	                t.getTablePosition().getRow())
+	                ).setName(t.getNewValue());
+	        	}
+				}
+		);
+		TableColumn<Option, Float> WertCol = new TableColumn<Option, Float>("Wert");
+		WertCol.setCellValueFactory(new PropertyValueFactory<Option,Float>("wert"));
+		WertCol.setCellFactory(TextFieldTableCell.<Option, Float>forTableColumn(new FloatStringConverter()));
+		WertCol.setOnEditCommit(
+	    new EventHandler<CellEditEvent<Option, Float>>() {
+	        public void handle(CellEditEvent<Option, Float> t) {
+	            ((Option) t.getTableView().getItems().get(
+	                t.getTablePosition().getRow())
+	                ).setWert(t.getNewValue());
+	        }
+	    }
+		);
+		table_options1.getColumns().addAll(NameCol, WertCol);
+		table_options1.setItems(data1);
+
+
+		//----------------------------------
+		table_options2.getColumns().clear();
+		ObservableList<Option> data2 = FXCollections.observableArrayList(
+        
+		);
+		TableColumn<Option, String> Name2Col = new TableColumn<Option, String>("Name");
+		Name2Col.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));
+		TableColumn<Option, Float> Wert2Col = new TableColumn<Option, Float>("Wert");
+		Wert2Col.setCellValueFactory(new PropertyValueFactory<Option,Float>("wert"));
+		table_options2.getColumns().addAll(Name2Col, Wert2Col);
+		table_options2.setItems(data2);
+
+		}
 	
 	@FXML
 	public void do_menu_beenden()

@@ -25,21 +25,7 @@
    <children>
       <TabPane layoutY="76.0" prefHeight="924.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <tabs>
-            <Tab text="Grundeinstellungen">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <TableView fx:id="table_options1" prefHeight="695.0" prefWidth="357.0" />
-                              <Separator orientation="VERTICAL" prefHeight="895.0" prefWidth="17.0" />
-                              <TableView fx:id="table_options2" prefHeight="200.0" prefWidth="200.0" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-               </content></Tab>
-            <Tab text="Initialisierung">
+            <Tab fx:id="tab_init" text="Initialisierung">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="883.0" prefWidth="1243.0">
                      <children>
@@ -123,7 +109,7 @@
                   <Tooltip text="Empty Tooltip" />
                </tooltip>
             </Tab>
-            <Tab text="Verriegelungsmatrix">
+            <Tab fx:id="tab_vm" disable="true" onSelectionChanged="#tab_vm_clicked" text="Verriegelungsmatrix">
                <content>
                   <AnchorPane fx:id="vm_pane" prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -132,7 +118,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Zwischenzeiten">
+            <Tab fx:id="tab_zz" disable="true" onSelectionChanged="#tab_zz_clicked" text="Zwischenzeiten">
                <content>
                   <AnchorPane fx:id="zz_pane" prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -141,7 +127,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Phasendefinition">
+            <Tab fx:id="tab_ph" disable="true" text="Phasendefinition">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -172,7 +158,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Phasenplan">
+            <Tab fx:id="tab_pp" disable="true" text="Phasenplan">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -181,7 +167,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Export">
+            <Tab fx:id="tab_exp" disable="true" text="Export">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -190,6 +176,20 @@
                   </AnchorPane>
                </content>
             </Tab>
+            <Tab fx:id="tab_ge" onSelectionChanged="#tab_ge_clicked" text="Grundeinstellungen">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TableView fx:id="table_options1" prefHeight="695.0" prefWidth="357.0" />
+                              <Separator orientation="VERTICAL" prefHeight="895.0" prefWidth="17.0" />
+                              <TableView fx:id="table_options2" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
          </tabs>
       </TabPane>
       <MenuBar layoutX="132.0" layoutY="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

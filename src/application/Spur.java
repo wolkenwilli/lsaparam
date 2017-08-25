@@ -13,6 +13,7 @@ public class Spur {
 	private final SimpleFloatProperty q;
 	private final SimpleFloatProperty erftf;
 	private final SimpleStringProperty bezeichnung;
+	private final SimpleIntegerProperty dauer;
 	
 	public ImageView getView() {
 		return view;
@@ -42,6 +43,7 @@ public class Spur {
 		this.sumoid = new SimpleIntegerProperty(0);
 		this.q=new SimpleFloatProperty(q);
 		this.erftf=new SimpleFloatProperty(0.0f);
+		this.dauer=new SimpleIntegerProperty(0);
 		zf.putSpur(this);	//Spur der Zufahrt hinzufügen
 		k.putSpur(zf, this);
 		switch (typ.get()) {
@@ -83,6 +85,11 @@ public class Spur {
 		zf.spurlist.add(this);
 	}
 	
+
+	public Integer getDauer() {
+		return dauer.get();
+	}
+
 
 	public String getBezeichnung() {
 		return bezeichnung.get();
