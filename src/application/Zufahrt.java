@@ -86,6 +86,7 @@ public class Zufahrt {
 		}	
 		return check;
 	}
+	
 	private void updateTable() {
 		table.getColumns().clear();
 		table.setEditable(true);

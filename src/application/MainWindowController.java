@@ -79,10 +79,13 @@ public class MainWindowController implements Initializable {
 	@FXML private TreeView<String> tree_phasen;
 	@FXML private VBox vbox_phase;
 	@FXML private HBox hbox_phasen;
-	private ComboBox<String> comboBox;
+	@FXML private ComboBox<String> comboBox;
 	@FXML private Pane anchor_left;
 	@FXML private Pane anchor_right;
 	HashMap<String, Spur> spurbezeichnung = new HashMap<String, Spur>(); 
+	//----
+	@FXML private VBox pp_vbox;
+	
 	
 	
 	public Main main;
@@ -272,9 +275,12 @@ public class MainWindowController implements Initializable {
 		update_tree_phase();
 		tab_pp.setDisable(false);
 	}
-	
-	
-	
+
+	@FXML
+	public void tab_pp_clicked() {
+		
+	}
+
 	@FXML
 	public void tab_ge_clicked() {
 		
