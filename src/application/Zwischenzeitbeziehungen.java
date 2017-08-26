@@ -3,19 +3,19 @@ package application;
 
 public class Zwischenzeitbeziehungen {
 	
-	private Spur einfahrend;
-	private Spur ausfahrend;
+	private Signalgeber einfahrend;
+	private Signalgeber ausfahrend;
 	
-	public Spur getEinfahrend() {
+	public Signalgeber getEinfahrend() {
 		return einfahrend;
 	}
-	public void setEinfahrend(Spur einfahrend) {
+	public void setEinfahrend(Signalgeber einfahrend) {
 		this.einfahrend = einfahrend;
 	}
-	public Spur getAusfahrend() {
+	public Signalgeber getAusfahrend() {
 		return ausfahrend;
 	}
-	public void setAusfahrend(Spur ausfahrend) {
+	public void setAusfahrend(Signalgeber ausfahrend) {
 		this.ausfahrend = ausfahrend;
 	}
 	private int verriegelung;

@@ -22,7 +22,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 	
 	
 	public void pruef_zz(Kreuzung kr, Verriegelungsmatrix vm){
-		HashMap <Zufahrt, Spur> hm = kr.getAlleSpuren();
+		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
 		int s=hm.size();
 		int rowCount = s;
         int columnCount = s+1;

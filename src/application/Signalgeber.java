@@ -6,10 +6,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Spur {
+public class Signalgeber {
 	private final SimpleIntegerProperty id;
 	private final SimpleIntegerProperty typ;
 	private final SimpleIntegerProperty sumoid;
+	private final SimpleFloatProperty g;
 	private final SimpleFloatProperty q;
 	private final SimpleFloatProperty erftf;
 	private final SimpleStringProperty bezeichnung;
@@ -35,7 +36,7 @@ public class Spur {
 	Image p6 = new Image("http://www.eventtechnik-schmidt.de/6.png");
 	
 		
-	public Spur (Kreuzung k, Zufahrt zf, int kat, int id, float q)
+	public Signalgeber (Kreuzung k, Zufahrt zf, int kat, int id, float q)
 	{
 		//Werteinitalisierung
 		this.id = new SimpleIntegerProperty(id);
@@ -44,8 +45,9 @@ public class Spur {
 		this.q=new SimpleFloatProperty(q);
 		this.erftf=new SimpleFloatProperty(0.0f);
 		this.dauer=new SimpleIntegerProperty(0);
-		zf.putSpur(this);	//Spur der Zufahrt hinzufügen
-		k.putSpur(zf, this);
+		this.g=new SimpleFloatProperty(0.8f);
+		zf.putSignalgeber(this);	//Spur der Zufahrt hinzufügen
+		k.putSignalgeber(zf, this);
 		switch (typ.get()) {
 		case 0:
 			view.setImage(p0);
@@ -82,7 +84,7 @@ public class Spur {
 		view.setFitWidth(23);
 		view.setFitHeight(150);
 		zf.pane.getChildren().addAll(view);
-		zf.spurlist.add(this);
+		zf.Signalgeberlist.add(this);
 	}
 	
 

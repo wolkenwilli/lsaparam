@@ -9,20 +9,19 @@ class Kreuzung {
 	private float calc_qsn;
 
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
-	HashMap<Zufahrt, Spur> allespuren = new HashMap<Zufahrt, Spur>();
+	HashMap<Zufahrt, Signalgeber> alleSignalgeber = new HashMap<Zufahrt, Signalgeber>();
 	public void putZufahrt (Zufahrt zf) {
-		
 		zufahrten.add(zf);
 		//System.out.println("Zufahrt erzeugt!");
 	}
 	
-	public void putSpur(Zufahrt z, Spur s) {
-		allespuren.put(z, s);
-		//System.out.println("Spur gespeichert.");
+	public void putSignalgeber(Zufahrt z, Signalgeber sg) {
+		alleSignalgeber.put(z, sg);
+		//System.out.println("Signalgeber gespeichert.");
 	}
 	
-	public HashMap<Zufahrt, Spur> getAlleSpuren(){
-		return allespuren;
+	public HashMap<Zufahrt, Signalgeber> getAlleSignalgeber(){
+		return alleSignalgeber;
 	}
 	
 	
@@ -55,25 +54,25 @@ class Kreuzung {
 		}
 		return z;
 	}
-	public int get_anz_spuren() 
+	public int get_anz_Signalgeber() 
 	{
 		int anz=0;
 		for (int i=0;i<=zufahrten.size()-1;i++)
 		{
-			anz=anz+zufahrten.get(i).get_anzahl_spuren();
+			anz=anz+zufahrten.get(i).get_anzahl_signalgeber();
 		}
 		return anz;
 	}
-	int checkspur(Zufahrt zf, int k)
+	int checksignalgeber(Zufahrt zf, int k)
 	{
 		int check = 0;
 		int neu = k;
-		if (zf.get_anzahl_spuren()==0)
+		if (zf.get_anzahl_signalgeber()==0)
 		{
 			check=1;
-			//System.out.println("Erste Spur in dieser Zufahrt, keine weitere Prüfung notwendig.");
+			//System.out.println("Erster Signalgeber in dieser Zufahrt, keine weitere Prüfung notwendig.");
 		}
-		else if (zf.get_anzahl_spuren()==4)
+		else if (zf.get_anzahl_signalgeber()==4)
 		{
 			check=0;
 			System.out.println("4 Spuren ist das maximum!");
@@ -81,7 +80,7 @@ class Kreuzung {
 		else
 		{
 			
-			int rechte = (zf.spuren.get(zf.get_anzahl_spuren()-1)).getTyp();
+			int rechte = (zf.signal_geber.get(zf.get_anzahl_signalgeber()-1)).getTyp();
 			//System.out.println("Neue Spur: "+neu+" Rechte Spur: "+rechte);
 			if (rechte==2)
 			{

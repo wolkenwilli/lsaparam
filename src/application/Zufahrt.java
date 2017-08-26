@@ -26,9 +26,9 @@ public class Zufahrt {
 	int nummer;
 	Kreuzung kr;
 	Pane pane = new Pane();
-	public TableView<Spur> table = new TableView<Spur>();
-	public final ObservableList<Spur> spurlist = FXCollections.observableArrayList();
-	LinkedList<Spur> spuren = new LinkedList<Spur>();
+	public TableView<Signalgeber> table = new TableView<Signalgeber>();
+	public final ObservableList<Signalgeber> Signalgeberlist = FXCollections.observableArrayList();
+	LinkedList<Signalgeber> signal_geber = new LinkedList<Signalgeber>();
     VBox v = new VBox();
 	
 	
@@ -39,8 +39,8 @@ public class Zufahrt {
 		this.v=v;
 		k.putZufahrt(this);
 	}
-	public Spur return_spur(int id) {
-		return spuren.get(id);
+	public Signalgeber return_Signalgeber(int id) {
+		return signal_geber.get(id);
 	}
 	
 
@@ -48,40 +48,40 @@ public class Zufahrt {
 		return nummer;
 	}
 
-	public void putSpur (Spur sp) {
-		spuren.add(sp);
+	public void putSignalgeber (Signalgeber sg) {
+		signal_geber.add(sg);
 	}
-	public int get_anzahl_spuren()
+	public int get_anzahl_signalgeber()
 	{
-		return spuren.size();
+		return signal_geber.size();
 	}
-	public int erzeugeSpur(int kat)
+	public int erzeugeSignalgeber(int kat)
 	{
 		int check=0;
-		if (kr.checkspur(this, kat)==1)
+		if (kr.checksignalgeber(this, kat)==1)
 		{
 			//----------------------------
 			TextInputDialog dialog = new TextInputDialog("600");
 			dialog.setTitle("Abfrage der Verkehrsstärke");
-			dialog.setHeaderText("Bitte geben Sie die Verkehrsstärke dieser Spur an! [Fzg/h]");
+			dialog.setHeaderText("Bitte geben Sie die Verkehrsstärke dieses Signalgeber an! [Fzg/h]");
 			dialog.setContentText("q=");
 
 			try {
 				// Traditional way to get the response value.
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
-					MainWindowController.s[kr.get_anz_spuren()]=new Spur(kr, this, kat, kr.get_anz_spuren(),Float.parseFloat(result.get()));
+					MainWindowController.s[kr.get_anz_Signalgeber()]=new Signalgeber(kr, this, kat, kr.get_anz_Signalgeber(),Float.parseFloat(result.get()));
 				} 
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 			updateTable();
-			//System.out.println("Spur mit Kategorie "+kat+" wurde erfolgreich hinzugefügt.");
+			//System.out.println("Signalgeber mit Kategorie "+kat+" wurde erfolgreich hinzugefügt.");
 			check=1;
 		}
 		else
 		{
-			System.out.println("Spur konnte nicht hinzugefügt werden!");
+			System.out.println("Signalgeber konnte nicht hinzugefügt werden!");
 			check=0;
 		}	
 		return check;
@@ -91,41 +91,41 @@ public class Zufahrt {
 		table.getColumns().clear();
 		table.setEditable(true);
 		//ID
-		TableColumn<Spur, Integer> idCol = new TableColumn<Spur, Integer>("ID");
+		TableColumn<Signalgeber, Integer> idCol = new TableColumn<Signalgeber, Integer>("ID");
 		idCol.setMinWidth(10);
-		idCol.setCellValueFactory(new PropertyValueFactory<Spur,Integer>("id"));
+		idCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("id"));
 		//Bild Typ
-//		TableColumn<Spur, ImageView> imageCol = new TableColumn<Spur, ImageView>("Typ2");
+//		TableColumn<Signalgeber, ImageView> imageCol = new TableColumn<Signalgeber, ImageView>("Typ2");
 //		imageCol.setMinWidth(10);
 //		imageCol.setMaxWidth(50);
-//		imageCol.setCellValueFactory(new PropertyValueFactory<Spur,ImageView>("view"));
+//		imageCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,ImageView>("view"));
 		//Typ
-		TableColumn<Spur, Integer> typCol = new TableColumn<Spur, Integer>("Typ");
+		TableColumn<Signalgeber, Integer> typCol = new TableColumn<Signalgeber, Integer>("Typ");
 		typCol.setMinWidth(10);
-		typCol.setCellValueFactory(new PropertyValueFactory<Spur,Integer>("typ"));
+		typCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("typ"));
 		//SumoID
-		TableColumn<Spur, Integer> sumoidCol = new TableColumn<Spur, Integer>("Sumo-ID");
+		TableColumn<Signalgeber, Integer> sumoidCol = new TableColumn<Signalgeber, Integer>("Sumo-ID");
 		sumoidCol.setMinWidth(10);
-		sumoidCol.setCellValueFactory(new PropertyValueFactory<Spur,Integer>("sumoid"));
-	    sumoidCol.setCellFactory(TextFieldTableCell.<Spur, Integer>forTableColumn(new IntegerStringConverter()));
+		sumoidCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("sumoid"));
+	    sumoidCol.setCellFactory(TextFieldTableCell.<Signalgeber, Integer>forTableColumn(new IntegerStringConverter()));
 	    sumoidCol.setOnEditCommit(
-			    new EventHandler<CellEditEvent<Spur, Integer>>() {
-			        public void handle(CellEditEvent<Spur, Integer> t) {
-			            ((Spur) t.getTableView().getItems().get(
+			    new EventHandler<CellEditEvent<Signalgeber, Integer>>() {
+			        public void handle(CellEditEvent<Signalgeber, Integer> t) {
+			            ((Signalgeber) t.getTableView().getItems().get(
 			                t.getTablePosition().getRow())
 			                ).setSumoid(t.getNewValue());
 			        }
 			    }
 			);
 		//q
-		TableColumn<Spur, Float> qCol = new TableColumn<Spur, Float>("q [Fzg/h]");
-		qCol.setCellValueFactory(new PropertyValueFactory<Spur,Float>("q"));
+		TableColumn<Signalgeber, Float> qCol = new TableColumn<Signalgeber, Float>("q [Fzg/h]");
+		qCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("q"));
 		qCol.setMinWidth(10);
-		qCol.setCellFactory(TextFieldTableCell.<Spur, Float>forTableColumn(new FloatStringConverter()));
+		qCol.setCellFactory(TextFieldTableCell.<Signalgeber, Float>forTableColumn(new FloatStringConverter()));
 	    qCol.setOnEditCommit(
-			    new EventHandler<CellEditEvent<Spur, Float>>() {
-			        public void handle(CellEditEvent<Spur, Float> t) {
-			            ((Spur) t.getTableView().getItems().get(
+			    new EventHandler<CellEditEvent<Signalgeber, Float>>() {
+			        public void handle(CellEditEvent<Signalgeber, Float> t) {
+			            ((Signalgeber) t.getTableView().getItems().get(
 			                t.getTablePosition().getRow())
 			                ).setQ(t.getNewValue());
 			        }
@@ -133,10 +133,10 @@ public class Zufahrt {
 			);
 	    
 		//erftf
-		TableColumn<Spur, Float> erftfCol = new TableColumn<Spur, Float>("tF,erf [s]");
+		TableColumn<Signalgeber, Float> erftfCol = new TableColumn<Signalgeber, Float>("tF,erf [s]");
 		erftfCol.setMinWidth(10);
-		erftfCol.setCellValueFactory(new PropertyValueFactory<Spur,Float>("erftf"));
-	    table.setItems(spurlist);
+		erftfCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("erftf"));
+	    table.setItems(Signalgeberlist);
 	    //table.getColumns().addAll(idCol, imageCol, sumoidCol, qCol, erftfCol); 	//mit Bild
 	    table.getColumns().addAll(idCol, typCol, sumoidCol, qCol, erftfCol);
         v.setSpacing(5);
@@ -151,9 +151,9 @@ public class Zufahrt {
 
 	public void calc_erftf() {
 		
-		for (int i=0;i<spuren.size();i++)
+		for (int i=0;i<signal_geber.size();i++)
 		{
-			spuren.get(i).calc_erftf(kr.getCalc_qsn());
+			signal_geber.get(i).calc_erftf(kr.getCalc_qsn());
 		}
 		updateTable();
 	}

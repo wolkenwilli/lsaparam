@@ -39,7 +39,7 @@ public class MainWindowController implements Initializable {
 	public Zufahrt z2;
 	public Zufahrt z3;
 	public Zufahrt z4;
-	public static Spur[] s = new Spur[16];		//Maximum 16 da 4x4 Spuren
+	public static Signalgeber[] s = new Signalgeber[16];		//Maximum 16 da 4x4 Signalgeber
 	public static Phase[] p = new Phase[10];	//Maximum 10 angenommen
 	int anz_phasen=0; 
 	public Verriegelungsmatrix vm = new Verriegelungsmatrix();
@@ -82,7 +82,7 @@ public class MainWindowController implements Initializable {
 	@FXML private ComboBox<String> comboBox;
 	@FXML private Pane anchor_left;
 	@FXML private Pane anchor_right;
-	HashMap<String, Spur> spurbezeichnung = new HashMap<String, Spur>(); 
+	HashMap<String, Signalgeber> signalgeberbezeichnung = new HashMap<String, Signalgeber>(); 
 	//----
 	@FXML private VBox pp_vbox;
 	
@@ -161,7 +161,7 @@ public class MainWindowController implements Initializable {
 		
 		for (int i=0;i<kats.size();i++)
 		{
-			if (kr.checkspur(zf, i)==1)
+			if (kr.checksignalgeber(zf, i)==1)
 			{
 				menuitem[i] = new MenuItem(kats.get(i));
 				menuitem[i].setOnAction(new EventHandler<ActionEvent>() 
@@ -171,7 +171,7 @@ public class MainWindowController implements Initializable {
 					{
 						
 						System.out.println("Debug: "+kats.get(j)+" Spur wird erzeugt!");
-						zf.erzeugeSpur(j);				        						
+						zf.erzeugeSignalgeber(j);				        						
 					}
 
 					private EventHandler<ActionEvent> init(int i)
@@ -199,7 +199,7 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setLeftAnchor(this.spane, 0.0);
 		AnchorPane.setRightAnchor(this.spane, 0.0);
 		AnchorPane.setBottomAnchor(this.spane, 0.0);
-		System.out.println(kr.getAlleSpuren());
+		System.out.println(kr.getAlleSignalgeber());
 		vm.create_matrix(kr);
 			
 	}
@@ -235,10 +235,10 @@ public class MainWindowController implements Initializable {
 		p[anz_phasen]=new Phase();
 		anz_phasen++;
 		ObservableList<String> options = FXCollections.observableArrayList();
-		for (Zufahrt z1 : kr.allespuren.keySet()) {
-			String bezeichnung="Zufahrt:"+z1.getNummer()+" Spur:"+kr.allespuren.get(z1).getBezeichnung();
+		for (Zufahrt z1 : kr.alleSignalgeber.keySet()) {
+			String bezeichnung="Zufahrt:"+z1.getNummer()+" Spur:"+kr.alleSignalgeber.get(z1).getBezeichnung();
 			options.add(bezeichnung);
-			spurbezeichnung.put(bezeichnung, kr.allespuren.get(z1));
+			signalgeberbezeichnung.put(bezeichnung, kr.alleSignalgeber.get(z1));
 		}
 		comboBox = new ComboBox<String>(options);
 		comboBox.getValue();
@@ -253,8 +253,8 @@ public class MainWindowController implements Initializable {
         for (int i = 0; i < anz_phasen; i++) {
             TreeItem<String> pitem = new TreeItem<String> ("Phase" + i);
             pitem.setExpanded(true);
-            for (int j=0;j<p[i].spuren.size();j++) {
-            	TreeItem<String> sitem = new TreeItem<String> ("Spur" + p[i].spuren.get(j).getBezeichnung());
+            for (int j=0;j<p[i].sg.size();j++) {
+            	TreeItem<String> sitem = new TreeItem<String> ("Spur" + p[i].sg.get(j).getBezeichnung());
             	sitem.setExpanded(true);
             	pitem.getChildren().add(sitem);
             }
@@ -270,7 +270,7 @@ public class MainWindowController implements Initializable {
 	
 	@FXML
 	public void button_spur_phase_add(){
-		Spur s = spurbezeichnung.get(comboBox.getValue());
+		Signalgeber s = signalgeberbezeichnung.get(comboBox.getValue());
 		p[anz_phasen-1].putSpuren(s);
 		update_tree_phase();
 		tab_pp.setDisable(false);

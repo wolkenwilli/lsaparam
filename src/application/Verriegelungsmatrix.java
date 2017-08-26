@@ -118,7 +118,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	
 	public void create_matrix(Kreuzung kr){
 		
-		HashMap <Zufahrt, Spur> hm = kr.getAlleSpuren();
+		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
 		int s=hm.size();
 		int rowCount = s;
         int columnCount = s+1;
