@@ -8,12 +8,14 @@ import javafx.scene.image.ImageView;
 
 public class Signalgeber {
 	private final SimpleIntegerProperty id;
+	private final SimpleStringProperty bezeichnung;
 	private final SimpleIntegerProperty typ;
 	private final SimpleIntegerProperty sumoid;
 	private final SimpleFloatProperty g;
 	private final SimpleFloatProperty q;
-	private final SimpleFloatProperty erftf;
-	private final SimpleStringProperty bezeichnung;
+	private final SimpleFloatProperty qs;
+	private final SimpleFloatProperty tfStunde;
+	
 	private final SimpleIntegerProperty dauer;
 	
 	public ImageView getView() {
@@ -36,50 +38,45 @@ public class Signalgeber {
 	Image p6 = new Image("http://www.eventtechnik-schmidt.de/6.png");
 	
 		
-	public Signalgeber (Kreuzung k, Zufahrt zf, int kat, int id, float q)
+	public Signalgeber (Kreuzung kr, Zufahrt zf, int kat, int id, float q)
 	{
 		//Werteinitalisierung
 		this.id = new SimpleIntegerProperty(id);
+		this.bezeichnung=new SimpleStringProperty("K"+(id+1));
 		this.typ = new SimpleIntegerProperty(kat);
 		this.sumoid = new SimpleIntegerProperty(0);
 		this.q=new SimpleFloatProperty(q);
-		this.erftf=new SimpleFloatProperty(0.0f);
+		this.qs=new SimpleFloatProperty(0.0f); 			//Muss ich noch berechnen
+		this.tfStunde=new SimpleFloatProperty(0.0f);
 		this.dauer=new SimpleIntegerProperty(0);
 		this.g=new SimpleFloatProperty(0.8f);
 		zf.putSignalgeber(this);	//Spur der Zufahrt hinzufügen
-		k.putSignalgeber(zf, this);
+		kr.putSignalgeber(zf, this);
+		
 		switch (typ.get()) {
 		case 0:
 			view.setImage(p0);
-			this.bezeichnung=new SimpleStringProperty("Gerade-Rechts");
 			break;
 		case 1:
 			view.setImage(p1);
-			this.bezeichnung=new SimpleStringProperty("Gerade");
 			break;
 		case 2:
 			view.setImage(p2);
-			this.bezeichnung=new SimpleStringProperty("Rechts");
 			break;
 		case 3:
 			view.setImage(p3);
-			this.bezeichnung=new SimpleStringProperty("Links");
 			break;
 		case 4:
 			view.setImage(p4);
-			this.bezeichnung=new SimpleStringProperty("Links-Rechts");
 			break;
 		case 5:
 			view.setImage(p5);
-			this.bezeichnung=new SimpleStringProperty("Links-Gerade");
 			break;
 		case 6:
 			view.setImage(p6);
-			this.bezeichnung=new SimpleStringProperty("Links-Gerade-Rechts");
 			break;
 		default:
 			view.setImage(p1);
-			this.bezeichnung=new SimpleStringProperty("Gerade");
 		}
 		view.setFitWidth(23);
 		view.setFitHeight(150);
@@ -112,11 +109,11 @@ public class Signalgeber {
 		return q.get();
 	}
 	public void calc_erftf(float qsn) {
-		erftf.set(q.get()*(3600/qsn));
+		tfStunde.set(q.get()*(3600/qsn));
 	}
 	
 	public float getErftf() {
-		return erftf.get();
+		return tfStunde.get();
 	}
 
 	public int getId() {

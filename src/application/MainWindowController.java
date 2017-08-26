@@ -198,10 +198,8 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setTopAnchor(this.spane, 0.0);
 		AnchorPane.setLeftAnchor(this.spane, 0.0);
 		AnchorPane.setRightAnchor(this.spane, 0.0);
-		AnchorPane.setBottomAnchor(this.spane, 0.0);
-		System.out.println(kr.getAlleSignalgeber());
-		vm.create_matrix(kr);
-			
+		AnchorPane.setBottomAnchor(this.spane, 0.0);		
+		vm.create_matrix(kr);	
 	}
 	@FXML
 	public void tab_zz_clicked() {

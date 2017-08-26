@@ -3,9 +3,6 @@ package application;
 import java.util.LinkedList;
 import java.util.Optional;
 
-import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardDownRightHandler;
-import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardEndHandler;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -16,7 +13,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.FloatStringConverter;
@@ -91,20 +87,16 @@ public class Zufahrt {
 		table.getColumns().clear();
 		table.setEditable(true);
 		//ID
-		TableColumn<Signalgeber, Integer> idCol = new TableColumn<Signalgeber, Integer>("ID");
-		idCol.setMinWidth(10);
-		idCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("id"));
+		TableColumn<Signalgeber, String> BezeichnungCol = new TableColumn<Signalgeber, String>("Bez.");
+		BezeichnungCol.setMinWidth(10);
+		BezeichnungCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,String>("Bezeichnung"));
 		//Bild Typ
 //		TableColumn<Signalgeber, ImageView> imageCol = new TableColumn<Signalgeber, ImageView>("Typ2");
 //		imageCol.setMinWidth(10);
 //		imageCol.setMaxWidth(50);
 //		imageCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,ImageView>("view"));
-		//Typ
-		TableColumn<Signalgeber, Integer> typCol = new TableColumn<Signalgeber, Integer>("Typ");
-		typCol.setMinWidth(10);
-		typCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("typ"));
 		//SumoID
-		TableColumn<Signalgeber, Integer> sumoidCol = new TableColumn<Signalgeber, Integer>("Sumo-ID");
+		TableColumn<Signalgeber, Integer> sumoidCol = new TableColumn<Signalgeber, Integer>("SumoID");
 		sumoidCol.setMinWidth(10);
 		sumoidCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("sumoid"));
 	    sumoidCol.setCellFactory(TextFieldTableCell.<Signalgeber, Integer>forTableColumn(new IntegerStringConverter()));
@@ -132,13 +124,19 @@ public class Zufahrt {
 			    }
 			);
 	    
-		//erftf
-		TableColumn<Signalgeber, Float> erftfCol = new TableColumn<Signalgeber, Float>("tF,erf [s]");
-		erftfCol.setMinWidth(10);
-		erftfCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("erftf"));
-	    table.setItems(Signalgeberlist);
+		//tfStunde
+		TableColumn<Signalgeber, Float> tfStundeCol = new TableColumn<Signalgeber, Float>("tF [h]");
+		tfStundeCol.setMinWidth(10);
+		tfStundeCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("tfStunde"));
+	    //qS
+		TableColumn<Signalgeber, Float> qsCol = new TableColumn<Signalgeber, Float>("qs [Fzg/h]");
+		qsCol.setMinWidth(10);
+		qsCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("qs"));
+	    
+		
+		table.setItems(Signalgeberlist);
 	    //table.getColumns().addAll(idCol, imageCol, sumoidCol, qCol, erftfCol); 	//mit Bild
-	    table.getColumns().addAll(idCol, typCol, sumoidCol, qCol, erftfCol);
+	    table.getColumns().addAll(BezeichnungCol, sumoidCol, qCol, qsCol, tfStundeCol);
         v.setSpacing(5);
         v.setPadding(new Insets(10, 0, 0, 10));
         v.getChildren().clear();
