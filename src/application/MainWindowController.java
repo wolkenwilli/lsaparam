@@ -59,10 +59,6 @@ public class MainWindowController implements Initializable {
 	@FXML TableView<Option> table_options2;	
 	@FXML Label label_info;
 	//----
-	@FXML private TextField qs;
-	@FXML private TextField f1;
-	@FXML private TextField f2;
-	@FXML private TextField qsn;
 	@FXML private Pane gui_zufahrt1;
 	@FXML private Pane gui_zufahrt2;
 	@FXML private Pane gui_zufahrt3;
@@ -148,12 +144,6 @@ public class MainWindowController implements Initializable {
 		tab_ph.setDisable(false);
 	}
 	
-	@FXML
-	public void handlecalc() {
-		qsn.setText(String.valueOf(kr.calc_qsn(qs, f1, f2))+" Kfz/h");
-	}
-	
-	
 	public void contextMenu(Pane p, double x, double y) 
 	{
 		Zufahrt zf = kr.get_zufahrt(p);
@@ -234,9 +224,8 @@ public class MainWindowController implements Initializable {
 		anz_phasen++;
 		ObservableList<String> options = FXCollections.observableArrayList();
 		for (Zufahrt z1 : kr.alleSignalgeber.keySet()) {
-			String bezeichnung="Zufahrt:"+z1.getNummer()+" Spur:"+kr.alleSignalgeber.get(z1).getBezeichnung();
-			options.add(bezeichnung);
-			signalgeberbezeichnung.put(bezeichnung, kr.alleSignalgeber.get(z1));
+			options.add(kr.alleSignalgeber.get(z1).getBezeichnung());
+			signalgeberbezeichnung.put(kr.alleSignalgeber.get(z1).getBezeichnung(), kr.alleSignalgeber.get(z1));
 		}
 		comboBox = new ComboBox<String>(options);
 		comboBox.getValue();
@@ -252,7 +241,7 @@ public class MainWindowController implements Initializable {
             TreeItem<String> pitem = new TreeItem<String> ("Phase" + i);
             pitem.setExpanded(true);
             for (int j=0;j<p[i].sg.size();j++) {
-            	TreeItem<String> sitem = new TreeItem<String> ("Spur" + p[i].sg.get(j).getBezeichnung());
+            	TreeItem<String> sitem = new TreeItem<String> (p[i].sg.get(j).getBezeichnung());
             	sitem.setExpanded(true);
             	pitem.getChildren().add(sitem);
             }

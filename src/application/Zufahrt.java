@@ -66,11 +66,29 @@ public class Zufahrt {
 				// Traditional way to get the response value.
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
-					MainWindowController.s[kr.get_anz_Signalgeber()]=new Signalgeber(kr, this, kat, kr.get_anz_Signalgeber(),Float.parseFloat(result.get()));
+					//----------------------------
+					TextInputDialog dialog2 = new TextInputDialog("2000");
+					dialog2.setTitle("Abfrage der Sättigungsverkehrsstärke");
+					dialog2.setHeaderText("Bitte geben Sie die Sättiungsungsverkehrsstärke dieses Signalgeber an! [Fzg/h]");
+					dialog2.setContentText("qs=");
+
+					try {
+						// Traditional way to get the response value.
+						Optional<String> result2 = dialog2.showAndWait();
+						if (result2.isPresent()) {
+								MainWindowController.s[kr.get_anz_Signalgeber()]=new Signalgeber(kr, this, kat, kr.get_anz_Signalgeber(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());				
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 				} 
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
+			
+			
+			
+			
 			updateTable();
 			//System.out.println("Signalgeber mit Kategorie "+kat+" wurde erfolgreich hinzugefügt.");
 			check=1;
@@ -96,7 +114,7 @@ public class Zufahrt {
 //		imageCol.setMaxWidth(50);
 //		imageCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,ImageView>("view"));
 		//SumoID
-		TableColumn<Signalgeber, Integer> sumoidCol = new TableColumn<Signalgeber, Integer>("SumoID");
+		TableColumn<Signalgeber, Integer> sumoidCol = new TableColumn<Signalgeber, Integer>("SID");
 		sumoidCol.setMinWidth(10);
 		sumoidCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("sumoid"));
 	    sumoidCol.setCellFactory(TextFieldTableCell.<Signalgeber, Integer>forTableColumn(new IntegerStringConverter()));
@@ -123,15 +141,25 @@ public class Zufahrt {
 			        }
 			    }
 			);
-	    
+	    //qS
+	  	TableColumn<Signalgeber, Float> qsCol = new TableColumn<Signalgeber, Float>("qs [Fzg/h]");
+	  	qsCol.setMinWidth(10);
+	  	qsCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("qs"));
+	  	qsCol.setCellFactory(TextFieldTableCell.<Signalgeber, Float>forTableColumn(new FloatStringConverter()));
+	    qsCol.setOnEditCommit(
+			    new EventHandler<CellEditEvent<Signalgeber, Float>>() {
+			        public void handle(CellEditEvent<Signalgeber, Float> s) {
+			            ((Signalgeber) s.getTableView().getItems().get(
+			                s.getTablePosition().getRow())
+			                ).setQS(s.getNewValue());
+			        }
+			    }
+			);
 		//tfStunde
-		TableColumn<Signalgeber, Float> tfStundeCol = new TableColumn<Signalgeber, Float>("tF [h]");
+		TableColumn<Signalgeber, Float> tfStundeCol = new TableColumn<Signalgeber, Float>("tF [s/h]");
 		tfStundeCol.setMinWidth(10);
 		tfStundeCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("tfStunde"));
-	    //qS
-		TableColumn<Signalgeber, Float> qsCol = new TableColumn<Signalgeber, Float>("qs [Fzg/h]");
-		qsCol.setMinWidth(10);
-		qsCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("qs"));
+	    
 	    
 		
 		table.setItems(Signalgeberlist);
@@ -141,18 +169,7 @@ public class Zufahrt {
         v.setPadding(new Insets(10, 0, 0, 10));
         v.getChildren().clear();
         v.getChildren().addAll(table);
+           
         
-//        table.addEventHandler(KeyboardDownRightHandler.onKeyReleased, arg1);
-        
-        
-	}
-
-	public void calc_erftf() {
-		
-		for (int i=0;i<signal_geber.size();i++)
-		{
-			signal_geber.get(i).calc_erftf(kr.getCalc_qsn());
-		}
-		updateTable();
 	}
 }

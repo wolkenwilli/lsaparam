@@ -15,8 +15,8 @@ public class Signalgeber {
 	private final SimpleFloatProperty q;
 	private final SimpleFloatProperty qs;
 	private final SimpleFloatProperty tfStunde;
-	
 	private final SimpleIntegerProperty dauer;
+	private float qsn;
 	
 	public ImageView getView() {
 		return view;
@@ -38,7 +38,7 @@ public class Signalgeber {
 	Image p6 = new Image("http://www.eventtechnik-schmidt.de/6.png");
 	
 		
-	public Signalgeber (Kreuzung kr, Zufahrt zf, int kat, int id, float q)
+	public Signalgeber (Kreuzung kr, Zufahrt zf, int kat, int id, float q, float qs, float f1, float f2)
 	{
 		//Werteinitalisierung
 		this.id = new SimpleIntegerProperty(id);
@@ -46,8 +46,9 @@ public class Signalgeber {
 		this.typ = new SimpleIntegerProperty(kat);
 		this.sumoid = new SimpleIntegerProperty(0);
 		this.q=new SimpleFloatProperty(q);
-		this.qs=new SimpleFloatProperty(0.0f); 			//Muss ich noch berechnen
-		this.tfStunde=new SimpleFloatProperty(0.0f);
+		this.qs=new SimpleFloatProperty(qs);
+		this.qsn=qs*f1*f2;
+		this.tfStunde=new SimpleFloatProperty(((q*3600)/this.qsn));
 		this.dauer=new SimpleIntegerProperty(0);
 		this.g=new SimpleFloatProperty(0.8f);
 		zf.putSignalgeber(this);	//Spur der Zufahrt hinzufügen
@@ -108,14 +109,14 @@ public class Signalgeber {
 	public float getQ() {
 		return q.get();
 	}
-	public void calc_erftf(float qsn) {
-		tfStunde.set(q.get()*(3600/qsn));
-	}
 	
-	public float getErftf() {
-		return tfStunde.get();
+	public void setQS(float qs) {
+		this.qs.set(qs);
 	}
 
+	public Float getTfStunde() {
+		return tfStunde.get();
+	}
 	public int getId() {
 		return id.get();
 	}
@@ -126,5 +127,10 @@ public class Signalgeber {
 
 	public void setSumoid(int sid) {
 		sumoid.set(sid);
+	}
+
+
+	public Float getQs() {
+		return qs.get();
 	}
 }

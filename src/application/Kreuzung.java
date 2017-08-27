@@ -6,8 +6,24 @@ import java.util.LinkedList;
 import javafx.scene.control.TextField;
 
 class Kreuzung {
-	private float calc_qsn;
+	private float f1=0.9f;
+	private float f2=1.0f;
 
+	public float getF1() {
+		return f1;
+	}
+
+	public void setF1(float f1) {
+		this.f1 = f1;
+	}
+
+	public float getF2() {
+		return f2;
+	}
+
+	public void setF2(float f2) {
+		this.f2 = f2;
+	}
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
 	HashMap<Zufahrt, Signalgeber> alleSignalgeber = new HashMap<Zufahrt, Signalgeber>();
 	public void putZufahrt (Zufahrt zf) {
@@ -27,15 +43,6 @@ class Kreuzung {
 	
 	public int anz_Zufahrt () {
 		return (zufahrten.size());
-	}
-	public float calc_qsn (TextField gui_qs, TextField gui_f1, TextField gui_f2) {
-		float calc_qs=Float.parseFloat(gui_qs.getText());
-		float calc_f1=Float.parseFloat(gui_f1.getText());
-		float calc_f2=Float.parseFloat(gui_f2.getText());
-		this.calc_qsn=calc_qs*calc_f1*calc_f2;
-		return this.calc_qsn;
-
-		
 	}
 	public Zufahrt return_zufahrt(int i)
 	{
@@ -105,10 +112,4 @@ class Kreuzung {
 		}
 		return check;
 	}
-	public float getCalc_qsn() {
-		return calc_qsn;
-	}
-
-
-	
 }

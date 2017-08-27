@@ -12,7 +12,6 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -57,43 +56,10 @@
                                  </opaqueInsets>
                               </HBox>
                               <Group layoutX="401.0" layoutY="407.0" />
-                              <HBox alignment="CENTER" layoutX="370.0" layoutY="387.0" prefHeight="212.0" prefWidth="253.0">
-                                 <children>
-                                    <VBox prefHeight="182.0" prefWidth="52.0" spacing="11.0">
-                                       <children>
-                                          <Label text="qs=">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font></Label>
-                                          <Label text="f1=">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font></Label>
-                                          <Label text="f2=">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font></Label>
-                                          <Label text="qsN=">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font></Label>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" spacing="6.0">
-                                       <children>
-                                          <TextField fx:id="qs" prefHeight="25.0" prefWidth="112.0" text="2000" />
-                                          <TextField fx:id="f1" prefHeight="25.0" prefWidth="115.0" text="0.90" />
-                                          <TextField fx:id="f2" prefHeight="25.0" prefWidth="116.0" text="1.00" />
-                                          <TextField fx:id="qsn" editable="false" prefHeight="25.0" prefWidth="118.0" />
-                                          <Button fx:id="calc" mnemonicParsing="false" onAction="#handlecalc" prefHeight="25.0" prefWidth="102.0" text="Berechnen" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                              <VBox fx:id="gui_vbox_z2" layoutX="652.0" layoutY="116.0" prefHeight="182.0" prefWidth="290.0" />
-                              <VBox fx:id="gui_vbox_z3" layoutX="21.0" layoutY="66.0" prefHeight="182.0" prefWidth="290.0" />
-                              <VBox fx:id="gui_vbox_z4" layoutX="21.0" layoutY="647.0" prefHeight="182.0" prefWidth="290.0" />
-                              <VBox fx:id="gui_vbox_z1" layoutX="652.0" layoutY="656.0" prefHeight="213.0" prefWidth="290.0" />
+                              <VBox fx:id="gui_vbox_z2" layoutX="652.0" layoutY="116.0" prefHeight="200.0" prefWidth="330.0" />
+                              <VBox fx:id="gui_vbox_z3" layoutX="13.0" layoutY="83.0" prefHeight="200.0" prefWidth="330.0" />
+                              <VBox fx:id="gui_vbox_z4" layoutX="13.0" layoutY="647.0" prefHeight="200.0" prefWidth="330.0" />
+                              <VBox fx:id="gui_vbox_z1" layoutX="617.0" layoutY="657.0" prefHeight="200.0" prefWidth="330.0" />
                            </children>
                         </Group>
                         <AnchorPane layoutX="293.0" layoutY="585.0" />
