@@ -79,11 +79,9 @@ public class Zufahrt {
 								MainWindowController.s[kr.getAlleSignalgeber().size()]=new Signalgeber(kr, this, kat, kr.getAlleSignalgeber().size(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());				
 						}
 					} catch (Exception e) {
-						// TODO: handle exception
 					}
 				} 
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
 			
 			

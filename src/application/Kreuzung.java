@@ -1,9 +1,7 @@
 package application;
 
-import java.util.HashMap;
+import java.util.HashMap;		//TODO: aufräumen, sortieren
 import java.util.LinkedList;
-
-import javafx.scene.control.TextField;
 
 class Kreuzung {
 	private float f1=0.9f;
@@ -12,17 +10,12 @@ class Kreuzung {
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
 	HashMap<Zufahrt, Signalgeber> alleSignalgeber = new HashMap<Zufahrt, Signalgeber>();
 	
-	
-	
-	
 	public void putZufahrt (Zufahrt zf) {
 		zufahrten.add(zf);
-		//System.out.println("Zufahrt erzeugt!");
 	}
 	
 	public void putSignalgeber(Zufahrt z, Signalgeber sg) {
 		alleSignalgeber.put(z, sg);
-		//System.out.println("Signalgeber gespeichert.");
 	}
 	
 	public HashMap<Zufahrt, Signalgeber> getAlleSignalgeber(){

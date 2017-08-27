@@ -21,7 +21,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -223,11 +222,11 @@ public class MainWindowController implements Initializable {
 	}
 	// ---------------------- Phasenerstellung ----------------------------
 	@FXML
-	public void button_phase_add(){
+	public void button_phase_add(){			//TODO: Abprüfen, ob Signalgeber schon in Phase enthalten ist!
 		anchor_left.getChildren().clear();
 		p[anz_phasen]=new Phase();
 		anz_phasen++;
-		ObservableList<String> options = FXCollections.observableArrayList();
+		ObservableList<String> options = FXCollections.observableArrayList();	//TODO: Liste sortieren ASC
 		for (Zufahrt z1 : kr.alleSignalgeber.keySet()) {
 			options.add(kr.alleSignalgeber.get(z1).getBezeichnung());
 			signalgeberbezeichnung.put(kr.alleSignalgeber.get(z1).getBezeichnung(), kr.alleSignalgeber.get(z1));
@@ -261,9 +260,9 @@ public class MainWindowController implements Initializable {
 	
 	
 	@FXML
-	public void button_spur_phase_add(){
+	public void button_spur_phase_add(){		//TODO: Abprüfen, ob Signalgeber schon in Phase enthalten ist!
 		Signalgeber s = signalgeberbezeichnung.get(comboBox.getValue());
-		p[anz_phasen-1].putSpuren(s);
+		p[anz_phasen-1].putSignalgeber(s);
 		update_tree_phase();
 		tab_pp.setDisable(false);
 	}
@@ -305,10 +304,10 @@ public class MainWindowController implements Initializable {
 		//	label_info.setText("Bitte erzeugen Sie nun Spuren in den Zufahrten!");
 		table_options1.getColumns().clear();
 		ObservableList<Option> data1 = FXCollections.observableArrayList(
-			new Option("Angleichsfaktor f1", 0.90f),
-			new Option("Angleichsfaktor f2", 0.85f),
-			new Option("Dauer Signalbild Gelb [s]", 3f),
-			new Option("Dauer Sigalbild Rot-Gelb [s]", 2f)
+			new Option(1, "Angleichsfaktor f1", 0.90f),
+			new Option(2, "Angleichsfaktor f2", 0.85f),
+			new Option(3, "Dauer Signalbild Gelb [s]", 3f),
+			new Option(4, "Dauer Sigalbild Rot-Gelb [s]", 2f)
 		/*	Vorerst nicht erforderlich, da keine Berechnung der Zwischenzeit
       		new Option("Räumgeschwindigkeit KFZ gerade [m/s]", 10f),
         	new Option("Räumgeschwindigkeit KFZ abb. [m/s]", 7f),

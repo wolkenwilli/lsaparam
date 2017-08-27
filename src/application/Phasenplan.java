@@ -1,17 +1,14 @@
 package application;
 
 import java.util.HashMap;
-import java.util.Stack;
 
 import org.controlsfx.control.spreadsheet.GridBase;
-import org.controlsfx.control.spreadsheet.GridChange;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.TableView;
 
 public class Phasenplan extends SpreadsheetView {
@@ -39,8 +36,10 @@ public class Phasenplan extends SpreadsheetView {
 			rowsHeaders.add(hm.get(z1).getBezeichnung());
        		SpreadsheetCell cell1 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQ() );
        		SpreadsheetCell cell2 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQs());
-       		SpreadsheetCell cell3 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0,  Math.round(hm.get(z1).getG()*100)/100.0);
+       		SpreadsheetCell cell3 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, Math.round(hm.get(z1).getG()*100)/100.0);
+       		//System.out.println(Math.round(hm.get(z1).getG()*100)/100.0);	TODO: 0, anzeigen!
        		SpreadsheetCell cell4 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, Math.round(hm.get(z1).getTp()*100)/100.0);
+       		//System.out.println(Math.round(hm.get(z1).getTp()*100)/100.0);	siehe oben.
        		SpreadsheetCell cell5 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getTfUmlauf());
 			Row.add(cell1);
 			Row.add(cell2);
@@ -56,13 +55,11 @@ public class Phasenplan extends SpreadsheetView {
 	    grid.getColumnHeaders().addAll(columnsHeaders);
 
         getFixedRows().add(0);
-        Stack<GridChange> st = new Stack<GridChange>();
-        grid.addEventHandler(GridChange.GRID_CHANGE_EVENT, new EventHandler<GridChange>() {
-            
-            public void handle(GridChange change) {
-                    st.push(change);
-                }
-            });
+	}
+	public void create_festzeitplan(Phase[] p, int anz_phasen) 
+	{
+		
+		
 	}
 	
 		

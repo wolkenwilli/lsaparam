@@ -6,6 +6,7 @@ import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -26,7 +27,6 @@ public class Zwischenzeiten extends SpreadsheetView {
 		int s=hm.size();
 		int rowCount = s;
         int columnCount = s+1;
-
           
         grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
@@ -52,11 +52,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 			}
 			rows.add(Row);
 		}
-        
-        
-        
-        
-        
+ 
 	    grid.setRows(rows);
    	    setGrid(grid);
         grid.getRowHeaders().addAll(rowsHeaders);

@@ -5,19 +5,16 @@ import java.util.LinkedList;
 public class Phase {
 	
 	private double phasendauer;
-	
-	
-	
 	LinkedList<Signalgeber> sg = new LinkedList<Signalgeber>();
 
 	public LinkedList<Signalgeber> getSignalgeber() {
 		return sg;
 	}
 
-	public void setSpuren(LinkedList<Signalgeber> sg) {
+	public void setSignalgeber(LinkedList<Signalgeber> sg) {
 		this.sg = sg;
 	}
-	public void putSpuren(Signalgeber s) {
+	public void putSignalgeber(Signalgeber s) {
 		sg.add(s);
 	}
 	public void calc_phasendauer() {
