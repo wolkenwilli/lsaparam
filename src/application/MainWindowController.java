@@ -270,14 +270,24 @@ public class MainWindowController implements Initializable {
 
 	@FXML
 	public void tab_pp_clicked() {
+		float g;
+		float tp;
 		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number new_val) {System.out.println(String.format("%.2f", new_val));}});
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number new_val) {
+            	
 		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,Number old_val, Number new_val) {System.out.println(String.format("%.2f", new_val));}});
 		Phasenplan pp;
 		pp=new Phasenplan(slider_g, slider_tp,p[0]);
 	}
-
+	
+	public void vb_calc_Signalgeber(float g, float tp) {
+		for (int i=0; i<kr.get_anz_Signalgeber();i++) {
+    		kr.getAlleSignalgeber().get(i).calc_TfUmlauf(g, tp);
+    	}
+    	System.out.println(String.format("%.2f", new_val));}});
+	}
+	
 	@FXML
 	public void tab_ge_clicked() {
 		

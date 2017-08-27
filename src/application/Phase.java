@@ -22,8 +22,8 @@ public class Phase {
 	}
 	public void calc_phasendauer() {
 		for (int i=0; i<sg.size();i++) {
-			if (sg.get(i).getDauer()>this.phasendauer) {
-				this.phasendauer=sg.get(i).getDauer();
+			if (sg.get(i).getTfUmlauf()>this.phasendauer) {
+				this.phasendauer=sg.get(i).getTfUmlauf();
 			}
 		}
 			

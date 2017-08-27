@@ -30,13 +30,20 @@ public class Phasenplan {
 	
 	public Phasenplan(Slider slider_g, Slider slider_tp, Phase p) {
 		
+			}
+	public void calc_minfz() {
 		
-		int rowCount = p.getSignalgeber().size();
-        int columnCount = p.getSignalgeber().size()+1;
-        int i=0; int j=0; int x=0;
+		
+		
+	}
+	public void create_table_fz() {
+
+		//int rowCount = p.getSignalgeber().size();
+        //int columnCount = p.getSignalgeber().size()+1;
+        //int i=0; int j=0; int x=0;
         
-        GridBase grid = new GridBase(rowCount, columnCount);
-        ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
+        //GridBase grid = new GridBase(rowCount, columnCount);
+        //ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
 /*
         for (p.getSignalgeber() sg ) {
         	final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
@@ -66,14 +73,7 @@ public class Phasenplan {
         getFixedRows().add(0);
         Stack<GridChange> st = new Stack<GridChange>();
        */
-	}
-	public void calc_minfz() {
-		
-		
-		
-	}
-	public void create_table_fz() {
-	
+
 	}
 	
 		
