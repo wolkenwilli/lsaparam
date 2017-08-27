@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -81,6 +84,8 @@ public class MainWindowController implements Initializable {
 	HashMap<String, Signalgeber> signalgeberbezeichnung = new HashMap<String, Signalgeber>(); 
 	//----
 	@FXML private VBox pp_vbox;
+	@FXML private Slider slider_g;
+	@FXML private Slider slider_tp;
 	
 	
 	
@@ -265,7 +270,12 @@ public class MainWindowController implements Initializable {
 
 	@FXML
 	public void tab_pp_clicked() {
-		
+		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number new_val) {System.out.println(String.format("%.2f", new_val));}});
+		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number new_val) {System.out.println(String.format("%.2f", new_val));}});
+		Phasenplan pp;
+		pp=new Phasenplan(slider_g, slider_tp,p[0]);
 	}
 
 	@FXML

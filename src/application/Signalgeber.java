@@ -11,12 +11,13 @@ public class Signalgeber {
 	private final SimpleStringProperty bezeichnung;
 	private final SimpleIntegerProperty typ;
 	private final SimpleIntegerProperty sumoid;
-	private final SimpleFloatProperty g;
 	private final SimpleFloatProperty q;
 	private final SimpleFloatProperty qs;
 	private final SimpleFloatProperty tfStunde;
-	private final SimpleIntegerProperty dauer;
+	private final SimpleIntegerProperty tfUmlauf;
 	private float qsn;
+	private float g;
+	private float tp;
 	
 	public ImageView getView() {
 		return view;
@@ -49,8 +50,7 @@ public class Signalgeber {
 		this.qs=new SimpleFloatProperty(qs);
 		this.qsn=qs*f1*f2;
 		this.tfStunde=new SimpleFloatProperty(((q*3600)/this.qsn));
-		this.dauer=new SimpleIntegerProperty(0);
-		this.g=new SimpleFloatProperty(0.8f);
+		this.tfUmlauf=new SimpleIntegerProperty(0);
 		zf.putSignalgeber(this);	//Spur der Zufahrt hinzufügen
 		kr.putSignalgeber(zf, this);
 		
@@ -86,10 +86,15 @@ public class Signalgeber {
 	}
 	
 
-	public Integer getDauer() {
-		return dauer.get();
+	public Integer getTfUmlauf() {
+		return tfUmlauf.get();
 	}
 
+	public void calc_TfUmlauf(Float g, float tp) {
+		float tf=0.0f;
+		tf=((q.get()*tp)/(qs.get()*g));
+		tfUmlauf.set((int) Math.ceil(tf));
+	}
 
 	public String getBezeichnung() {
 		return bezeichnung.get();
@@ -133,4 +138,11 @@ public class Signalgeber {
 	public Float getQs() {
 		return qs.get();
 	}
+	public void setG(float g) {
+		this.g=g;
+	}
+	public void setTp(float tp) {
+		this.tp=tp;
+	}
+	
 }
