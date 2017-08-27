@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Phase {
 	
-	private int phasendauer;
+	private double phasendauer;
 	
 	
 	

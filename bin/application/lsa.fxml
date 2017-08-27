@@ -129,20 +129,21 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <VBox fx:id="pp_vbox" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane prefHeight="50.0" prefWidth="1200.0">
                                  <children>
                                     <HBox alignment="CENTER" layoutX="132.0" layoutY="1.0" prefHeight="50.0" prefWidth="1200.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <Label fx:id="label_g" text="g = " />
-                                          <Slider fx:id="slider_g" blockIncrement="0.1" majorTickUnit="0.4" max="1.6" minorTickCount="2" prefHeight="45.0" prefWidth="230.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.8" />
+                                          <Slider fx:id="slider_g" blockIncrement="0.1" majorTickUnit="0.1" max="1.6" minorTickCount="2" prefHeight="45.0" prefWidth="230.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.8" />
                                           <Label fx:id="label_tp" layoutX="520.0" layoutY="25.0" text="Tp = " />
                                           <Slider fx:id="slider_tp" blockIncrement="5.0" layoutX="540.0" layoutY="26.0" majorTickUnit="20.0" max="120.0" min="30.0" prefHeight="45.0" prefWidth="296.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="90.0" />
                                        </children>
                                     </HBox>
                                  </children>
                               </AnchorPane>
+                              <VBox fx:id="pp_vbox" prefHeight="722.0" prefWidth="1200.0" />
                            </children></VBox>
                      </children>
                   </AnchorPane>

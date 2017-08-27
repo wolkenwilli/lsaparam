@@ -83,12 +83,14 @@ public class MainWindowController implements Initializable {
 	@FXML private Pane anchor_right;
 	HashMap<String, Signalgeber> signalgeberbezeichnung = new HashMap<String, Signalgeber>(); 
 	//----
+	Phasenplan pp = new Phasenplan();
 	@FXML private VBox pp_vbox;
 	@FXML private Slider slider_g;
 	@FXML private Slider slider_tp;
-	private float g=0.0f;
-	private float tp=0.0f;
-	
+	private double g=0.0d;
+	private double tp=0;
+	StackPane spane_pp;
+		
 	
 	
 	public Main main;
@@ -121,9 +123,9 @@ public class MainWindowController implements Initializable {
 		tab_zz.setDisable(false);
 		tab_ph.setDisable(false);
 		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(Float.parseFloat(g_val.toString()));}});
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(g_val.doubleValue());}});
 		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(Float.parseFloat(tp_val.toString()));}});
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(tp_val.doubleValue());}});
 
 	}
 	
@@ -266,27 +268,32 @@ public class MainWindowController implements Initializable {
 		tab_pp.setDisable(false);
 	}
 	
-	public int get_AnzahlPhase() {
-		return anz_phasen;
-	}
-	
 	// ---------------------- Phasenplan ----------------------------
 	@FXML
 	public void tab_pp_clicked() {
-        float g=Float.parseFloat(Double.toString(slider_g.getValue()));
-		float tp=Float.parseFloat(Double.toString(slider_tp.getValue()));
-		Phasenplan pp = new Phasenplan(Phase[] pp, Kreuzung kr);
+        double g=slider_g.getValue();
+		double tp=slider_tp.getValue();
+		vb_calc_Signalgeber(g, tp);
+		this.spane_pp = new StackPane(pp);
+		this.pp_vbox.getChildren().add(this.spane_pp);
+		AnchorPane.setTopAnchor(this.spane_pp, 0.0);
+		AnchorPane.setLeftAnchor(this.spane_pp, 0.0);
+		AnchorPane.setRightAnchor(this.spane_pp, 0.0);
+		AnchorPane.setBottomAnchor(this.spane_pp, 0.0);
+		pp.create_fz_table(kr);
 	}
-	public void setG(float g) {
+	public void setG(double g) {
 		this.g=g;
 		vb_calc_Signalgeber(g, tp);
+		pp.create_fz_table(kr);
 	}
-	public void setTp(float tp) {
+	public void setTp(double tp) {
 		this.tp=tp;
 		vb_calc_Signalgeber(g, tp);
+		pp.create_fz_table(kr);
 	}
 	
-	public void vb_calc_Signalgeber(float g, float tp) {
+	public void vb_calc_Signalgeber(double g, double tp) {
 		for (Zufahrt z1 : kr.getAlleSignalgeber().keySet()) {
 			kr.getAlleSignalgeber().get(z1).calc_TfUmlauf(g, tp);
 		}

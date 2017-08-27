@@ -104,7 +104,6 @@ public class Zufahrt {
 	private void updateTable() {
 		table.getColumns().clear();
 		table.setEditable(true);
-		//ID
 		TableColumn<Signalgeber, String> BezeichnungCol = new TableColumn<Signalgeber, String>("Bez.");
 		BezeichnungCol.setMinWidth(10);
 		BezeichnungCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,String>("Bezeichnung"));

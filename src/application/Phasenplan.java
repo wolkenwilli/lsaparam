@@ -7,73 +7,62 @@ import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.GridChange;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
+import org.controlsfx.control.spreadsheet.SpreadsheetView;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.converter.FloatStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
-public class Phasenplan {
-	private int minfz;
-	private int tp;
-	public TableView<Phasenplan> table = new TableView<Phasenplan>();
+public class Phasenplan extends SpreadsheetView {
+	public TableView<Signalgeber> table = new TableView<Signalgeber>();
+	public final ObservableList<Signalgeber> Phasenplanlist = FXCollections.observableArrayList();
 	
-	public Phasenplan(Phase[] p, Kreuzung kr) {
-		
-			}
-	public void calc_minfz() {
-		
-		
-		
+	public Phasenplan() {		
 	}
-	public void create_table_fz() {
-
-		//int rowCount = p.getSignalgeber().size();
-        //int columnCount = p.getSignalgeber().size()+1;
-        //int i=0; int j=0; int x=0;
+	
+	public void create_fz_table(Kreuzung kr)  {
+		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
+		int s=hm.size();
+		int rowCount = s;
+        int columnCount = s+1;
+        int i=0;
         
-        //GridBase grid = new GridBase(rowCount, columnCount);
-        //ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
-/*
-        for (p.getSignalgeber() sg ) {
+        GridBase grid = new GridBase(rowCount, columnCount);
+        ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
+        ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
+        ObservableList<String> columnsHeaders = FXCollections.observableArrayList("q [Fzg/h]", "qs [Fzg/h]", "g", "Tp [s]", "tf [s]");
+        
+        for (Zufahrt z1 : hm.keySet()) {
         	final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
         	i=0;
-        	for (Zufahrt z2 : hm.keySet()) {
-        		int pruef=0;
-        		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
-				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		                
-				zzb[x] = new Zwischenzeitbeziehungen();
-				zzb[x].setVerriegelung(pruef);
-				zzb[x].setEinfahrend(hm.get(z1));
-				zzb[x].setAusfahrend(hm.get(z2));
-				vr_array[i][j]=zzb[x];
-				vr_array[j][i]=zzb[x];
-		
-				cell.setEditable(true);
-				Row.add(cell);
-				i++;
-				x++;
-        	}
+			rowsHeaders.add(hm.get(z1).getBezeichnung());
+       		SpreadsheetCell cell1 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQ() );
+       		SpreadsheetCell cell2 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQs());
+       		SpreadsheetCell cell3 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0,  Math.round(hm.get(z1).getG()*100)/100.0);
+       		SpreadsheetCell cell4 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, Math.round(hm.get(z1).getTp()*100)/100.0);
+       		SpreadsheetCell cell5 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getTfUmlauf());
+			Row.add(cell1);
+			Row.add(cell2);
+			Row.add(cell3);
+			Row.add(cell4);
+			Row.add(cell5);
+			i++;
         	rows.add(Row);
-        	j++;
         }
         grid.setRows(rows);
         setGrid(grid);
+        grid.getRowHeaders().addAll(rowsHeaders);
+	    grid.getColumnHeaders().addAll(columnsHeaders);
 
         getFixedRows().add(0);
         Stack<GridChange> st = new Stack<GridChange>();
-       */
-
+        grid.addEventHandler(GridChange.GRID_CHANGE_EVENT, new EventHandler<GridChange>() {
+            
+            public void handle(GridChange change) {
+                    st.push(change);
+                }
+            });
 	}
 	
 		

@@ -26,11 +26,12 @@ public class Zwischenzeiten extends SpreadsheetView {
 		int s=hm.size();
 		int rowCount = s;
         int columnCount = s+1;
-        
-        
-    
+
+          
         grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
+        ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
+        ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
         
         for(int i=0;i<vr_matrix.length;i++) 
 		{
@@ -46,6 +47,8 @@ public class Zwischenzeiten extends SpreadsheetView {
 		        	cell.setEditable(true);
 		        }
 		 		Row.add(cell);
+				rowsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
+				columnsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 			}
 			rows.add(Row);
 		}
@@ -55,10 +58,11 @@ public class Zwischenzeiten extends SpreadsheetView {
         
         
 	    grid.setRows(rows);
-	    setGrid(grid);
+   	    setGrid(grid);
+        grid.getRowHeaders().addAll(rowsHeaders);
+	    grid.getColumnHeaders().addAll(columnsHeaders);
         getFixedRows().add(0);
         getColumns().get(0).setFixed(true);
-        //getColumns().get(1).setPrefWidth(250);
     	
 	}
 

@@ -128,14 +128,19 @@ class Verriegelungsmatrix extends SpreadsheetView {
         
         GridBase grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
-
+        ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
+        ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
+        
         for (Zufahrt z1 : hm.keySet()) {
         	final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
         	i=0;
+			rowsHeaders.add(hm.get(z1).getBezeichnung());
+			columnsHeaders.add(hm.get(z1).getBezeichnung());
         	for (Zufahrt z2 : hm.keySet()) {
         		int pruef=0;
         		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
-				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		                
+				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		 
+
 				zzb[x] = new Zwischenzeitbeziehungen();
 				zzb[x].setVerriegelung(pruef);
 				zzb[x].setEinfahrend(hm.get(z1));
@@ -153,6 +158,8 @@ class Verriegelungsmatrix extends SpreadsheetView {
         }
         grid.setRows(rows);
         setGrid(grid);
+        grid.getRowHeaders().addAll(rowsHeaders);
+	    grid.getColumnHeaders().addAll(columnsHeaders);
 
         getFixedRows().add(0);
         Stack<GridChange> st = new Stack<GridChange>();
