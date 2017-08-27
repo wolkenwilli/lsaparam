@@ -94,6 +94,7 @@ public class Signalgeber {
 		float tf=0.0f;
 		tf=((q.get()*tp)/(qs.get()*g));
 		tfUmlauf.set((int) Math.ceil(tf));
+		//System.out.println("SG: "+this.bezeichnung.get()+" G: "+g+" TP: "+tp+ " tf-Umlauf: "+tfUmlauf.get());
 	}
 
 	public String getBezeichnung() {

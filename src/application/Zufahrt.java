@@ -76,7 +76,7 @@ public class Zufahrt {
 						// Traditional way to get the response value.
 						Optional<String> result2 = dialog2.showAndWait();
 						if (result2.isPresent()) {
-								MainWindowController.s[kr.get_anz_Signalgeber()]=new Signalgeber(kr, this, kat, kr.get_anz_Signalgeber(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());				
+								MainWindowController.s[kr.getAlleSignalgeber().size()]=new Signalgeber(kr, this, kat, kr.getAlleSignalgeber().size(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());				
 						}
 					} catch (Exception e) {
 						// TODO: handle exception

@@ -9,23 +9,12 @@ class Kreuzung {
 	private float f1=0.9f;
 	private float f2=1.0f;
 
-	public float getF1() {
-		return f1;
-	}
-
-	public void setF1(float f1) {
-		this.f1 = f1;
-	}
-
-	public float getF2() {
-		return f2;
-	}
-
-	public void setF2(float f2) {
-		this.f2 = f2;
-	}
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
 	HashMap<Zufahrt, Signalgeber> alleSignalgeber = new HashMap<Zufahrt, Signalgeber>();
+	
+	
+	
+	
 	public void putZufahrt (Zufahrt zf) {
 		zufahrten.add(zf);
 		//System.out.println("Zufahrt erzeugt!");
@@ -61,15 +50,22 @@ class Kreuzung {
 		}
 		return z;
 	}
-	public int get_anz_Signalgeber() 
-	{
-		int anz=0;
-		for (int i=0;i<=zufahrten.size()-1;i++)
-		{
-			anz=anz+zufahrten.get(i).get_anzahl_signalgeber();
-		}
-		return anz;
+	public float getF1() {
+		return f1;
 	}
+
+	public void setF1(float f1) {
+		this.f1 = f1;
+	}
+
+	public float getF2() {
+		return f2;
+	}
+
+	public void setF2(float f2) {
+		this.f2 = f2;
+	}
+	
 	int checksignalgeber(Zufahrt zf, int k)
 	{
 		int check = 0;

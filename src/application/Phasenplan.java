@@ -28,7 +28,7 @@ public class Phasenplan {
 	private int tp;
 	public TableView<Phasenplan> table = new TableView<Phasenplan>();
 	
-	public Phasenplan(Slider slider_g, Slider slider_tp, Phase p) {
+	public Phasenplan(Phase[] p, Kreuzung kr) {
 		
 			}
 	public void calc_minfz() {

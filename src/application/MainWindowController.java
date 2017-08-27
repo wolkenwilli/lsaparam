@@ -86,6 +86,8 @@ public class MainWindowController implements Initializable {
 	@FXML private VBox pp_vbox;
 	@FXML private Slider slider_g;
 	@FXML private Slider slider_tp;
+	private float g=0.0f;
+	private float tp=0.0f;
 	
 	
 	
@@ -96,22 +98,11 @@ public class MainWindowController implements Initializable {
 	}
 	
 	public static void main(String[] args) {
-	//	menu_init.getOnAction();
-
-	}
-
-	@FXML
-	public void do_menu_init(){
-		
-
+	
 	}
 	
-	@FXML
-	public void do_menu_probe(){
-		
-			
-	}
-	
+
+	// ---------------------- Signalgeber Initialisierung ----------------------------
 	@FXML
 	public void erzeugeZufahrten(){
 		z1 = new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
@@ -129,6 +120,11 @@ public class MainWindowController implements Initializable {
 		tab_vm.setDisable(false);
 		tab_zz.setDisable(false);
 		tab_ph.setDisable(false);
+		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(Float.parseFloat(g_val.toString()));}});
+		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(Float.parseFloat(tp_val.toString()));}});
+
 	}
 	
 	@FXML
@@ -186,6 +182,7 @@ public class MainWindowController implements Initializable {
 		gui_contextmenu.show(p, x, y);
 	
 	}
+	// ---------------------- Verriegelungsmatrix anzeigen ----------------------------
 	@FXML
 	public void tab_vm_clicked() {
 		this.spane = new StackPane(vm);
@@ -196,6 +193,7 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setBottomAnchor(this.spane, 0.0);		
 		vm.create_matrix(kr);	
 	}
+	// ---------------------- Zwischenzeiten eingeben ----------------------------
 	@FXML
 	public void tab_zz_clicked() {
 		zz=new Zwischenzeiten(vm.getVr_array());
@@ -207,7 +205,7 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setBottomAnchor(this.spane2, 0.0);
 		zz.pruef_zz(kr, vm);
 	}
-	
+	// ---------------------- Signalgeber erzeugen (Context Menü) ----------------------------
 	public void initialize(URL location, ResourceBundle resources) {
 		gui_zufahrt1.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
 		{public void handle(MouseEvent e){contextMenu(gui_zufahrt1,e.getScreenX(), e.getScreenY());}});
@@ -221,7 +219,7 @@ public class MainWindowController implements Initializable {
 		gui_zufahrt4.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
 		{public void handle(MouseEvent e){contextMenu(gui_zufahrt4,e.getScreenX(), e.getScreenY());}});
 	}
-	
+	// ---------------------- Phasenerstellung ----------------------------
 	@FXML
 	public void button_phase_add(){
 		anchor_left.getChildren().clear();
@@ -267,27 +265,33 @@ public class MainWindowController implements Initializable {
 		update_tree_phase();
 		tab_pp.setDisable(false);
 	}
-
+	
+	public int get_AnzahlPhase() {
+		return anz_phasen;
+	}
+	
+	// ---------------------- Phasenplan ----------------------------
 	@FXML
 	public void tab_pp_clicked() {
-		float g;
-		float tp;
-		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number new_val) {
-            	
-		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number new_val) {System.out.println(String.format("%.2f", new_val));}});
-		Phasenplan pp;
-		pp=new Phasenplan(slider_g, slider_tp,p[0]);
+        float g=Float.parseFloat(Double.toString(slider_g.getValue()));
+		float tp=Float.parseFloat(Double.toString(slider_tp.getValue()));
+		Phasenplan pp = new Phasenplan(Phase[] pp, Kreuzung kr);
+	}
+	public void setG(float g) {
+		this.g=g;
+		vb_calc_Signalgeber(g, tp);
+	}
+	public void setTp(float tp) {
+		this.tp=tp;
+		vb_calc_Signalgeber(g, tp);
 	}
 	
 	public void vb_calc_Signalgeber(float g, float tp) {
-		for (int i=0; i<kr.get_anz_Signalgeber();i++) {
-    		kr.getAlleSignalgeber().get(i).calc_TfUmlauf(g, tp);
-    	}
-    	System.out.println(String.format("%.2f", new_val));}});
+		for (Zufahrt z1 : kr.getAlleSignalgeber().keySet()) {
+			kr.getAlleSignalgeber().get(z1).calc_TfUmlauf(g, tp);
+		}
 	}
-	
+	// ---------------------- Grundeinstellungen ----------------------------
 	@FXML
 	public void tab_ge_clicked() {
 		
@@ -352,6 +356,7 @@ public class MainWindowController implements Initializable {
 		table_options2.setItems(data2);
 
 		}
+	
 	
 	@FXML
 	public void do_menu_beenden()
