@@ -1,4 +1,4 @@
-package application;
+package de.tudresden.vlp;
 
 
 public class Zwischenzeitbeziehungen {

@@ -1,4 +1,4 @@
-package application;
+package de.tudresden.vlp;
 
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
