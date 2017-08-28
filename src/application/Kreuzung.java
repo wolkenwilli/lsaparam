@@ -6,6 +6,8 @@ import java.util.LinkedList;
 class Kreuzung {
 	private float f1=0.9f;
 	private float f2=1.0f;
+	private int t_gelb=2;
+	private int t_rot_gelb=2;
 
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
 	HashMap<Zufahrt, Signalgeber> alleSignalgeber = new HashMap<Zufahrt, Signalgeber>();
@@ -101,4 +103,21 @@ class Kreuzung {
 		}
 		return check;
 	}
+
+	public int getT_gelb() {
+		return t_gelb;
+	}
+
+	public void setT_gelb(int t_gelb) {
+		this.t_gelb = t_gelb;
+	}
+
+	public int getT_rot_gelb() {
+		return t_rot_gelb;
+	}
+
+	public void setT_rot_gelb(int t_rot_gelb) {
+		this.t_rot_gelb = t_rot_gelb;
+	}
+	
 }

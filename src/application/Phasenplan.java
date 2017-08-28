@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 public class Phasenplan extends SpreadsheetView {
 	public TableView<Signalgeber> table = new TableView<Signalgeber>();
 	public final ObservableList<Signalgeber> Phasenplanlist = FXCollections.observableArrayList();
+	private int anzahl_signalgeber;
 	
 	public Phasenplan() {		
 	}
@@ -21,6 +22,7 @@ public class Phasenplan extends SpreadsheetView {
 	public void create_fz_table(Kreuzung kr)  {
 		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
 		int s=hm.size();
+		this.anzahl_signalgeber=s;
 		int rowCount = s;
         int columnCount = s+1;
         int i=0;
@@ -56,8 +58,37 @@ public class Phasenplan extends SpreadsheetView {
 
         getFixedRows().add(0);
 	}
-	public void create_festzeitplan(Phase[] p, int anz_phasen) 
+	public void create_festzeitplan(Kreuzung kr, Phase[] p, int anz_phasen, Verriegelungsmatrix vm) 
 	{
+		int rowCount_fs = anzahl_signalgeber;
+        int columnCount_fs = anz_phasen*4;
+        
+        
+        GridBase grid_fs = new GridBase(rowCount_fs, columnCount_fs);
+        ObservableList<ObservableList<SpreadsheetCell>> rows_fs = FXCollections.observableArrayList();
+        ObservableList<String> rowsHeaders_fs = FXCollections.observableArrayList();
+        ObservableList<String> columnsHeaders_fs = FXCollections.observableArrayList();
+        SpreadsheetCell[] cell = null;
+		int index=0;
+		for (int i=0; i<anz_phasen;i++) {
+			for (int j=0;j<p[i].getSignalgeber().size();j++) {
+				int gzv=0;
+				final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
+				rowsHeaders_fs.add(p[i].getSignalgeber().get(j).getBezeichnung());
+				// Maximale Zwischenzeit berechnen
+				
+				
+				// ----
+				cell[index+3]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
+				cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_gelb());		//Rotzeit	TODO Rotzeit auslesen
+				cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_gelb());		//Gelbzeit
+				cell[index]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
+			}
+			columnsHeaders_fs.add("g");
+			columnsHeaders_fs.add("ge");
+			columnsHeaders_fs.add("r");
+			columnsHeaders_fs.add("rg");
+		}
 		
 		
 	}
