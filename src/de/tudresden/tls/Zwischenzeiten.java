@@ -13,17 +13,15 @@ import javafx.collections.ObservableList;
 
 public class Zwischenzeiten extends SpreadsheetView {
 
-	GridBase grid;
-	private Zwischenzeitbeziehungen[][] vr_matrix;
+	GridBase grid;	
 	
-	
-	public Zwischenzeiten(Zwischenzeitbeziehungen[][] zzb) {
-		vr_matrix=zzb;
+	public Zwischenzeiten() {
 		
 	}
 	
 	
 	public void pruef_zz(Kreuzung kr, Verriegelungsmatrix vm){
+		Zwischenzeitbeziehungen[][] vr_matrix= vm.getVr_array();
 		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
 		int s=hm.size();
 		int rowCount = s;
@@ -41,19 +39,22 @@ public class Zwischenzeiten extends SpreadsheetView {
 				SpreadsheetCell cell;
 		        if ((vr_matrix[i][j].getVerriegelung()==9)||(vr_matrix[i][j].getVerriegelung()==0)) {
 		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "X");
+		        	vr_matrix[i][j].setZwischenzeit(0);			//Beispielwert
 		        	cell.setEditable(false);	
 		        }
 		        else {
-		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "10");
+		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "10");	//Beispielwert
+		        	vr_matrix[i][j].setZwischenzeit(10);			//Beispielwert
 		        	cell.setEditable(true);
 		        }
+		        	// DEBUG: System.out.println("U Signalgeber A: "+vr_matrix[i][j].getEinfahrend()+" Signalgeber B: "+vr_matrix[i][j].getAusfahrend()+" ZZ: "+vr_matrix[i][j].getZwischenzeit());
 		 		Row.add(cell);
 				rowsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 				columnsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 			}
 			rows.add(Row);
 		}
- 
+        
 	    grid.setRows(rows);
    	    setGrid(grid);
         grid.getRowHeaders().addAll(rowsHeaders);
@@ -63,12 +64,20 @@ public class Zwischenzeiten extends SpreadsheetView {
     	
 	}
 	public int get_zwischenzeit(Signalgeber a, Signalgeber b, Kreuzung kr, Verriegelungsmatrix vm) {
+		System.out.println("Neue SG Abfrage id: "+Math.random()+" Signalgeber A: "+a.getBezeichnung()+" Signalgeber B: "+b.getBezeichnung());
 		int zwischenzeit=999;
 		Zwischenzeitbeziehungen[] zzb=vm.getZzb();
 		for (int x=0; x<vm.getAnz_zzb();x++) {
 			if (zzb[x].getEinfahrend().equals(a)) {
 				if (zzb[x].getAusfahrend().equals(b)){
 					zwischenzeit=zzb[x].getZwischenzeit();
+					System.out.println("Zwischenzeit: "+zwischenzeit);
+				}
+			}
+			if (zzb[x].getEinfahrend().equals(b)) {
+				if (zzb[x].getAusfahrend().equals(a)){
+					zwischenzeit=zzb[x].getZwischenzeit();
+					System.out.println("Zwischenzeit: "+zwischenzeit);
 				}
 			}
 			

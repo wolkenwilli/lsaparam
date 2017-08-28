@@ -9,6 +9,9 @@ import org.controlsfx.control.spreadsheet.SpreadsheetView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 
 public class Phasenplan extends SpreadsheetView {
@@ -16,7 +19,7 @@ public class Phasenplan extends SpreadsheetView {
 	public final ObservableList<Signalgeber> Phasenplanlist = FXCollections.observableArrayList();
 	private int anzahl_signalgeber;
 	
-	public Phasenplan() {		
+	public Phasenplan() {
 	}
 	
 	public void create_fz_table(Kreuzung kr)  {
@@ -68,7 +71,7 @@ public class Phasenplan extends SpreadsheetView {
         ObservableList<ObservableList<SpreadsheetCell>> rows_fs = FXCollections.observableArrayList();
         ObservableList<String> rowsHeaders_fs = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders_fs = FXCollections.observableArrayList();
-        SpreadsheetCell[] cell = null;
+        SpreadsheetCell[] cell = new SpreadsheetCell [columnCount_fs];
 		int index=0;
 		for (int i=0; i<anz_phasen;i++) {
 			Phase aphase=p[i];
@@ -79,34 +82,48 @@ public class Phasenplan extends SpreadsheetView {
 			else {
 				nphase=p[0];
 			}
-			int max_zwischen=999;
+			int max_zwischen=-998;
 			int gzv = 0;
 			for (int j=0;j<aphase.getSignalgeber().size();j++) {
 				gzv=0;
-				max_zwischen=999;
 				final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
 				rowsHeaders_fs.add(p[i].getSignalgeber().get(j).getBezeichnung());
 				// Maximale Zwischenzeit berechnen
+				System.out.println("___________________________________________________________________________");
 				for (int k=0; k<nphase.getSignalgeber().size();k++) {
-					if (max_zwischen<zz.get_zwischenzeit(aphase.getSignalgeber().get(j), nphase.getSignalgeber().get(k), kr, vm)) {
-						max_zwischen=zz.get_zwischenzeit(aphase.getSignalgeber().get(j), nphase.getSignalgeber().get(k), kr, vm);	
+					int zwischen=zz.get_zwischenzeit(aphase.getSignalgeber().get(j), nphase.getSignalgeber().get(k), kr, vm);
+					if (max_zwischen<zwischen) {
+						max_zwischen=zwischen;	
 					}
 				}
+				System.out.println(max_zwischen);
 				// ----
-				cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
-				cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
-				cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_gelb());		//Gelbzeit
 				cell[index]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
+				cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_gelb());		//Gelbzeit
+				cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
+				cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
+				
+				for (int l=index; l<5;l++) {
+					Row.add(cell[l]);	
+				}
+				rows_fs.add(Row);						
+				
+				
+				
 			}
 			columnsHeaders_fs.add("g");
 			columnsHeaders_fs.add("ge");
 			columnsHeaders_fs.add("r");
 			columnsHeaders_fs.add("rg");
+	        grid_fs.setRows(rows_fs);
+	     //   setGrid(grid_fs);
+	        grid_fs.getRowHeaders().addAll(rowsHeaders_fs);
+		    grid_fs.getColumnHeaders().addAll(columnsHeaders_fs);
+
+	        //getFixedRows().add(0);
 		}
 		
-		
 	}
-	
 		
 		
 }
