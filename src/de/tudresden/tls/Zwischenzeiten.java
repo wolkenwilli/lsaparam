@@ -1,6 +1,7 @@
-package de.tudresden.vlp;
+package de.tudresden.tls;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
@@ -43,7 +44,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 		        	cell.setEditable(false);	
 		        }
 		        else {
-		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "Wert");
+		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "10");
 		        	cell.setEditable(true);
 		        }
 		 		Row.add(cell);
@@ -60,6 +61,19 @@ public class Zwischenzeiten extends SpreadsheetView {
         getFixedRows().add(0);
         getColumns().get(0).setFixed(true);
     	
+	}
+	public int get_zwischenzeit(Signalgeber a, Signalgeber b, Kreuzung kr, Verriegelungsmatrix vm) {
+		int zwischenzeit=999;
+		Zwischenzeitbeziehungen[] zzb=vm.getZzb();
+		for (int x=0; x<vm.getAnz_zzb();x++) {
+			if (zzb[x].getEinfahrend().equals(a)) {
+				if (zzb[x].getAusfahrend().equals(b)){
+					zwischenzeit=zzb[x].getZwischenzeit();
+				}
+			}
+			
+		}
+		return zwischenzeit;
 	}
 
 

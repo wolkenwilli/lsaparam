@@ -1,4 +1,4 @@
-package de.tudresden.vlp;
+package de.tudresden.tls;
 
 import java.util.HashMap;
 import java.util.Stack;
@@ -18,6 +18,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	private int[][] array_gerade = new int[7][7];	
 	private Zwischenzeitbeziehungen[] zzb;
 	private Zwischenzeitbeziehungen[][] vr_array;
+	private int anz_zzb;
 
 	public Verriegelungsmatrix()
 	{
@@ -125,6 +126,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
         vr_array = new Zwischenzeitbeziehungen[s][s];
         int i=0; int j=0; int x=0;
         zzb = new Zwischenzeitbeziehungen[s*s];
+        anz_zzb=s;
         
         GridBase grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
@@ -184,6 +186,8 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	public void setVr_array(Zwischenzeitbeziehungen[][] vr_array) {
 		this.vr_array = vr_array;
 	}
-
+	public int getAnz_zzb() {
+		return anz_zzb;
+	}
 }
 

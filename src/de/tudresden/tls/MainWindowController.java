@@ -1,4 +1,4 @@
-package de.tudresden.vlp;
+package de.tudresden.tls;
 
 import java.net.URL;
 import java.util.HashMap;
