@@ -126,7 +126,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
         vr_array = new Zwischenzeitbeziehungen[s][s];
         int i=0; int j=0; int x=0;
         zzb = new Zwischenzeitbeziehungen[s*s];
-        anz_zzb=s;
+        anz_zzb=s*s;
         
         GridBase grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
@@ -142,13 +142,13 @@ class Verriegelungsmatrix extends SpreadsheetView {
         		int pruef=0;
         		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
 				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		 
-
+					// DEBUG: System.out.println("i: "+ i + " j: "+j+" x: "+x);
 				zzb[x] = new Zwischenzeitbeziehungen();
 				zzb[x].setVerriegelung(pruef);
 				zzb[x].setEinfahrend(hm.get(z1));
 				zzb[x].setAusfahrend(hm.get(z2));
 				vr_array[i][j]=zzb[x];
-				vr_array[j][i]=zzb[x];
+					// DEBUG: System.out.println("i: "+ i + " j: "+j+" x: "+zzb[x]);
 		
 				cell.setEditable(true);
 				Row.add(cell);
@@ -177,14 +177,8 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	public Zwischenzeitbeziehungen[] getZzb() {
 		return zzb;
 	}
-	public void setZzb(Zwischenzeitbeziehungen[] zzb) {
-		this.zzb = zzb;
-	}
 	public Zwischenzeitbeziehungen[][] getVr_array() {
 		return vr_array;
-	}
-	public void setVr_array(Zwischenzeitbeziehungen[][] vr_array) {
-		this.vr_array = vr_array;
 	}
 	public int getAnz_zzb() {
 		return anz_zzb;
