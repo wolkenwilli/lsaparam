@@ -90,6 +90,8 @@ public class MainWindowController implements Initializable {
 	private double g=0.0d;
 	private double tp=0;
 	StackPane spane_pp;
+	// -----
+	private Festzeitsteuerung fezest = new Festzeitsteuerung();
 	StackPane spane_fs;
 		
 	
@@ -293,13 +295,13 @@ public class MainWindowController implements Initializable {
 	}
 	public void create_fsz() {
 
-        this.spane_fs = new StackPane(pp);
+        this.spane_fs = new StackPane(fezest);
 		this.pp_vbox.getChildren().add(this.spane_fs);
 		AnchorPane.setTopAnchor(this.spane_fs, 0.0);
 		AnchorPane.setLeftAnchor(this.spane_fs, 0.0);
 		AnchorPane.setRightAnchor(this.spane_fs, 0.0);
 		AnchorPane.setBottomAnchor(this.spane_fs, 0.0);
-		pp.create_festzeitplan(kr, p, anz_phasen, vm, zz);
+		fezest.create_festzeitplan(kr, p, anz_phasen, vm, zz);
 	}
 	public void setG(double g) {
 		this.g=g;
