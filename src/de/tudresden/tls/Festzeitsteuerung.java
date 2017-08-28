@@ -24,6 +24,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 		for (int i=0; i<anz_phasen;i++) {
 			Phase aphase=p[i];
 			Phase nphase;
+			int phase_zwischen=-100;
 			if (anz_phasen-i>1) {
 				nphase=p[i+1];	
 			}
@@ -32,9 +33,10 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			}
 			int max_zwischen=-998;
 			int gzv = 0;
+			
 			for (int j=0;j<aphase.getSignalgeber().size();j++) {
 				gzv=0;
-				final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
+				ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
 				rowsHeaders_fs.add(p[i].getSignalgeber().get(j).getBezeichnung());
 				// Maximale Zwischenzeit berechnen
 				System.out.println("___________________________________________________________________________");
@@ -44,32 +46,46 @@ public class Festzeitsteuerung extends SpreadsheetView {
 						max_zwischen=zwischen;	
 					}
 				}
-				System.out.println(max_zwischen);
+				if (phase_zwischen<max_zwischen) {
+					phase_zwischen=max_zwischen;
+				}
+				gzv=phase_zwischen-max_zwischen;
+			
 				// ----
+				System.out.println(index);
+				if (index > 0) {
+					for (int z=0;z<index;z++) {
+					cell[z]=SpreadsheetCellType.STRING.createCell(j, 0, 0, 0, "");
+					}
+				}
 				cell[index]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
 				cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_gelb());		//Gelbzeit
 				cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
 				cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
-				
-				for (int l=index; l<5;l++) {
+				if ((anz_phasen*4)-index>=4) {
+					for (int z=index+4;z<(anz_phasen*4);z++) {
+					cell[z]=SpreadsheetCellType.STRING.createCell(j, 0, 0, 0, "");
+					System.out.println("create"+z);
+					}
+				}
+				for (int l=0; l<(anz_phasen*4);l++) {
 					Row.add(cell[l]);	
 				}
-				rows_fs.add(Row);						
-				
-				
-				
-			}
+				rows_fs.add(Row);
+			}	
+			System.out.println(rowsHeaders_fs);
+			index=+4;
 			columnsHeaders_fs.add("g");
 			columnsHeaders_fs.add("ge");
 			columnsHeaders_fs.add("r");
 			columnsHeaders_fs.add("rg");
-	        grid_fs.setRows(rows_fs);
-	        setGrid(grid_fs);
-	        grid_fs.getRowHeaders().addAll(rowsHeaders_fs);
-		    grid_fs.getColumnHeaders().addAll(columnsHeaders_fs);
-
-	        getFixedRows().add(0);
 		}
+		grid_fs.setRows(rows_fs);
+	    setGrid(grid_fs);
+	    grid_fs.getRowHeaders().addAll(rowsHeaders_fs);
+		grid_fs.getColumnHeaders().addAll(columnsHeaders_fs);
+        getFixedRows().add(0);
+		
 		
 	}
 }

@@ -41,10 +41,8 @@ public class Phasenplan extends SpreadsheetView {
 			rowsHeaders.add(hm.get(z1).getBezeichnung());
        		SpreadsheetCell cell1 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQ() );
        		SpreadsheetCell cell2 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQs());
-       		SpreadsheetCell cell3 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, Math.round(hm.get(z1).getG()*100)/100.0);
-       		//System.out.println(Math.round(hm.get(z1).getG()*100)/100.0);	TODO: 0, anzeigen!
+       		SpreadsheetCell cell3 = SpreadsheetCellType.STRING.createCell(i, 0, 0, 0, Double.toString(Math.round(hm.get(z1).getG()*100)/100.0));
        		SpreadsheetCell cell4 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, Math.round(hm.get(z1).getTp()*100)/100.0);
-       		//System.out.println(Math.round(hm.get(z1).getTp()*100)/100.0);	siehe oben.
        		SpreadsheetCell cell5 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getTfUmlauf());
 			Row.add(cell1);
 			Row.add(cell2);
