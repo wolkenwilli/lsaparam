@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -89,6 +90,7 @@ public class MainWindowController implements Initializable {
 	private double g=0.0d;
 	private double tp=0;
 	StackPane spane_pp;
+	StackPane spane_fs;
 		
 	
 	
@@ -197,7 +199,7 @@ public class MainWindowController implements Initializable {
 	// ---------------------- Zwischenzeiten eingeben ----------------------------
 	@FXML
 	public void tab_zz_clicked() {
-		zz=new Zwischenzeiten(vm.getVr_array());
+		zz=new Zwischenzeiten();
 		this.spane2 = new StackPane(zz);
 		this.zz_pane.getChildren().add(this.spane2);
 		AnchorPane.setTopAnchor(this.spane2, 0.0);
@@ -270,6 +272,7 @@ public class MainWindowController implements Initializable {
 	// ---------------------- Phasenplan ----------------------------
 	@FXML
 	public void tab_pp_clicked() {
+		this.pp_vbox.getChildren().clear();
         double g=slider_g.getValue();
 		double tp=slider_tp.getValue();
 		vb_calc_Signalgeber(g, tp);
@@ -280,6 +283,23 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setRightAnchor(this.spane_pp, 0.0);
 		AnchorPane.setBottomAnchor(this.spane_pp, 0.0);
 		pp.create_fz_table(kr);
+		Button button_fzs = new Button("Festzeitsteuerung generieren");
+        button_fzs.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                create_fsz();
+            }
+        });
+        this.pp_vbox.getChildren().add(button_fzs);
+	}
+	public void create_fsz() {
+
+        this.spane_fs = new StackPane(pp);
+		this.pp_vbox.getChildren().add(this.spane_fs);
+		AnchorPane.setTopAnchor(this.spane_fs, 0.0);
+		AnchorPane.setLeftAnchor(this.spane_fs, 0.0);
+		AnchorPane.setRightAnchor(this.spane_fs, 0.0);
+		AnchorPane.setBottomAnchor(this.spane_fs, 0.0);
+		pp.create_festzeitplan(kr, p, anz_phasen, vm, zz);
 	}
 	public void setG(double g) {
 		this.g=g;
