@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="800.0" minWidth="1200.0" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
+<AnchorPane minHeight="800.0" minWidth="1200.0" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tudresden.tls.MainWindowController">
    <children>
       <TabPane layoutY="76.0" prefHeight="924.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <tabs>
@@ -33,7 +33,7 @@
                            <children>
                               <ImageView fitHeight="952.0" fitWidth="949.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../img/kreuzung.png" />
+                                    <Image url="@../../../../img/kreuzung.png" />
                                  </image>
                               </ImageView>
                               <HBox fx:id="gui_zufahrt1" alignment="BOTTOM_CENTER" layoutX="482.0" layoutY="679.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="127.0" spacing="8.0" AnchorPane.leftAnchor="482.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="679.0">

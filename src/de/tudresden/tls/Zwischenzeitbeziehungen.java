@@ -5,6 +5,8 @@ public class Zwischenzeitbeziehungen {
 	
 	private Signalgeber einfahrend;
 	private Signalgeber ausfahrend;
+	private int verriegelung;
+	private int zwischenzeit=994;
 	
 	public Signalgeber getEinfahrend() {
 		return einfahrend;
@@ -18,8 +20,7 @@ public class Zwischenzeitbeziehungen {
 	public void setAusfahrend(Signalgeber ausfahrend) {
 		this.ausfahrend = ausfahrend;
 	}
-	private int verriegelung;
-	private int zwischenzeit;
+
 	
 	
 	
