@@ -15,6 +15,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	private Zwischenzeitbeziehungen[] zzb;
 	private Zwischenzeitbeziehungen[][] vr_array;
 	private int anz_zzb;
+	GridBase grid;
 
 	public Verriegelungsmatrix()
 	{
@@ -106,7 +107,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
         zzb = new Zwischenzeitbeziehungen[s*s];
         anz_zzb=s*s;
         
-        GridBase grid = new GridBase(rowCount, columnCount);
+        grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
         ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
@@ -119,6 +120,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
         		int pruef=0;
         		pruef=pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp());
 				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, pruef); 		 
+				//SpreadsheetCell cell1 = SpreadsheetCellType.INTEGER.createCell(row, column, rowSpan, columnSpan, value)
 				zzb[x] = new Zwischenzeitbeziehungen();
 				zzb[x].setVerriegelung(pruef);
 				zzb[x].setEinfahrend(ll.get(i));
@@ -144,8 +146,14 @@ class Verriegelungsmatrix extends SpreadsheetView {
         //getColumns().get(0).setFixed(true);
         //getColumns().get(1).setPrefWidth(250);
 	}
-	public void SaveChanges() {
-		
+	public void SaveChanges(Kreuzung kr) {
+		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
+		for (int i=0;i<grid.getRowCount();i++) {
+			for (int j=0;j<grid.getColumnCount();j++)
+				if (Integer.toString((pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp())),0)!=(grid.getRows().get(i).get(j).getText())) {
+				System.out.println("Veränderung!!");	
+				}
+		}
 	}
 	public Zwischenzeitbeziehungen[] getZzb() {
 		return zzb;
