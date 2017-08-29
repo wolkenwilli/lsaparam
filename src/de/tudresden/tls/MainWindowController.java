@@ -234,6 +234,7 @@ public class MainWindowController implements Initializable {
             public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(g_val.doubleValue());}});
 		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(tp_val.doubleValue());}});
+		label_info.setText("Signalgeber einfügen jetzt möglich!");
 	}
 	// ---------------------- Phasenerstellung ----------------------------
 	@FXML
