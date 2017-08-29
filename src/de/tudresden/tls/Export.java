@@ -73,7 +73,7 @@ public class Export {
 		Element t_rot_gelb = doc.createElement("t_rot_gelb");
 		t_rot_gelb.appendChild(doc.createTextNode(Float.toString(kr.getT_rot_gelb())));
 		kreuzung.appendChild(t_rot_gelb);
-
+		//Signalgeber
 
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
