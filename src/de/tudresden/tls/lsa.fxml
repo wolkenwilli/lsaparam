@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="800.0" minWidth="1200.0" prefHeight="1000.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tudresden.tls.MainWindowController">
+<AnchorPane minHeight="800.0" minWidth="1027.0" prefHeight="1000.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tudresden.tls.MainWindowController">
    <children>
       <TabPane layoutY="76.0" prefHeight="924.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <tabs>
@@ -31,41 +31,38 @@
                      <children>
                         <Group>
                            <children>
-                              <ImageView fitHeight="952.0" fitWidth="949.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="804.0" fitWidth="853.0" layoutX="123.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../img/kreuzung.png" />
                                  </image>
                               </ImageView>
-                              <HBox fx:id="gui_zufahrt1" alignment="BOTTOM_CENTER" layoutX="482.0" layoutY="679.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="127.0" spacing="8.0" AnchorPane.leftAnchor="482.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="679.0">
+                              <HBox fx:id="gui_zufahrt1" alignment="BOTTOM_CENTER" layoutX="525.0" layoutY="523.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="66.0" prefWidth="106.0" spacing="8.0" AnchorPane.leftAnchor="525.0" AnchorPane.rightAnchor="317.0" AnchorPane.topAnchor="523.0">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
-                              <HBox fx:id="gui_zufahrt3" alignment="BOTTOM_CENTER" layoutX="355.0" layoutY="131.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="127.0" rotate="180.0" spacing="8.0">
+                              <HBox fx:id="gui_zufahrt3" alignment="BOTTOM_CENTER" layoutX="413.0" layoutY="181.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="111.0" rotate="180.0" spacing="8.0">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
-                              <HBox fx:id="gui_zufahrt4" alignment="BOTTOM_CENTER" layoutX="126.0" layoutY="480.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="127.0" rotate="90.0" spacing="8.0">
+                              <HBox fx:id="gui_zufahrt4" alignment="BOTTOM_CENTER" layoutX="299.0" layoutY="404.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="111.0" rotate="90.0" spacing="8.0">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
-                              <HBox fx:id="gui_zufahrt2" alignment="BOTTOM_CENTER" layoutX="698.0" layoutY="353.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="117.0" prefWidth="127.0" rotate="-90.0" spacing="8.0">
+                              <HBox fx:id="gui_zufahrt2" alignment="BOTTOM_CENTER" layoutX="616.0" layoutY="321.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="66.0" prefWidth="111.0" rotate="-90.0" spacing="8.0">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </HBox>
-                              <Group layoutX="401.0" layoutY="407.0" />
-                              <VBox fx:id="gui_vbox_z2" layoutX="652.0" layoutY="116.0" prefHeight="200.0" prefWidth="330.0" />
-                              <VBox fx:id="gui_vbox_z3" layoutX="13.0" layoutY="83.0" prefHeight="200.0" prefWidth="330.0" />
-                              <VBox fx:id="gui_vbox_z4" layoutX="13.0" layoutY="647.0" prefHeight="200.0" prefWidth="330.0" />
-                              <VBox fx:id="gui_vbox_z1" layoutX="617.0" layoutY="657.0" prefHeight="200.0" prefWidth="330.0" />
+                              <VBox fx:id="gui_vbox_z3" layoutX="83.0" layoutY="58.0" prefHeight="200.0" prefWidth="330.0" />
+                              <VBox fx:id="gui_vbox_z2" layoutX="638.0" layoutY="68.0" prefHeight="200.0" prefWidth="330.0" />
+                              <VBox fx:id="gui_vbox_z4" layoutX="55.0" layoutY="532.0" prefHeight="200.0" prefWidth="330.0" />
+                              <VBox fx:id="gui_vbox_z1" layoutX="638.0" layoutY="560.0" prefHeight="200.0" prefWidth="330.0" />
                            </children>
                         </Group>
                         <AnchorPane layoutX="293.0" layoutY="585.0" />
-                        <Button fx:id="createzf" layoutX="989.0" layoutY="372.0" mnemonicParsing="false" onAction="#erzeuge3Zufahrten" text="3 Zufahrten erzeugen" />
-                        <Button fx:id="createzf1" layoutX="989.0" layoutY="416.0" mnemonicParsing="false" onAction="#erzeugeZufahrten" text="4 Zufahrten erzeugen" />
                      </children>
                   </AnchorPane>
                </content>
