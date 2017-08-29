@@ -122,7 +122,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
 		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
 		int s=hm.size();
 		int rowCount = s;
-        int columnCount = s+1;
+        int columnCount = s;
         vr_array = new Zwischenzeitbeziehungen[s][s];
         int i=0; int j=0; int x=0;
         zzb = new Zwischenzeitbeziehungen[s*s];
@@ -134,43 +134,38 @@ class Verriegelungsmatrix extends SpreadsheetView {
         ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
         
         for (Zufahrt z1 : hm.keySet()) {
-        	final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
+        	final ObservableList<SpreadsheetCell> data = FXCollections.observableArrayList();
         	i=0;
 			rowsHeaders.add(hm.get(z1).getBezeichnung());
 			columnsHeaders.add(hm.get(z1).getBezeichnung());
         	for (Zufahrt z2 : hm.keySet()) {
         		int pruef=0;
         		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
-				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, 0, 0, 0, pruef); 		 
-					// DEBUG: System.out.println("i: "+ i + " j: "+j+" x: "+x);
+				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, j, 0, 0, pruef); 		 
 				zzb[x] = new Zwischenzeitbeziehungen();
 				zzb[x].setVerriegelung(pruef);
 				zzb[x].setEinfahrend(hm.get(z1));
 				zzb[x].setAusfahrend(hm.get(z2));
 				vr_array[i][j]=zzb[x];
-					// DEBUG: System.out.println("i: "+ i + " j: "+j+" x: "+zzb[x]);
-		
 				cell.setEditable(true);
-				Row.add(cell);
+				data.add(cell);
 				i++;
 				x++;
         	}
-        	rows.add(Row);
+        	rows.add(data);
         	j++;
+        	System.out.println("Erzeugte Cols: "+data.size()+" geplante Cols: "+columnCount);
+        	System.out.println("Erzeugte Rows: "+rows.size()+" geplante RowCount: "+rowCount);
         }
+        
+        
         grid.setRows(rows);
         setGrid(grid);
         grid.getRowHeaders().addAll(rowsHeaders);
 	    grid.getColumnHeaders().addAll(columnsHeaders);
 
         getFixedRows().add(0);
-        Stack<GridChange> st = new Stack<GridChange>();
-        grid.addEventHandler(GridChange.GRID_CHANGE_EVENT, new EventHandler<GridChange>() {
-            
-            public void handle(GridChange change) {
-                    st.push(change);
-                }
-            });
+        
         //getColumns().get(0).setFixed(true);
         //getColumns().get(1).setPrefWidth(250);
 	}
