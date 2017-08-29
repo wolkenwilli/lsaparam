@@ -164,6 +164,12 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setRightAnchor(this.spane, 0.0);
 		AnchorPane.setBottomAnchor(this.spane, 0.0);		
 		vm.create_matrix(kr);	
+		Button button_vm = new Button("veränderte Verriegelungsmatrix speichern");
+        button_vm.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                vm.SaveChanges();
+            }
+        });
 	}
 	else {
 		System.out.println("Keine Signalgeber angelegt!");

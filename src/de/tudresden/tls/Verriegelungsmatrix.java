@@ -144,6 +144,9 @@ class Verriegelungsmatrix extends SpreadsheetView {
         //getColumns().get(0).setFixed(true);
         //getColumns().get(1).setPrefWidth(250);
 	}
+	public void SaveChanges() {
+		
+	}
 	public Zwischenzeitbeziehungen[] getZzb() {
 		return zzb;
 	}
