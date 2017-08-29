@@ -26,8 +26,8 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("lsa.fxml"));
 			AnchorPane pane = loader.load();
 			
-			primaryStage.setMinHeight(1000.00);
-			primaryStage.setMinWidth(1000.00);
+			primaryStage.setMinHeight(500.00);
+			primaryStage.setMinWidth(500.00);
 			
 			MainWindowController mainWindowController = loader.getController();
 			mainWindowController.setMain(this);

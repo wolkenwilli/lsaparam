@@ -108,48 +108,6 @@ public class MainWindowController implements Initializable {
 	
 
 	// ---------------------- Signalgeber Initialisierung ----------------------------
-	@FXML
-	public void erzeugeZufahrten(){
-		z1 = new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
-		z2 = new Zufahrt(kr,gui_zufahrt2, gui_vbox_z2);
-		z3 = new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
-		z4 = new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
-		kats = new LinkedList<String>();
-		kats.add("Gerade + Rechts");		//0
-		kats.add("Gerade");					//1
-		kats.add("Rechts");					//2
-		kats.add("Links");					//3
-		kats.add("Links + Rechts");			//4
-		kats.add("Links + Gerade");			//5
-		kats.add("Links + Gerade+ Rechts");	//6
-		tab_vm.setDisable(false);
-		tab_zz.setDisable(false);
-		tab_ph.setDisable(false);
-		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(g_val.doubleValue());}});
-		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(tp_val.doubleValue());}});
-
-	}
-	
-	@FXML
-	public void erzeuge3Zufahrten(){
-		z1 = new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
-		z2 = new Zufahrt(kr,gui_zufahrt2, gui_vbox_z2);
-		z3 = new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
-		kats = new LinkedList<String>();
-		kats.add("Gerade + Rechts");		//0
-		kats.add("Gerade");					//1
-		kats.add("Rechts");					//2
-		kats.add("Links");					//3
-		kats.add("Links + Rechts");			//4
-		kats.add("Links + Gerade");			//5
-		kats.add("Links + Gerade+ Rechts");	//6
-		tab_vm.setDisable(false);
-		tab_zz.setDisable(false);
-		tab_ph.setDisable(false);
-	}
-	
 	public void contextMenu(Pane p, double x, double y) 
 	{
 		Zufahrt zf = kr.get_zufahrt(p);
@@ -223,6 +181,27 @@ public class MainWindowController implements Initializable {
 		
 		gui_zufahrt4.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
 		{public void handle(MouseEvent e){contextMenu(gui_zufahrt4,e.getScreenX(), e.getScreenY());}});
+		
+		
+		z1 = new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
+		z2 = new Zufahrt(kr,gui_zufahrt2, gui_vbox_z2);
+		z3 = new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
+		z4 = new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
+		kats = new LinkedList<String>();
+		kats.add("Gerade + Rechts");		//0
+		kats.add("Gerade");					//1
+		kats.add("Rechts");					//2
+		kats.add("Links");					//3
+		kats.add("Links + Rechts");			//4
+		kats.add("Links + Gerade");			//5
+		kats.add("Links + Gerade+ Rechts");	//6
+		tab_vm.setDisable(false);
+		tab_zz.setDisable(false);
+		tab_ph.setDisable(false);
+		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(g_val.doubleValue());}});
+		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(tp_val.doubleValue());}});
 	}
 	// ---------------------- Phasenerstellung ----------------------------
 	@FXML
