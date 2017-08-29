@@ -70,6 +70,9 @@ public class Zwischenzeiten extends SpreadsheetView {
 	    grid.getColumnHeaders().addAll(columnsHeaders);
         getFixedRows().add(0);
         getColumns().get(0).setFixed(true);
+        for (int i=0;i<getColumns().size();i++) {
+            getColumns().get(i).setPrefWidth(50);
+            }
     	
 	}
 	public int get_zwischenzeit(Signalgeber a, Signalgeber b, Kreuzung kr, Verriegelungsmatrix vm) {

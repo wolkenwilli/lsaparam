@@ -31,9 +31,12 @@ public class Signalgeber {
 
 	ImageView view = new ImageView();
 	
-	Image p0 = new Image("http://www.eventtechnik-schmidt.de/0.png");
-	Image p1 = new Image("http://www.eventtechnik-schmidt.de/1.png");
-	Image p2 = new Image("http://www.eventtechnik-schmidt.de/2.png");
+	Image p0 = new Image(Main.class.getResourceAsStream("0.png"));
+	Image p1 = new Image(Main.class.getResourceAsStream("1.png"));
+	Image p2 = new Image(Main.class.getResourceAsStream("2.png"));
+	//Image p0 = new Image("http://www.eventtechnik-schmidt.de/0.png");
+	//Image p1 = new Image("http://www.eventtechnik-schmidt.de/1.png");
+	//Image p2 = new Image("http://www.eventtechnik-schmidt.de/2.png");
 	
 		
 	public Signalgeber (Kreuzung kr, Zufahrt zf, int kat, int id, float q, float qs, float f1, float f2)

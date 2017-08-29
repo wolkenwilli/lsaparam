@@ -28,6 +28,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -37,7 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.FloatStringConverter;
 
 
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Initializable { 
 	public Kreuzung kr = new Kreuzung();
 	public Zufahrt z1;
 	public Zufahrt z2;
@@ -60,6 +61,7 @@ public class MainWindowController implements Initializable {
 	
 	//Views
 	@FXML TableView<Option> table_options1;
+	ObservableList<Option> data1;
 	@FXML Label label_info;
 	//----
 	@FXML private Pane gui_zufahrt1;
@@ -71,10 +73,7 @@ public class MainWindowController implements Initializable {
 	@FXML private VBox gui_vbox_z3;
 	@FXML private VBox gui_vbox_z4;
 	@FXML private ContextMenu gui_contextmenu;
-	private Image p0;
-	private Image p1;
-	private Image p2;
-	private Image kreuzung;
+	@FXML private ImageView imageview_crossing;
 	//----
 	@FXML private VBox vm_vbox;
 	@FXML private VBox zz_vbox;
@@ -114,6 +113,41 @@ public class MainWindowController implements Initializable {
 	
 
 	// ---------------------- Signalgeber Initialisierung ----------------------------
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		gui_zufahrt1.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
+		{public void handle(MouseEvent e){contextMenu(gui_zufahrt1,e.getScreenX(), e.getScreenY());}});
+		
+		gui_zufahrt2.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
+		{public void handle(MouseEvent e){contextMenu(gui_zufahrt2,e.getScreenX(), e.getScreenY());}});
+		
+		gui_zufahrt3.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
+		{public void handle(MouseEvent e){contextMenu(gui_zufahrt3,e.getScreenX(), e.getScreenY());}});
+		
+		gui_zufahrt4.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
+		{public void handle(MouseEvent e){contextMenu(gui_zufahrt4,e.getScreenX(), e.getScreenY());}});
+		
+		
+		z1 = new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
+		z2 = new Zufahrt(kr,gui_zufahrt2, gui_vbox_z2);
+		z3 = new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
+		z4 = new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
+		kats = new LinkedList<String>();
+		kats.add("Gerade");					//0
+		kats.add("Rechts");					//1
+		kats.add("Links");					//2
+		tab_vm.setDisable(false);
+		tab_zz.setDisable(false);
+		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(g_val.doubleValue());}});
+		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(tp_val.doubleValue());}});
+		label_info.setText("Signalgeber einfügen jetzt möglich!!");
+		
+		Image kreuzung = new Image(Main.class.getResourceAsStream("kreuzung.png"));
+		imageview_crossing.setImage(kreuzung);
+	}
+	
 	public void contextMenu(Pane p, double x, double y) 
 	{
 		
@@ -147,7 +181,7 @@ public class MainWindowController implements Initializable {
 			}
 			else
 			{
-				System.out.println("Debug: Spur nicht möglich!");
+				//System.out.println("Debug: Spur nicht möglich!");
 			}
 		}
 		gui_contextmenu.show(p, x, y);
@@ -203,38 +237,6 @@ public class MainWindowController implements Initializable {
 	else {
 		System.out.println("Keine Signalgeber angelegt!");
 	}
-	}
-	// ---------------------- Signalgeber erzeugen (Context Menü) ----------------------------
-	public void initialize(URL location, ResourceBundle resources) {
-				
-		gui_zufahrt1.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
-		{public void handle(MouseEvent e){contextMenu(gui_zufahrt1,e.getScreenX(), e.getScreenY());}});
-		
-		gui_zufahrt2.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
-		{public void handle(MouseEvent e){contextMenu(gui_zufahrt2,e.getScreenX(), e.getScreenY());}});
-		
-		gui_zufahrt3.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
-		{public void handle(MouseEvent e){contextMenu(gui_zufahrt3,e.getScreenX(), e.getScreenY());}});
-		
-		gui_zufahrt4.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
-		{public void handle(MouseEvent e){contextMenu(gui_zufahrt4,e.getScreenX(), e.getScreenY());}});
-		
-		
-		z1 = new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
-		z2 = new Zufahrt(kr,gui_zufahrt2, gui_vbox_z2);
-		z3 = new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
-		z4 = new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
-		kats = new LinkedList<String>();
-		kats.add("Gerade");					//0
-		kats.add("Rechts");					//1
-		kats.add("Links");					//2
-		tab_vm.setDisable(false);
-		tab_zz.setDisable(false);
-		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(g_val.doubleValue());}});
-		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,Number old_val, Number tp_val) {setTp(tp_val.doubleValue());}});
-		label_info.setText("Signalgeber einfügen jetzt möglich!!");
 	}
 	// ---------------------- Phasenerstellung ----------------------------
 	@FXML
@@ -348,7 +350,7 @@ public class MainWindowController implements Initializable {
 		
 		//	label_info.setText("Bitte erzeugen Sie nun Spuren in den Zufahrten!");
 		table_options1.getColumns().clear();
-		ObservableList<Option> data1 = FXCollections.observableArrayList(
+			data1 = FXCollections.observableArrayList(
 			new Option(1, "Angleichsfaktor f1", 0.90f),
 			new Option(2, "Angleichsfaktor f2", 0.85f),
 			new Option(3, "Dauer Signalbild Gelb [s]", 3f),
@@ -394,6 +396,13 @@ public class MainWindowController implements Initializable {
 		table_options1.setItems(data1);
 		}
 	
+	@FXML
+	public void button_ge_save_clicked() {
+		for (int i=0;i<data1.size();i++)
+		{
+			kr.putOption(data1.get(i));
+		}
+	}
 	
 	@FXML
 	public void do_menu_beenden()

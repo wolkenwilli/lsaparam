@@ -8,7 +8,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -31,7 +30,7 @@
                      <children>
                         <Group>
                            <children>
-                              <ImageView fitHeight="804.0" fitWidth="853.0" layoutX="123.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageview_crossing" fitHeight="804.0" fitWidth="853.0" layoutX="123.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../img/kreuzung.png" />
                                  </image>
@@ -159,12 +158,12 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="477.0" prefWidth="425.0">
                            <children>
-                              <TableView fx:id="table_options1" prefHeight="695.0" prefWidth="357.0" />
-                              <Separator orientation="VERTICAL" prefHeight="895.0" prefWidth="17.0" />
+                              <TableView fx:id="table_options1" prefHeight="300.0" prefWidth="425.0" />
+                              <Button mnemonicParsing="false" onAction="#button_ge_save_clicked" prefHeight="31.0" prefWidth="469.0" text="Einstellungen speichern" />
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
                   </AnchorPane>
                </content></Tab>

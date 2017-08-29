@@ -55,16 +55,16 @@ public class Festzeitsteuerung extends SpreadsheetView {
 				System.out.println(index);
 				if (index > 0) {
 					for (int z=0;z<index;z++) {
-					cell[z]=SpreadsheetCellType.STRING.createCell(j, 0, 0, 0, "");
+					cell[z]=SpreadsheetCellType.STRING.createCell(j, z, 1, 1, "");
 					}
 				}
-				cell[index]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
-				cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_gelb());		//Gelbzeit
-				cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
-				cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, 0, 0, 0, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
+				cell[index]=SpreadsheetCellType.INTEGER.createCell(j, index, 1, 1, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
+				cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, index+1, 1, 1, (int) kr.getT_gelb());		//Gelbzeit
+				cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, index+2, 1, 1, (int) max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
+				cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, index+3, 1, 1, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
 				if ((anz_phasen*4)-index>=4) {
 					for (int z=index+4;z<(anz_phasen*4);z++) {
-					cell[z]=SpreadsheetCellType.STRING.createCell(j, 0, 0, 0, "");
+					cell[z]=SpreadsheetCellType.STRING.createCell(j, z, 1, 1, "");
 					}
 				}
 				for (int l=0; l<(anz_phasen*4);l++) {
@@ -83,6 +83,9 @@ public class Festzeitsteuerung extends SpreadsheetView {
 	    grid_fs.getRowHeaders().addAll(rowsHeaders_fs);
 		grid_fs.getColumnHeaders().addAll(columnsHeaders_fs);
         getFixedRows().add(0);
+        for (int i=0;i<getColumns().size();i++) {
+            getColumns().get(i).setPrefWidth(50);
+            }
 		
 		
 	}

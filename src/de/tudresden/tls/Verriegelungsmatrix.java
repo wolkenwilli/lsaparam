@@ -122,7 +122,6 @@ class Verriegelungsmatrix extends SpreadsheetView {
         		int pruef=0;
         		SpreadsheetCell cell;
         		if (zzb[x]==null) {
-        			System.out.println(zzb[x]);
         			pruef=pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp());
         			cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, pruef); 		 
 					zzb[x] = new Zwischenzeitbeziehungen();
@@ -139,8 +138,8 @@ class Verriegelungsmatrix extends SpreadsheetView {
 				x++;
         	}
         	rows.add(data);
-        	System.out.println("Erzeugte Cols: "+data.size()+" geplante Cols: "+columnCount);
-        	System.out.println("Erzeugte Rows: "+rows.size()+" geplante RowCount: "+rowCount);
+        	// DEBUG: System.out.println("Erzeugte Cols: "+data.size()+" geplante Cols: "+columnCount);
+        	// DEBUG: System.out.println("Erzeugte Rows: "+rows.size()+" geplante RowCount: "+rowCount);
         }
         
         
@@ -151,8 +150,9 @@ class Verriegelungsmatrix extends SpreadsheetView {
 
         getFixedRows().add(0);
         
-        //getColumns().get(0).setFixed(true);
-        //getColumns().get(1).setPrefWidth(250);
+        for (int i=0;i<getColumns().size();i++) {
+        getColumns().get(i).setPrefWidth(50);
+        }
 	}
 	public void SaveChanges(Kreuzung kr) {
 		int x=0;

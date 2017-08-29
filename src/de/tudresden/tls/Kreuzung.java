@@ -10,6 +10,11 @@ class Kreuzung {
 
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
 	LinkedList<Signalgeber> signalgeberlist = new LinkedList<Signalgeber>();
+	LinkedList<Option> optionenlist = new LinkedList<Option>();
+	
+	public void putOption(Option o) {
+		optionenlist.add(o);
+	}
 	
 	public void putZufahrt (Zufahrt zf) {
 		zufahrten.add(zf);
