@@ -3,10 +3,10 @@ package de.tudresden.tls;
 import java.util.LinkedList;
 
 class Kreuzung {
-	private float f1=0.9f;
+	private float f1=1.2f;
 	private float f2=1.0f;
-	private int t_gelb=2;
-	private int t_rot_gelb=2;
+	private int t_gelb=5;
+	private int t_rot_gelb=5;
 
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
 	LinkedList<Signalgeber> signalgeberlist = new LinkedList<Signalgeber>();
@@ -14,6 +14,16 @@ class Kreuzung {
 	
 	public void putOption(Option o) {
 		optionenlist.add(o);
+		updateOption();
+	}
+	private void updateOption() {
+		if (optionenlist.size()==4) {
+			f1=optionenlist.get(0).getWert();
+			f2=optionenlist.get(1).getWert();
+			t_gelb=(int)Math.round(optionenlist.get(2).getWert());
+			t_rot_gelb=(int)Math.round(optionenlist.get(3).getWert());
+		}
+		
 	}
 	
 	public void putZufahrt (Zufahrt zf) {

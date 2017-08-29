@@ -146,6 +146,28 @@ public class MainWindowController implements Initializable {
 		
 		Image kreuzung = new Image(Main.class.getResourceAsStream("kreuzung.png"));
 		imageview_crossing.setImage(kreuzung);
+		
+		data1 = FXCollections.observableArrayList(
+		new Option(1, "Angleichsfaktor f1", 0.90f),
+		new Option(2, "Angleichsfaktor f2", 0.85f),
+		new Option(3, "Dauer Signalbild Gelb [s]", 3f),
+		new Option(4, "Dauer Sigalbild Rot-Gelb [s]", 2f)
+	/*	Vorerst nicht erforderlich, da keine Berechnung der Zwischenzeit
+  		new Option("Räumgeschwindigkeit KFZ gerade [m/s]", 10f),
+    	new Option("Räumgeschwindigkeit KFZ abb. [m/s]", 7f),
+    	new Option("Räumgeschwindigkeit Radfahrer [m/s]", 4f),
+    	new Option("Einfahrgeschwindigkeit KFZ gerade [m/s]", 11.1f),
+    	new Option("Einfahrgeschwindigkeit KFZ abb. [m/s]", 11.1f),
+    	new Option("Einfahrgeschwindigkeit Radfahrer [m/s]", 5f),
+    	new Option("Überfahrzeit KFZ gerade [s]", 3f),
+    	new Option("Überfahrzeit KFZ abb. [s]", 2f),
+    	new Option("Überfahrzeit Rad [s]", 1f)
+	*/           
+		);
+		for (int i=0;i<data1.size();i++)
+		{
+			kr.putOption(data1.get(i));
+		}
 	}
 	
 	public void contextMenu(Pane p, double x, double y) 
@@ -348,25 +370,8 @@ public class MainWindowController implements Initializable {
 	@FXML
 	public void tab_ge_clicked() {
 		
-		//	label_info.setText("Bitte erzeugen Sie nun Spuren in den Zufahrten!");
-		table_options1.getColumns().clear();
-			data1 = FXCollections.observableArrayList(
-			new Option(1, "Angleichsfaktor f1", 0.90f),
-			new Option(2, "Angleichsfaktor f2", 0.85f),
-			new Option(3, "Dauer Signalbild Gelb [s]", 3f),
-			new Option(4, "Dauer Sigalbild Rot-Gelb [s]", 2f)
-		/*	Vorerst nicht erforderlich, da keine Berechnung der Zwischenzeit
-      		new Option("Räumgeschwindigkeit KFZ gerade [m/s]", 10f),
-        	new Option("Räumgeschwindigkeit KFZ abb. [m/s]", 7f),
-        	new Option("Räumgeschwindigkeit Radfahrer [m/s]", 4f),
-        	new Option("Einfahrgeschwindigkeit KFZ gerade [m/s]", 11.1f),
-        	new Option("Einfahrgeschwindigkeit KFZ abb. [m/s]", 11.1f),
-        	new Option("Einfahrgeschwindigkeit Radfahrer [m/s]", 5f),
-        	new Option("Überfahrzeit KFZ gerade [s]", 3f),
-        	new Option("Überfahrzeit KFZ abb. [s]", 2f),
-        	new Option("Überfahrzeit Rad [s]", 1f)
-		*/            
-		);
+			table_options1.getColumns().clear();
+
 		table_options1.setEditable(true);
 		TableColumn<Option, String> NameCol = new TableColumn<Option, String>("Name");
 		NameCol.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));

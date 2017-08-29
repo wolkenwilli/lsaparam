@@ -31,47 +31,48 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			else {
 				nphase=p[0];
 			}
-			int max_zwischen=-998;
+			int sg_max_zwischen=-998;
 			int gzv = 0;
-			
-			for (int j=0;j<aphase.getSignalgeber().size();j++) {
-				gzv=0;
-				ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
-				rowsHeaders_fs.add(p[i].getSignalgeber().get(j).getBezeichnung());
-				// Maximale Zwischenzeit berechnen
-				System.out.println("___________________________________________________________________________");
-				for (int k=0; k<nphase.getSignalgeber().size();k++) {
-					int zwischen=zz.get_zwischenzeit(aphase.getSignalgeber().get(j), nphase.getSignalgeber().get(k), kr, vm);
-					if (max_zwischen<zwischen) {
-						max_zwischen=zwischen;	
+			for (int m=0;m<2;m++) {
+				for (int j=0;j<aphase.getSignalgeber().size();j++) {
+					gzv=0;
+					ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
+					rowsHeaders_fs.add(p[i].getSignalgeber().get(j).getBezeichnung());
+					// Maximale Zwischenzeit berechnen
+						for (int k=0; k<nphase.getSignalgeber().size();k++) {
+							int zwischen=zz.get_zwischenzeit(aphase.getSignalgeber().get(j), nphase.getSignalgeber().get(k), kr, vm);
+							if (sg_max_zwischen<zwischen) {
+								sg_max_zwischen=zwischen;	
+							}
+						}
+						if (phase_zwischen<sg_max_zwischen) {
+							phase_zwischen=sg_max_zwischen;
+						}
+						gzv=phase_zwischen-sg_max_zwischen;
+					if (m==1) {
+						if (index > 0) {
+							for (int z=0;z<index;z++) {
+							cell[z]=SpreadsheetCellType.STRING.createCell(j, z, 1, 1, "");
+							}
+						}
+						cell[index]=SpreadsheetCellType.INTEGER.createCell(j, index, 1, 1, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
+						cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, index+1, 1, 1, (int) kr.getT_gelb());		//Gelbzeit
+						cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, index+2, 1, 1, (int) sg_max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
+						cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, index+3, 1, 1, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
+						if ((anz_phasen*4)-index>=4) {
+							for (int z=index+4;z<(anz_phasen*4);z++) {
+							cell[z]=SpreadsheetCellType.STRING.createCell(j, z, 1, 1, "");
+							}
+						}
+						for (int l=0; l<(anz_phasen*4);l++) {
+							Row.add(cell[l]);	
+						}
+						rows_fs.add(Row);
+
 					}
+					sg_max_zwischen=-998;
 				}
-				if (phase_zwischen<max_zwischen) {
-					phase_zwischen=max_zwischen;
-				}
-				gzv=phase_zwischen-max_zwischen;
-			
-				// ----
-				System.out.println(index);
-				if (index > 0) {
-					for (int z=0;z<index;z++) {
-					cell[z]=SpreadsheetCellType.STRING.createCell(j, z, 1, 1, "");
-					}
-				}
-				cell[index]=SpreadsheetCellType.INTEGER.createCell(j, index, 1, 1, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
-				cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, index+1, 1, 1, (int) kr.getT_gelb());		//Gelbzeit
-				cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, index+2, 1, 1, (int) max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
-				cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, index+3, 1, 1, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen
-				if ((anz_phasen*4)-index>=4) {
-					for (int z=index+4;z<(anz_phasen*4);z++) {
-					cell[z]=SpreadsheetCellType.STRING.createCell(j, z, 1, 1, "");
-					}
-				}
-				for (int l=0; l<(anz_phasen*4);l++) {
-					Row.add(cell[l]);	
-				}
-				rows_fs.add(Row);
-			}	
+			}
 			index=index+4;
 			columnsHeaders_fs.add("g");
 			columnsHeaders_fs.add("ge");

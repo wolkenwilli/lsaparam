@@ -76,20 +76,20 @@ public class Zwischenzeiten extends SpreadsheetView {
     	
 	}
 	public int get_zwischenzeit(Signalgeber a, Signalgeber b, Kreuzung kr, Verriegelungsmatrix vm) {
-		System.out.println("Neue SG Abfrage id: "+Math.random()+" Signalgeber A: "+a.getBezeichnung()+" Signalgeber B: "+b.getBezeichnung());
+		// DEBUG: System.out.println("Neue SG Abfrage id: "+Math.random()+" Signalgeber A: "+a.getBezeichnung()+" Signalgeber B: "+b.getBezeichnung());
 		int zwischenzeit=999;
 		Zwischenzeitbeziehungen[] zzb=vm.getZzb();
 		for (int x=0; x<vm.getAnz_zzb();x++) {
 			if (zzb[x].getEinfahrend().equals(a)) {
 				if (zzb[x].getAusfahrend().equals(b)){
 					zwischenzeit=zzb[x].getZwischenzeit();
-					System.out.println("Zwischenzeit: "+zwischenzeit);
+//DEBUG:					System.out.println("Zwischenzeit: "+zwischenzeit);
 				}
 			}
 			if (zzb[x].getEinfahrend().equals(b)) {
 				if (zzb[x].getAusfahrend().equals(a)){
 					zwischenzeit=zzb[x].getZwischenzeit();
-					System.out.println("Zwischenzeit: "+zwischenzeit);
+//DEBUG:					System.out.println("Zwischenzeit: "+zwischenzeit);
 				}
 			}
 			
