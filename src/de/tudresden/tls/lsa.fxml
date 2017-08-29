@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="800.0" minWidth="1027.0" prefHeight="1000.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tudresden.tls.MainWindowController">
+<AnchorPane minHeight="800.0" minWidth="1027.0" prefHeight="934.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.tudresden.tls.MainWindowController">
    <children>
       <TabPane layoutY="76.0" prefHeight="924.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <tabs>
@@ -146,7 +146,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab_exp" disable="true" text="Export">
+            <Tab fx:id="tab_exp" disable="true" onSelectionChanged="#tab_exp_clicked" text="Export">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>

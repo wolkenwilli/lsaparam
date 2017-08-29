@@ -1,18 +1,13 @@
 package de.tudresden.tls;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Stack;
-
 import org.controlsfx.control.spreadsheet.GridBase;
-import org.controlsfx.control.spreadsheet.GridChange;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 
 class Verriegelungsmatrix extends SpreadsheetView {
 	private int[][] array_ungerade = new int[3][3];
@@ -123,7 +118,7 @@ class Verriegelungsmatrix extends SpreadsheetView {
         	for (int j=0;j<ll.size();j++) {
         		int pruef=0;
         		pruef=pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp());
-				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, j, 0, 0, pruef); 		 
+				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, pruef); 		 
 				zzb[x] = new Zwischenzeitbeziehungen();
 				zzb[x].setVerriegelung(pruef);
 				zzb[x].setEinfahrend(ll.get(i));

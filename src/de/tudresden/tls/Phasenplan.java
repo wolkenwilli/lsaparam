@@ -1,6 +1,5 @@
 package de.tudresden.tls;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.controlsfx.control.spreadsheet.GridBase;
@@ -10,15 +9,11 @@ import org.controlsfx.control.spreadsheet.SpreadsheetView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 
 public class Phasenplan extends SpreadsheetView {
 	public TableView<Signalgeber> table = new TableView<Signalgeber>();
 	public final ObservableList<Signalgeber> Phasenplanlist = FXCollections.observableArrayList();
-	private int anzahl_signalgeber;
 	
 	public Phasenplan() {
 	}
@@ -26,7 +21,6 @@ public class Phasenplan extends SpreadsheetView {
 	public void create_fz_table(Kreuzung kr)  {
 		LinkedList<Signalgeber> ll = kr.get_signalgeberlist();
 		int s=ll.size();
-		this.anzahl_signalgeber=s;
 		int rowCount = s;
         int columnCount = s+1;
         

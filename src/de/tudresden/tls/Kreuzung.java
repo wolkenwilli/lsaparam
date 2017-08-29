@@ -1,6 +1,5 @@
 package de.tudresden.tls;
 
-import java.util.HashMap;		//TODO: aufräumen, sortieren
 import java.util.LinkedList;
 
 class Kreuzung {

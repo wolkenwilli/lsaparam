@@ -1,6 +1,5 @@
 package de.tudresden.tls;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.controlsfx.control.spreadsheet.GridBase;
@@ -44,18 +43,18 @@ public class Zwischenzeiten extends SpreadsheetView {
 			for(int j=0;j<vr_matrix.length;j++){
 				SpreadsheetCell cell;
 		        if ((vr_matrix[i][j].getVerriegelung()==9)||(vr_matrix[i][j].getVerriegelung()==0)) {
-		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "X");
+		        	cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "X");
 		        	vr_matrix[i][j].setZwischenzeit(0);			//Beispielwert
 		        	cell.setEditable(false);	
 		        }
 		        else {
-		        	cell = SpreadsheetCellType.STRING.createCell(j, 1, 1, 0, "10");	//Beispielwert
+		        	cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "10");	//Beispielwert
 		        	vr_matrix[i][j].setZwischenzeit(10);			//Beispielwert
 		        	cell.setEditable(true);
 		        }
 		        	// DEBUG: System.out.println("U Signalgeber A: "+vr_matrix[i][j].getEinfahrend()+" Signalgeber B: "+vr_matrix[i][j].getAusfahrend()+" ZZ: "+vr_matrix[i][j].getZwischenzeit());
 		 		Row.add(cell);
-		 		System.out.println("i: "+i+" j: "+j+" objekt: "+vr_matrix[i][j].getEinfahrend());
+		 			// DEBUG: System.out.println("i: "+i+" j: "+j+" objekt: "+vr_matrix[i][j].getEinfahrend());
 				rowsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 				columnsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 			}

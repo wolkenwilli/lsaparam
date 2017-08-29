@@ -27,6 +27,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -70,6 +71,10 @@ public class MainWindowController implements Initializable {
 	@FXML private VBox gui_vbox_z3;
 	@FXML private VBox gui_vbox_z4;
 	@FXML private ContextMenu gui_contextmenu;
+	private Image p0;
+	private Image p1;
+	private Image p2;
+	private Image kreuzung;
 	//----
 	@FXML private Pane vm_pane;
 	@FXML private Pane zz_pane;
@@ -92,6 +97,8 @@ public class MainWindowController implements Initializable {
 	// -----
 	private Festzeitsteuerung fezest = new Festzeitsteuerung();
 	StackPane spane_fs;
+	// -----
+	private Export export = new Export();
 		
 	
 	
@@ -109,6 +116,8 @@ public class MainWindowController implements Initializable {
 	// ---------------------- Signalgeber Initialisierung ----------------------------
 	public void contextMenu(Pane p, double x, double y) 
 	{
+		
+		
 		Zufahrt zf = kr.get_zufahrt(p);
 		gui_contextmenu.getItems().clear();
 		
@@ -123,7 +132,7 @@ public class MainWindowController implements Initializable {
 					public void handle(ActionEvent e) 
 					{
 						
-						System.out.println("Debug: "+kats.get(j)+" Spur wird erzeugt!");
+						//System.out.println("Debug: "+kats.get(j)+" Spur wird erzeugt!");
 						zf.erzeugeSignalgeber(j);				        						
 					}
 
@@ -147,6 +156,7 @@ public class MainWindowController implements Initializable {
 	// ---------------------- Verriegelungsmatrix anzeigen ----------------------------
 	@FXML
 	public void tab_vm_clicked() {
+	if (kr.get_signalgeberlist().size()>0) {
 		this.spane = new StackPane(vm);
 		this.vm_pane.getChildren().add(this.spane);
 		AnchorPane.setTopAnchor(this.spane, 0.0);
@@ -155,9 +165,14 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setBottomAnchor(this.spane, 0.0);		
 		vm.create_matrix(kr);	
 	}
+	else {
+		System.out.println("Keine Signalgeber angelegt!");
+	}
+	}
 	// ---------------------- Zwischenzeiten eingeben ----------------------------
 	@FXML
 	public void tab_zz_clicked() {
+	if (kr.get_signalgeberlist().size()>0) {
 		zz=new Zwischenzeiten();
 		this.spane2 = new StackPane(zz);
 		this.zz_pane.getChildren().add(this.spane2);
@@ -166,9 +181,15 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setRightAnchor(this.spane2, 0.0);
 		AnchorPane.setBottomAnchor(this.spane2, 0.0);
 		zz.pruef_zz(kr, vm);
+		tab_ph.setDisable(false);
+	}
+	else {
+		System.out.println("Keine Signalgeber angelegt!");
+	}
 	}
 	// ---------------------- Signalgeber erzeugen (Context Menü) ----------------------------
 	public void initialize(URL location, ResourceBundle resources) {
+				
 		gui_zufahrt1.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() 
 		{public void handle(MouseEvent e){contextMenu(gui_zufahrt1,e.getScreenX(), e.getScreenY());}});
 		
@@ -192,7 +213,6 @@ public class MainWindowController implements Initializable {
 		kats.add("Links");					//2
 		tab_vm.setDisable(false);
 		tab_zz.setDisable(false);
-		tab_ph.setDisable(false);
 		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,Number old_val, Number g_val) {setG(g_val.doubleValue());}});
 		slider_tp.valueProperty().addListener(new ChangeListener<Number>() {
@@ -278,6 +298,7 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setRightAnchor(this.spane_fs, 0.0);
 		AnchorPane.setBottomAnchor(this.spane_fs, 0.0);
 		fezest.create_festzeitplan(kr, p, anz_phasen, vm, zz);
+		tab_exp.setDisable(false);
 	}
 	public void setG(double g) {
 		this.g=g;
@@ -297,7 +318,13 @@ public class MainWindowController implements Initializable {
 		}
 		
 	}
+	// ---------------------- Export ----------------------------
+	@FXML
+	public void tab_exp_clicked() {
+		export.do_export(kr, p, anz_phasen, vm, zz);
+	}
 	// ---------------------- Grundeinstellungen ----------------------------
+	@SuppressWarnings("unchecked")
 	@FXML
 	public void tab_ge_clicked() {
 		

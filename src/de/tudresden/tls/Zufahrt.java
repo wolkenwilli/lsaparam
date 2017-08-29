@@ -100,6 +100,7 @@ public class Zufahrt {
 		return check;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void updateTable() {
 		table.getColumns().clear();
 		table.setEditable(true);
