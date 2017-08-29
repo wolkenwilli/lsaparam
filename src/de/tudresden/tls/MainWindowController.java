@@ -59,7 +59,6 @@ public class MainWindowController implements Initializable {
 	
 	//Views
 	@FXML TableView<Option> table_options1;
-	@FXML TableView<Option> table_options2;	
 	@FXML Label label_info;
 	//----
 	@FXML private Pane gui_zufahrt1;
@@ -188,13 +187,9 @@ public class MainWindowController implements Initializable {
 		z3 = new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
 		z4 = new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
 		kats = new LinkedList<String>();
-		kats.add("Gerade + Rechts");		//0
-		kats.add("Gerade");					//1
-		kats.add("Rechts");					//2
-		kats.add("Links");					//3
-		kats.add("Links + Rechts");			//4
-		kats.add("Links + Gerade");			//5
-		kats.add("Links + Gerade+ Rechts");	//6
+		kats.add("Gerade");					//0
+		kats.add("Rechts");					//1
+		kats.add("Links");					//2
 		tab_vm.setDisable(false);
 		tab_zz.setDisable(false);
 		tab_ph.setDisable(false);
@@ -209,13 +204,15 @@ public class MainWindowController implements Initializable {
 		anchor_left.getChildren().clear();
 		p[anz_phasen]=new Phase();
 		anz_phasen++;
-		ObservableList<String> options = FXCollections.observableArrayList();	//TODO: Liste sortieren ASC
-		for (Zufahrt z1 : kr.alleSignalgeber.keySet()) {
-			options.add(kr.alleSignalgeber.get(z1).getBezeichnung());
-			signalgeberbezeichnung.put(kr.alleSignalgeber.get(z1).getBezeichnung(), kr.alleSignalgeber.get(z1));
+		ObservableList<String> options = FXCollections.observableArrayList();
+		
+		for (int i=0;i<kr.get_signalgeberlist().size();i++) {
+			options.add(kr.get_signalgeberlist().get(i).getBezeichnung());
+			signalgeberbezeichnung.put(kr.get_signalgeberlist().get(i).getBezeichnung(), kr.get_signalgeberlist().get(i));
 		}
+		
 		comboBox = new ComboBox<String>(options);
-		comboBox.getValue();
+		comboBox.setValue(options.get(0));
 		anchor_left.getChildren().addAll(comboBox);
 		update_tree_phase();
 	}
@@ -294,9 +291,11 @@ public class MainWindowController implements Initializable {
 	}
 	
 	public void vb_calc_Signalgeber(double g, double tp) {
-		for (Zufahrt z1 : kr.getAlleSignalgeber().keySet()) {
-			kr.getAlleSignalgeber().get(z1).calc_TfUmlauf(g, tp);
+	
+		for (int i=0;i<kr.get_signalgeberlist().size();i++) {
+			kr.get_signalgeberlist().get(i).calc_TfUmlauf(g, tp);
 		}
+		
 	}
 	// ---------------------- Grundeinstellungen ----------------------------
 	@FXML
@@ -348,20 +347,6 @@ public class MainWindowController implements Initializable {
 		);
 		table_options1.getColumns().addAll(NameCol, WertCol);
 		table_options1.setItems(data1);
-
-
-		//----------------------------------
-		table_options2.getColumns().clear();
-		ObservableList<Option> data2 = FXCollections.observableArrayList(
-        
-		);
-		TableColumn<Option, String> Name2Col = new TableColumn<Option, String>("Name");
-		Name2Col.setCellValueFactory(new PropertyValueFactory<Option,String>("name"));
-		TableColumn<Option, Float> Wert2Col = new TableColumn<Option, Float>("Wert");
-		Wert2Col.setCellValueFactory(new PropertyValueFactory<Option,Float>("wert"));
-		table_options2.getColumns().addAll(Name2Col, Wert2Col);
-		table_options2.setItems(data2);
-
 		}
 	
 	

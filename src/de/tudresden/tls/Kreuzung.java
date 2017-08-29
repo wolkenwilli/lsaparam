@@ -10,18 +10,16 @@ class Kreuzung {
 	private int t_rot_gelb=2;
 
 	LinkedList<Zufahrt> zufahrten = new LinkedList<Zufahrt>();
-	HashMap<Zufahrt, Signalgeber> alleSignalgeber = new HashMap<Zufahrt, Signalgeber>();
+	LinkedList<Signalgeber> signalgeberlist = new LinkedList<Signalgeber>();
 	
 	public void putZufahrt (Zufahrt zf) {
 		zufahrten.add(zf);
 	}
-	
-	public void putSignalgeber(Zufahrt z, Signalgeber sg) {
-		alleSignalgeber.put(z, sg);
+	public void putSignalgeberInList(Signalgeber sg) {
+		signalgeberlist.add(sg);
 	}
-	
-	public HashMap<Zufahrt, Signalgeber> getAlleSignalgeber(){
-		return alleSignalgeber;
+	public LinkedList<Signalgeber> get_signalgeberlist() {
+		return signalgeberlist;
 	}
 	
 	
@@ -80,17 +78,17 @@ class Kreuzung {
 			
 			int rechte = (zf.signal_geber.get(zf.get_anzahl_signalgeber()-1)).getTyp();
 			//System.out.println("Neue Spur: "+neu+" Rechte Spur: "+rechte);
-			if (rechte==2)
+			if (rechte==1)
 			{
 				check=1;
 				//System.out.println("Rechte Spur hat Kategorie 2, alles ok!");	
 			}
-			else if ((neu==3)&&(rechte>=3))
+			else if ((neu==2)&&(rechte==2))
 			{
 				check=1;
 				//System.out.println("Neue Spur hat Kategorie 3 und rechte davon >=3");
 			}
-			else if (((neu==1)||(neu==3)||(neu==5))&&(rechte<=1))
+			else if (((neu==0)||(neu==2))&&(rechte<=0))
 			{
 				check=1;
 				//System.out.println("Neue Spur hat Kategorie 1 3 oder 5 und die Rechte <=1 also alles io!");

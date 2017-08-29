@@ -1,6 +1,7 @@
 package de.tudresden.tls;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
@@ -23,33 +24,31 @@ public class Phasenplan extends SpreadsheetView {
 	}
 	
 	public void create_fz_table(Kreuzung kr)  {
-		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
-		int s=hm.size();
+		LinkedList<Signalgeber> ll = kr.get_signalgeberlist();
+		int s=ll.size();
 		this.anzahl_signalgeber=s;
 		int rowCount = s;
         int columnCount = s+1;
-        int i=0;
         
         GridBase grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
         ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders = FXCollections.observableArrayList("q [Fzg/h]", "qs [Fzg/h]", "g", "Tp [s]", "tf [s]");
         
-        for (Zufahrt z1 : hm.keySet()) {
+        for (int i=0;i<ll.size();i++) {
         	final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
-        	i=0;
-			rowsHeaders.add(hm.get(z1).getBezeichnung());
-       		SpreadsheetCell cell1 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQ() );
-       		SpreadsheetCell cell2 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getQs());
-       		SpreadsheetCell cell3 = SpreadsheetCellType.STRING.createCell(i, 0, 0, 0, Double.toString(Math.round(hm.get(z1).getG()*100)/100.0));
-       		SpreadsheetCell cell4 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, Math.round(hm.get(z1).getTp()*100)/100.0);
-       		SpreadsheetCell cell5 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) hm.get(z1).getTfUmlauf());
+
+			rowsHeaders.add(ll.get(i).getBezeichnung());
+       		SpreadsheetCell cell1 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) ll.get(i).getQ() );
+       		SpreadsheetCell cell2 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) ll.get(i).getQs());
+       		SpreadsheetCell cell3 = SpreadsheetCellType.STRING.createCell(i, 0, 0, 0, Double.toString(Math.round(ll.get(i).getG()*100)/100.0));
+       		SpreadsheetCell cell4 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, Math.round(ll.get(i).getTp()*100)/100.0);
+       		SpreadsheetCell cell5 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) ll.get(i).getTfUmlauf());
 			Row.add(cell1);
 			Row.add(cell2);
 			Row.add(cell3);
 			Row.add(cell4);
 			Row.add(cell5);
-			i++;
         	rows.add(Row);
         }
         grid.setRows(rows);

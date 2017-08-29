@@ -46,6 +46,7 @@ public class Zufahrt {
 
 	public void putSignalgeber (Signalgeber sg) {
 		signal_geber.add(sg);
+		kr.putSignalgeberInList(sg);
 	}
 	public int get_anzahl_signalgeber()
 	{
@@ -76,7 +77,7 @@ public class Zufahrt {
 						// Traditional way to get the response value.
 						Optional<String> result2 = dialog2.showAndWait();
 						if (result2.isPresent()) {
-								MainWindowController.s[kr.getAlleSignalgeber().size()]=new Signalgeber(kr, this, kat, kr.getAlleSignalgeber().size(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());				
+								MainWindowController.s[kr.get_signalgeberlist().size()]=new Signalgeber(kr, this, kat, kr.get_signalgeberlist().size(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());
 						}
 					} catch (Exception e) {
 					}

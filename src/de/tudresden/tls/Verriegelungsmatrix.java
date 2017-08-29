@@ -1,6 +1,7 @@
 package de.tudresden.tls;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Stack;
 
 import org.controlsfx.control.spreadsheet.GridBase;
@@ -14,8 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 
 class Verriegelungsmatrix extends SpreadsheetView {
-	private int[][] array_ungerade = new int[7][7];
-	private int[][] array_gerade = new int[7][7];	
+	private int[][] array_ungerade = new int[3][3];
+	private int[][] array_gerade = new int[3][3];	
 	private Zwischenzeitbeziehungen[] zzb;
 	private Zwischenzeitbeziehungen[][] vr_array;
 	private int anz_zzb;
@@ -23,13 +24,13 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	public Verriegelungsmatrix()
 	{
 		//Initialisierung der Verriegelungsmatrix
-		for (int i=0;i<7;i++) {
-			for (int j=0;j<7;j++) {
+		for (int i=0;i<3;i++) {
+			for (int j=0;j<3;j++) {
 				array_gerade[i][j]=3;
 			}
 		}
-		for (int i=0;i<7;i++) {
-			for (int j=0;j<7;j++) {
+		for (int i=0;i<3;i++) {
+			for (int j=0;j<3;j++) {
 				array_ungerade[i][j]=3;
 			}
 		}
@@ -39,31 +40,14 @@ class Verriegelungsmatrix extends SpreadsheetView {
 		array_ungerade[0][0]=0;
 		array_ungerade[1][1]=0;
 		array_ungerade[2][2]=0;
-		array_ungerade[3][3]=0;
 		array_ungerade[0][1]=0;
-		array_ungerade[0][2]=0;
-		array_ungerade[1][2]=0;
-		//bedingt verträglich
-		array_ungerade[0][5]=1;
-		array_ungerade[1][5]=1;
-		array_ungerade[2][5]=1;
-		array_ungerade[3][5]=1;
-		array_ungerade[4][5]=1;
-		array_ungerade[5][5]=1;
-		array_ungerade[6][5]=1;
-		array_ungerade[0][6]=1;
-		array_ungerade[1][6]=1;
-		array_ungerade[2][6]=1;
-		array_ungerade[5][6]=1;
-		array_ungerade[6][6]=1;
+		array_ungerade[1][0]=0;
 		
 		//--- Array Ungerade ---
 		
-		array_gerade[2][2]=0;
-		array_gerade[2][3]=0;
-		array_gerade[2][4]=0;
-		array_gerade[2][5]=0;
-		array_gerade[2][6]=0;
+		array_gerade[1][1]=0;
+		array_gerade[1][2]=0;
+		array_gerade[2][1]=0;
 	}
 	int pruef_verriegelung(int id_spur1, int id_spur2, int kat_spur1, int kat_spur2) {
 		int verriegelung=2;
@@ -118,13 +102,12 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	}
 	
 	public void create_matrix(Kreuzung kr){
-		
-		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
-		int s=hm.size();
+		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
+		int s=ll.size();
 		int rowCount = s;
         int columnCount = s;
         vr_array = new Zwischenzeitbeziehungen[s][s];
-        int i=0; int j=0; int x=0;
+        int x=0;
         zzb = new Zwischenzeitbeziehungen[s*s];
         anz_zzb=s*s;
         
@@ -133,27 +116,24 @@ class Verriegelungsmatrix extends SpreadsheetView {
         ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
         
-        for (Zufahrt z1 : hm.keySet()) {
+        for (int i=0;i<ll.size();i++) {
         	final ObservableList<SpreadsheetCell> data = FXCollections.observableArrayList();
-        	i=0;
-			rowsHeaders.add(hm.get(z1).getBezeichnung());
-			columnsHeaders.add(hm.get(z1).getBezeichnung());
-        	for (Zufahrt z2 : hm.keySet()) {
+			rowsHeaders.add(ll.get(i).getBezeichnung());
+			columnsHeaders.add(ll.get(i).getBezeichnung());
+        	for (int j=0;j<ll.size();j++) {
         		int pruef=0;
-        		pruef=pruef_verriegelung(z1.getNummer(), z2.getNummer(), hm.get(z1).getTyp(), hm.get(z2).getTyp());
+        		pruef=pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp());
 				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, j, 0, 0, pruef); 		 
 				zzb[x] = new Zwischenzeitbeziehungen();
 				zzb[x].setVerriegelung(pruef);
-				zzb[x].setEinfahrend(hm.get(z1));
-				zzb[x].setAusfahrend(hm.get(z2));
+				zzb[x].setEinfahrend(ll.get(i));
+				zzb[x].setAusfahrend(ll.get(j));
 				vr_array[i][j]=zzb[x];
 				cell.setEditable(true);
 				data.add(cell);
-				i++;
 				x++;
         	}
         	rows.add(data);
-        	j++;
         	System.out.println("Erzeugte Cols: "+data.size()+" geplante Cols: "+columnCount);
         	System.out.println("Erzeugte Rows: "+rows.size()+" geplante RowCount: "+rowCount);
         }

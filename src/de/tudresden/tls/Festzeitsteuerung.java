@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 public class Festzeitsteuerung extends SpreadsheetView {
 	public void create_festzeitplan(Kreuzung kr, Phase[] p, int anz_phasen, Verriegelungsmatrix vm, Zwischenzeiten zz) 
 	{
-		int rowCount_fs = kr.getAlleSignalgeber().size();
+		int rowCount_fs = kr.get_signalgeberlist().size();
         int columnCount_fs = anz_phasen*4;
         
         

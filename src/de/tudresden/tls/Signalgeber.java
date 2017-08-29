@@ -18,6 +18,7 @@ public class Signalgeber {
 	private float qsn;
 	private double g;
 	private double tp;
+	private Zufahrt eigene_zufahrt;
 	
 	public ImageView getView() {
 		return view;
@@ -33,10 +34,6 @@ public class Signalgeber {
 	Image p0 = new Image("http://www.eventtechnik-schmidt.de/0.png");
 	Image p1 = new Image("http://www.eventtechnik-schmidt.de/1.png");
 	Image p2 = new Image("http://www.eventtechnik-schmidt.de/2.png");
-	Image p3 = new Image("http://www.eventtechnik-schmidt.de/3.png");
-	Image p4 = new Image("http://www.eventtechnik-schmidt.de/4.png");
-	Image p5 = new Image("http://www.eventtechnik-schmidt.de/5.png");
-	Image p6 = new Image("http://www.eventtechnik-schmidt.de/6.png");
 	
 		
 	public Signalgeber (Kreuzung kr, Zufahrt zf, int kat, int id, float q, float qs, float f1, float f2)
@@ -51,9 +48,9 @@ public class Signalgeber {
 		this.qsn=qs*f1*f2;
 		this.tfUmlauf=new SimpleFloatProperty(0.0f);
 		this.tfStunde=new SimpleFloatProperty(((q*3600)/this.qsn));
+		this.eigene_zufahrt=zf;
 		zf.putSignalgeber(this);	//Spur der Zufahrt hinzufügen
-		kr.putSignalgeber(zf, this);
-		
+				
 		switch (typ.get()) {
 		case 0:
 			view.setImage(p0);
@@ -64,28 +61,19 @@ public class Signalgeber {
 		case 2:
 			view.setImage(p2);
 			break;
-		case 3:
-			view.setImage(p3);
-			break;
-		case 4:
-			view.setImage(p4);
-			break;
-		case 5:
-			view.setImage(p5);
-			break;
-		case 6:
-			view.setImage(p6);
-			break;
 		default:
-			view.setImage(p1);
+			view.setImage(p0);
 		}
 		view.setFitWidth(23);
-		view.setFitHeight(150);
+		view.setFitHeight(66);
 		zf.pane.getChildren().addAll(view);
 		zf.Signalgeberlist.add(this);
 	}
 	
 
+	public Zufahrt getEigene_zufahrt() {
+		return eigene_zufahrt;
+	}
 	public float getTfUmlauf() {
 		return tfUmlauf.get();
 	}

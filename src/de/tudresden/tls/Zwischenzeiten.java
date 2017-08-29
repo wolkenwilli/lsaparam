@@ -22,8 +22,8 @@ public class Zwischenzeiten extends SpreadsheetView {
 	
 	public void pruef_zz(Kreuzung kr, Verriegelungsmatrix vm){
 		Zwischenzeitbeziehungen[][] vr_matrix= vm.getVr_array();
-		HashMap <Zufahrt, Signalgeber> hm = kr.getAlleSignalgeber();
-		int s=hm.size();
+		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
+		int s=ll.size();
 		int rowCount = s;
         int columnCount = s+1;
           
@@ -31,6 +31,12 @@ public class Zwischenzeiten extends SpreadsheetView {
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
         ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
+        
+        for (int l=0;l<ll.size();l++) {
+        	rowsHeaders.add(ll.get(l).getBezeichnung());
+			columnsHeaders.add(ll.get(l).getBezeichnung());
+        }
+        
         
         for(int i=0;i<vr_matrix.length;i++) 
 		{
@@ -49,12 +55,12 @@ public class Zwischenzeiten extends SpreadsheetView {
 		        }
 		        	// DEBUG: System.out.println("U Signalgeber A: "+vr_matrix[i][j].getEinfahrend()+" Signalgeber B: "+vr_matrix[i][j].getAusfahrend()+" ZZ: "+vr_matrix[i][j].getZwischenzeit());
 		 		Row.add(cell);
+		 		System.out.println("i: "+i+" j: "+j+" objekt: "+vr_matrix[i][j].getEinfahrend());
 				rowsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 				columnsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 			}
 			rows.add(Row);
 		}
-        
 	    grid.setRows(rows);
    	    setGrid(grid);
         grid.getRowHeaders().addAll(rowsHeaders);
