@@ -10,10 +10,7 @@ public class Phase {
 	public LinkedList<Signalgeber> getSignalgeber() {
 		return sg;
 	}
-
-	public void setSignalgeber(LinkedList<Signalgeber> sg) {
-		this.sg = sg;
-	}
+	
 	public void putSignalgeber(Signalgeber s) {
 		sg.add(s);
 	}

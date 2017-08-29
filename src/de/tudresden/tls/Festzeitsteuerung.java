@@ -65,7 +65,6 @@ public class Festzeitsteuerung extends SpreadsheetView {
 				if ((anz_phasen*4)-index>=4) {
 					for (int z=index+4;z<(anz_phasen*4);z++) {
 					cell[z]=SpreadsheetCellType.STRING.createCell(j, 0, 0, 0, "");
-					System.out.println("create"+z);
 					}
 				}
 				for (int l=0; l<(anz_phasen*4);l++) {
@@ -73,8 +72,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 				}
 				rows_fs.add(Row);
 			}	
-			System.out.println(rowsHeaders_fs);
-			index=+4;
+			index=index+4;
 			columnsHeaders_fs.add("g");
 			columnsHeaders_fs.add("ge");
 			columnsHeaders_fs.add("r");

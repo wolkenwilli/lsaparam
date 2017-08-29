@@ -104,7 +104,9 @@ class Verriegelungsmatrix extends SpreadsheetView {
         int columnCount = s;
         vr_array = new Zwischenzeitbeziehungen[s][s];
         int x=0;
-        zzb = new Zwischenzeitbeziehungen[s*s];
+        if (zzb == null) {
+        	zzb = new Zwischenzeitbeziehungen[s*s];
+        }
         anz_zzb=s*s;
         
         grid = new GridBase(rowCount, columnCount);
@@ -118,13 +120,19 @@ class Verriegelungsmatrix extends SpreadsheetView {
 			columnsHeaders.add(ll.get(i).getBezeichnung());
         	for (int j=0;j<ll.size();j++) {
         		int pruef=0;
-        		pruef=pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp());
-				SpreadsheetCell cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, pruef); 		 
-				//SpreadsheetCell cell1 = SpreadsheetCellType.INTEGER.createCell(row, column, rowSpan, columnSpan, value)
-				zzb[x] = new Zwischenzeitbeziehungen();
-				zzb[x].setVerriegelung(pruef);
-				zzb[x].setEinfahrend(ll.get(i));
-				zzb[x].setAusfahrend(ll.get(j));
+        		SpreadsheetCell cell;
+        		if (zzb[x]==null) {
+        			System.out.println(zzb[x]);
+        			pruef=pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp());
+        			cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, pruef); 		 
+					zzb[x] = new Zwischenzeitbeziehungen();
+					zzb[x].setVerriegelung(pruef);
+					zzb[x].setEinfahrend(ll.get(i));
+					zzb[x].setAusfahrend(ll.get(j));
+				}
+        		else {
+        			cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, zzb[x].getVerriegelung()); 		 
+				}
 				vr_array[i][j]=zzb[x];
 				cell.setEditable(true);
 				data.add(cell);
@@ -147,13 +155,23 @@ class Verriegelungsmatrix extends SpreadsheetView {
         //getColumns().get(1).setPrefWidth(250);
 	}
 	public void SaveChanges(Kreuzung kr) {
+		int x=0;
 		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
 		for (int i=0;i<grid.getRowCount();i++) {
-			for (int j=0;j<grid.getColumnCount();j++)
-				if (Integer.toString((pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp())),0)!=(grid.getRows().get(i).get(j).getText())) {
-				System.out.println("Veränderung!!");	
+			for (int j=0;j<grid.getColumnCount();j++) {
+				
+				String s_calc=Integer.toString(pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp()),0);
+				String s_grid=grid.getRows().get(i).get(j).getText();
+				if (s_calc.equals(s_grid)) {
+					zzb[x].setVerriegelung(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
 				}
+				else {
+					zzb[x].setVerriegelung(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
+				}
+				x++;
+			}
 		}
+		create_matrix(kr);
 	}
 	public Zwischenzeitbeziehungen[] getZzb() {
 		return zzb;

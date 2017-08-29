@@ -76,8 +76,8 @@ public class MainWindowController implements Initializable {
 	private Image p2;
 	private Image kreuzung;
 	//----
-	@FXML private Pane vm_pane;
-	@FXML private Pane zz_pane;
+	@FXML private VBox vm_vbox;
+	@FXML private VBox zz_vbox;
 	//----
 	@FXML private TreeView<String> tree_phasen;
 	@FXML private VBox vbox_phase;
@@ -158,7 +158,8 @@ public class MainWindowController implements Initializable {
 	public void tab_vm_clicked() {
 	if (kr.get_signalgeberlist().size()>0) {
 		this.spane = new StackPane(vm);
-		this.vm_pane.getChildren().add(this.spane);
+		this.vm_vbox.getChildren().clear();
+		this.vm_vbox.getChildren().add(this.spane);
 		AnchorPane.setTopAnchor(this.spane, 0.0);
 		AnchorPane.setLeftAnchor(this.spane, 0.0);
 		AnchorPane.setRightAnchor(this.spane, 0.0);
@@ -170,7 +171,7 @@ public class MainWindowController implements Initializable {
                 vm.SaveChanges(kr);
             }
         });
-        this.vm_pane.getChildren().add(button_vm);
+        this.vm_vbox.getChildren().add(button_vm);
 	}
 	else {
 		System.out.println("Keine Signalgeber angelegt!");
@@ -182,13 +183,22 @@ public class MainWindowController implements Initializable {
 	if (kr.get_signalgeberlist().size()>0) {
 		zz=new Zwischenzeiten();
 		this.spane2 = new StackPane(zz);
-		this.zz_pane.getChildren().add(this.spane2);
+		this.zz_vbox.getChildren().clear();
+		this.zz_vbox.getChildren().add(this.spane2);
 		AnchorPane.setTopAnchor(this.spane2, 0.0);
 		AnchorPane.setLeftAnchor(this.spane2, 0.0);
 		AnchorPane.setRightAnchor(this.spane2, 0.0);
 		AnchorPane.setBottomAnchor(this.spane2, 0.0);
 		zz.pruef_zz(kr, vm);
 		tab_ph.setDisable(false);
+		Button button_zz = new Button("veränderte Zwischenzeitmatrix speichern");
+        button_zz.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                zz.SaveChanges(kr);
+                zz.pruef_zz(kr, vm);
+            }
+        });
+        this.zz_vbox.getChildren().add(button_zz);
 	}
 	else {
 		System.out.println("Keine Signalgeber angelegt!");

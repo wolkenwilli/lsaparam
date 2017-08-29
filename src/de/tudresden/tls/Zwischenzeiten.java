@@ -12,7 +12,8 @@ import javafx.collections.ObservableList;
 
 public class Zwischenzeiten extends SpreadsheetView {
 
-	GridBase grid;	
+	GridBase grid;
+	Zwischenzeitbeziehungen[][] vr_matrix;
 	
 	public Zwischenzeiten() {
 		
@@ -20,7 +21,7 @@ public class Zwischenzeiten extends SpreadsheetView {
 	
 	
 	public void pruef_zz(Kreuzung kr, Verriegelungsmatrix vm){
-		Zwischenzeitbeziehungen[][] vr_matrix= vm.getVr_array();
+		vr_matrix= vm.getVr_array();
 		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
 		int s=ll.size();
 		int rowCount = s;
@@ -44,17 +45,20 @@ public class Zwischenzeiten extends SpreadsheetView {
 				SpreadsheetCell cell;
 		        if ((vr_matrix[i][j].getVerriegelung()==9)||(vr_matrix[i][j].getVerriegelung()==0)) {
 		        	cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "X");
-		        	vr_matrix[i][j].setZwischenzeit(0);			//Beispielwert
+		        	vr_matrix[i][j].setZwischenzeit(0);
 		        	cell.setEditable(false);	
 		        }
 		        else {
-		        	cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "10");	//Beispielwert
-		        	vr_matrix[i][j].setZwischenzeit(10);			//Beispielwert
+		        	if (vr_matrix[i][j].getVerriegelung()>=0) {
+		        		cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, Integer.toString(vr_matrix[i][j].getZwischenzeit()));	
+		        	}
+		        	else {
+		        		cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "Wert eingeben!");
+		        	}
+		        	//vr_matrix[i][j].setZwischenzeit(vr_matrix[i][j].getZwischenzeit()); TODO: wird nicht benötigt oder?
 		        	cell.setEditable(true);
 		        }
-		        	// DEBUG: System.out.println("U Signalgeber A: "+vr_matrix[i][j].getEinfahrend()+" Signalgeber B: "+vr_matrix[i][j].getAusfahrend()+" ZZ: "+vr_matrix[i][j].getZwischenzeit());
 		 		Row.add(cell);
-		 			// DEBUG: System.out.println("i: "+i+" j: "+j+" objekt: "+vr_matrix[i][j].getEinfahrend());
 				rowsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 				columnsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 			}
@@ -90,5 +94,25 @@ public class Zwischenzeiten extends SpreadsheetView {
 		return zwischenzeit;
 	}
 
+
+	public void SaveChanges(Kreuzung kr) {
+		for (int i=0;i<grid.getRowCount();i++) {
+			for (int j=0;j<grid.getColumnCount();j++) {
+				System.out.println(Integer.toString(vr_matrix[i][j].getZwischenzeit(),0));
+				String s_calc=Integer.toString(vr_matrix[i][j].getZwischenzeit(),0);
+				String s_grid=grid.getRows().get(i).get(j).getText();
+				if (s_calc.equals(s_grid)) {
+					System.out.println("kein Veränderung!!");	
+				}
+				else if ((s_calc.equals("0"))&&(s_grid.equals("X"))) {
+					System.out.println("kein X Veränderung!!");
+				}
+				else {
+					System.out.println("Veränderung festgestellt: "+grid.getRows().get(i).get(j).getText());
+					vr_matrix[i][j].setZwischenzeit(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
+				}
+			}
+		}
+	}
 
 }
