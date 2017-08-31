@@ -46,7 +46,6 @@ public class Zufahrt {
 	LinkedList<Signalgeber> signal_geber = new LinkedList<Signalgeber>();
     VBox v = new VBox();
 	
-	
 	public Zufahrt(Kreuzung k, Pane p, VBox v) {
 		this.pane=p;
 		this.nummer=k.anz_Zufahrt()+1;
@@ -103,12 +102,7 @@ public class Zufahrt {
 				} 
 			} catch (Exception e) {
 			}
-			
-			
-			
-			
 			updateTable();
-			//System.out.println("Signalgeber mit Kategorie "+kat+" wurde erfolgreich hinzugefügt.");
 			check=1;
 		}
 		else

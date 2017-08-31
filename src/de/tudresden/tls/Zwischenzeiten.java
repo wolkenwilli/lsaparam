@@ -34,103 +34,97 @@ public class Zwischenzeiten extends SpreadsheetView {
 	GridBase grid;
 	Zwischenzeitbeziehungen[][] vr_matrix;
 	
-	public Zwischenzeiten() {
-		
-	}
-	
-	
 	public void pruef_zz(Kreuzung kr, Verriegelungsmatrix vm){
 		vr_matrix= vm.getVr_array();
 		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
-		int s=ll.size();
-		int rowCount = s;
-        int columnCount = s+1;
+		int rowCount = ll.size();
+        int columnCount = ll.size()+1;
           
         grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
         ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
         
+        //Erzeugung des Tabellenkopfs
         for (int l=0;l<ll.size();l++) {
         	rowsHeaders.add(ll.get(l).getBezeichnung());
 			columnsHeaders.add(ll.get(l).getBezeichnung());
         }
         
-        
+        //Äußere Schleife über alle Verriegelungen
         for(int i=0;i<vr_matrix.length;i++) 
 		{
 			final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
+			//Innere Schleife über alle Verriegelungen
 			for(int j=0;j<vr_matrix.length;j++){
 				SpreadsheetCell cell;
+				//Falls eigener Signalgeber -> keine Zwischenzeit erforderlich!
 		        if ((vr_matrix[i][j].getVerriegelung()==9)||(vr_matrix[i][j].getVerriegelung()==0)) {
 		        	cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "X");
 		        	vr_matrix[i][j].setZwischenzeit(0);
 		        	cell.setEditable(false);	
 		        }
+		        //sonst Bestimmung der Zwischenzeit
 		        else {
-		        	if (vr_matrix[i][j].getVerriegelung()>=0) {
+		        	//wenn bereits eine Zwischenzeit hinterlegt ist, diese laden
+		        	if (vr_matrix[i][j].getZwischenzeit()>=0) {
 		        		cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, Integer.toString(vr_matrix[i][j].getZwischenzeit()));	
 		        	}
+		        	//sonst Aufforderung zum Wert eingeben
 		        	else {
-		        		cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "Wert eingeben!");
+		        		cell = SpreadsheetCellType.STRING.createCell(i, j, 1, 1, "Wert");
 		        	}
-		        	//vr_matrix[i][j].setZwischenzeit(vr_matrix[i][j].getZwischenzeit()); TODO: wird nicht benötigt oder?
 		        	cell.setEditable(true);
 		        }
+		        //Zellen der Zeile hinzufügen
 		 		Row.add(cell);
-				rowsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
-				columnsHeaders.add(vr_matrix[i][j].getEinfahrend().getBezeichnung());
 			}
+			//Zeile der Matrix hinzufügen
 			rows.add(Row);
 		}
 	    grid.setRows(rows);
    	    setGrid(grid);
         grid.getRowHeaders().addAll(rowsHeaders);
 	    grid.getColumnHeaders().addAll(columnsHeaders);
-        getFixedRows().add(0);
-        getColumns().get(0).setFixed(true);
-        for (int i=0;i<getColumns().size();i++) {
+        //PrefWidth für alle Spalten setzen
+	    for (int i=0;i<getColumns().size();i++) {
             getColumns().get(i).setPrefWidth(50);
             }
     	
 	}
 	public int get_zwischenzeit(Signalgeber a, Signalgeber b, Kreuzung kr, Verriegelungsmatrix vm) {
-		// DEBUG: System.out.println("Neue SG Abfrage id: "+Math.random()+" Signalgeber A: "+a.getBezeichnung()+" Signalgeber B: "+b.getBezeichnung());
-		int zwischenzeit=999;
+		//System.out.println("DEBUG: Neue SG Abfrage id: "+Math.random()+" Signalgeber A: "+a.getBezeichnung()+" Signalgeber B: "+b.getBezeichnung());
+		int zwischenzeit=999;	//Maximale Zwischenzeit initalisieren
 		Zwischenzeitbeziehungen[] zzb=vm.getZzb();
+		//Schleife über alle Zwischenzeitbedingungen um zu überprüfen, ob Einfahrender mit Ausfahrendem Signalgeber übereinstimmt
 		for (int x=0; x<vm.getAnz_zzb();x++) {
 			if (zzb[x].getEinfahrend().equals(a)) {
 				if (zzb[x].getAusfahrend().equals(b)){
+					//falls Übereinstimmung besteht, Zwischenzeit auslesen
 					zwischenzeit=zzb[x].getZwischenzeit();
-//DEBUG:					System.out.println("Zwischenzeit: "+zwischenzeit);
 				}
 			}
-			if (zzb[x].getEinfahrend().equals(b)) {
-				if (zzb[x].getAusfahrend().equals(a)){
-					zwischenzeit=zzb[x].getZwischenzeit();
-//DEBUG:					System.out.println("Zwischenzeit: "+zwischenzeit);
-				}
-			}
-			
 		}
 		return zwischenzeit;
 	}
 
 
 	public void SaveChanges(Kreuzung kr) {
+		//Schleife über alle Zeilen
 		for (int i=0;i<grid.getRowCount();i++) {
+			//Schleife über alle Zellen einer Zeile
 			for (int j=0;j<grid.getColumnCount();j++) {
-				System.out.println(Integer.toString(vr_matrix[i][j].getZwischenzeit(),0));
-				String s_calc=Integer.toString(vr_matrix[i][j].getZwischenzeit(),0);
-				String s_grid=grid.getRows().get(i).get(j).getText();
+				String s_calc=Integer.toString(vr_matrix[i][j].getZwischenzeit(),0); //auslesen der berechneten Zwischenzeit
+				String s_grid=grid.getRows().get(i).get(j).getText();	//auslesen des Textes aus der Matrix
 				if (s_calc.equals(s_grid)) {
-					System.out.println("kein Veränderung!!");	
+					// DEBG: System.out.println("keine Veränderung!!");	
 				}
 				else if ((s_calc.equals("0"))&&(s_grid.equals("X"))) {
-					System.out.println("kein X Veränderung!!");
+					// DEBUG: System.out.println("eigener SG (X) keine Veränderung!!");
 				}
 				else {
-					System.out.println("Veränderung festgestellt: "+grid.getRows().get(i).get(j).getText());
+					// DEBUG: System.out.println("Veränderung festgestellt: "+grid.getRows().get(i).get(j).getText());
+					//Wenn Veränderung festgestellt wurde, diese als Zwischenzeit in die Zwischenzeitbeziehungen zurück schreiben
 					vr_matrix[i][j].setZwischenzeit(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
 				}
 			}

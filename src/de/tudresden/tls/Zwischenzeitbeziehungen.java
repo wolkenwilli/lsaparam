@@ -39,11 +39,6 @@ public class Zwischenzeitbeziehungen {
 	public void setAusfahrend(Signalgeber ausfahrend) {
 		this.ausfahrend = ausfahrend;
 	}
-
-	
-	
-	
-	
 	public int getVerriegelung() {
 		return verriegelung;
 	}
