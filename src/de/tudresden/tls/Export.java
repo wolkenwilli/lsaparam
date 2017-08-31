@@ -120,8 +120,22 @@ public class Export {
 			tfUmlauf[i] = doc.createElement("tfUmlauf");
 			tfUmlauf[i].appendChild(doc.createTextNode(Float.toString(kr.get_signalgeberlist().get(i).getTfUmlauf())));
 			tp[i].appendChild(tfUmlauf[i]);
-			
 		}
+		rootElement.appendChild(phasen);
+		Element[] phase = new Element[anz_phasen];
+		
+		for (int i=0; i<anz_phasen;i++) {
+			Element[] inhalt_sg = new Element[p[i].sg.size()];
+			phase[i] = doc.createElement("Phase");
+			phase[i].setAttribute("id", Integer.toString(i));
+			phasen.appendChild(phase[i]);
+			for (int j=0;j<p[i].getSignalgeber().size();j++) {
+				inhalt_sg[j] = doc.createElement("Signalgeber");
+				inhalt_sg[j].appendChild(doc.createTextNode(Integer.toString(p[i].getSignalgeber().get(j).getId())));
+				phase[i].appendChild(inhalt_sg[j]);
+			}
+		}
+		
 
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
