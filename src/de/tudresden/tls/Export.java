@@ -34,6 +34,10 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Export {
 
 	public void do_export(Kreuzung kr, Phase[] p, int anz_phasen, Verriegelungsmatrix vm, Zwischenzeiten zz) {
@@ -50,14 +54,10 @@ public class Export {
 		//1. Zweig
 		Element kreuzung = doc.createElement("Kreuzung");
 		rootElement.appendChild(kreuzung);
-		Element zufahrten = doc.createElement("Zufahrten");
-		rootElement.appendChild(zufahrten);
 		Element signalgeber = doc.createElement("Signalgeber");
 		rootElement.appendChild(signalgeber);
 		Element phasen = doc.createElement("Phasen");
 		rootElement.appendChild(phasen);
-		Element festzeitsteuerung = doc.createElement("Festzeitsteuerung");
-		rootElement.appendChild(festzeitsteuerung);
 		
 		//Kreuzung:
 		kreuzung.setAttribute("id", "1");
@@ -74,12 +74,60 @@ public class Export {
 		t_rot_gelb.appendChild(doc.createTextNode(Float.toString(kr.getT_rot_gelb())));
 		kreuzung.appendChild(t_rot_gelb);
 		//Signalgeber
+		Element[] sg = new Element[kr.get_signalgeberlist().size()];
+		Element[] sg_bezeichnung = new Element[kr.get_signalgeberlist().size()];
+		Element[] sumoid = new Element[kr.get_signalgeberlist().size()];
+		Element[] id = new Element[kr.get_signalgeberlist().size()];
+		Element[] typ = new Element[kr.get_signalgeberlist().size()];
+		Element[] q = new Element[kr.get_signalgeberlist().size()];
+		Element[] qs = new Element[kr.get_signalgeberlist().size()];
+		Element[] tfStunde = new Element[kr.get_signalgeberlist().size()];
+		Element[] tfUmlauf = new Element[kr.get_signalgeberlist().size()];
+		Element[] ZufahrtID = new Element[kr.get_signalgeberlist().size()];
+		Element[] tp = new Element[kr.get_signalgeberlist().size()];
+		Element[] g = new Element[kr.get_signalgeberlist().size()];
+		
+		for (int i=0;i<kr.get_signalgeberlist().size();i++) {
+			
+			sg[i] = doc.createElement("Signalgeber");
+			sg[i].setAttribute("id", Integer.toString(kr.get_signalgeberlist().get(i).getId()));
+			signalgeber.appendChild(sg[i]);
+			sg_bezeichnung[i] = doc.createElement("Bezeichnung");
+			sg_bezeichnung[i].appendChild(doc.createTextNode(kr.get_signalgeberlist().get(i).getBezeichnung()));
+			sg[i].appendChild(sg_bezeichnung[i]);
+			ZufahrtID[i] = doc.createElement("ZufahrtID");
+			ZufahrtID[i].appendChild(doc.createTextNode(Integer.toString(kr.get_signalgeberlist().get(i).getEigene_zufahrt().getNummer())));
+			sg[i].appendChild(ZufahrtID[i]);
+			sumoid[i] = doc.createElement("sumoid");
+			sumoid[i].appendChild(doc.createTextNode(Integer.toString(kr.get_signalgeberlist().get(i).getSumoid())));
+			sg[i].appendChild(sumoid[i]);
+			typ[i] = doc.createElement("Typ");
+			typ[i].appendChild(doc.createTextNode(Integer.toString(kr.get_signalgeberlist().get(i).getTyp())));
+			sg[i].appendChild(typ[i]);
+			q[i] = doc.createElement("q");
+			q[i].appendChild(doc.createTextNode(Float.toString(kr.get_signalgeberlist().get(i).getQ())));
+			sg[i].appendChild(q[i]);
+			qs[i] = doc.createElement("qs");
+			qs[i].appendChild(doc.createTextNode(Float.toString(kr.get_signalgeberlist().get(i).getQs())));
+			sg[i].appendChild(qs[i]);
+			tfStunde[i] = doc.createElement("tfStunde");
+			tfStunde[i].appendChild(doc.createTextNode(Float.toString(kr.get_signalgeberlist().get(i).getTfStunde())));
+			sg[i].appendChild(tfStunde[i]);
+			tp[i] = doc.createElement("tp");
+			tp[i].appendChild(doc.createTextNode(Double.toString(kr.get_signalgeberlist().get(i).getTp())));
+			sg[i].appendChild(tp[i]);
+			tp[i].setAttribute("g", Double.toString(kr.get_signalgeberlist().get(i).getG()));
+			tfUmlauf[i] = doc.createElement("tfUmlauf");
+			tfUmlauf[i].appendChild(doc.createTextNode(Float.toString(kr.get_signalgeberlist().get(i).getTfUmlauf())));
+			tp[i].appendChild(tfUmlauf[i]);
+			
+		}
 
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
-//		StreamResult result = new StreamResult(new File("C:\\file.xml"));
+		//StreamResult result = new StreamResult(new File("D:\\file.xml"));
 		StreamResult result =  new StreamResult(System.out);
 		transformer.transform(source, result);
 
