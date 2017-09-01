@@ -58,17 +58,13 @@ import javafx.util.converter.FloatStringConverter;
 
 
 public class MainWindowController implements Initializable { 
-	public Kreuzung kr = new Kreuzung();
-	public Zufahrt z1;
-	public Zufahrt z2;
-	public Zufahrt z3;
-	public Zufahrt z4;
-	public static Signalgeber[] s = new Signalgeber[16];		//Maximum 16 da 4x4 Signalgeber
-	public static Phase[] p = new Phase[10];	//Maximum 10 angenommen
+	private Kreuzung kr = new Kreuzung();
+	private static Signalgeber[] s = new Signalgeber[16];		//Maximum 16 da 4x4 Signalgeber
+	private static Phase[] p = new Phase[10];	//Maximum 10 angenommen
 	int anz_phasen=0; 
-	public Verriegelungsmatrix vm = new Verriegelungsmatrix();
-	public Zwischenzeiten zz;
-	public static MenuItem[] menuitem = new MenuItem[7];
+	private Verriegelungsmatrix vm = new Verriegelungsmatrix();
+	private Zwischenzeiten zz;
+	private static MenuItem[] menuitem = new MenuItem[7];
 	private LinkedList<String> kats;
 	StackPane spane;
 	StackPane spane2;
@@ -147,10 +143,10 @@ public class MainWindowController implements Initializable {
 		{public void handle(MouseEvent e){contextMenu(gui_zufahrt4,e.getScreenX(), e.getScreenY());}});
 		
 		
-		z1 = new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
-		z2 = new Zufahrt(kr,gui_zufahrt2, gui_vbox_z2);
-		z3 = new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
-		z4 = new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
+		new Zufahrt(kr,gui_zufahrt1, gui_vbox_z1);
+		new Zufahrt(kr,gui_zufahrt2, gui_vbox_z2);
+		new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
+		new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
 		kats = new LinkedList<String>();
 		kats.add("Gerade");					//0
 		kats.add("Rechts");					//1
@@ -189,10 +185,12 @@ public class MainWindowController implements Initializable {
 		}
 	}
 	
+	public static Signalgeber[] getS() {
+		return s;
+	}
+
 	public void contextMenu(Pane p, double x, double y) 
 	{
-		
-		
 		Zufahrt zf = kr.get_zufahrt(p);
 		gui_contextmenu.getItems().clear();
 		

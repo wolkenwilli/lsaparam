@@ -96,7 +96,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			columnsHeaders_fs.add("g");
 			columnsHeaders_fs.add("ge");
 			columnsHeaders_fs.add("r");
-			columnsHeaders_fs.add("rg");
+			columnsHeaders_fs.add("r-ge");
 		}
 		grid_fs.setRows(rows_fs);
 	    setGrid(grid_fs);
