@@ -50,96 +50,90 @@ class Verriegelungsmatrix extends SpreadsheetView {
 			}
 		}
 		
-		//--- Array gerade ---
-		//nicht verriegelt
+		//--- Array gerade ---	-->Signalgeber sind im rechten Winkel zueinander
 		array_ungerade[0][0]=0;
 		array_ungerade[1][1]=0;
 		array_ungerade[2][2]=0;
 		array_ungerade[0][1]=0;
 		array_ungerade[1][0]=0;
 		
-		//--- Array Ungerade ---
+		//--- Array Ungerade --- -->Signalgeber liegen sich gegenüber
 		
 		array_gerade[1][1]=0;
 		array_gerade[1][2]=0;
 		array_gerade[2][1]=0;
 	}
-	int pruef_verriegelung(int id_spur1, int id_spur2, int kat_spur1, int kat_spur2) {
-		int verriegelung=2;
-		if (id_spur1==id_spur2)
+	int pruef_verriegelung(int id_sg1, int id_sg2, int kat_sg1, int kat_sg2) {
+		int verriegelung=1;	//Signalgeber müssen gegeneinander verriegelt werden
+		if (id_sg1==id_sg2)
 		{
-			verriegelung=9;
+			verriegelung=9;	//Wenn gleicher Signalgeber, dann Verriegelung 9
 		}
-		else if ((id_spur1+id_spur2)%2>0)
+		else if ((id_sg1+id_sg2)%2>0)
 		{
-			if (array_gerade[kat_spur1][kat_spur2]==3)
+			if (array_gerade[kat_sg1][kat_sg2]==3)
 			{
-				if (array_gerade[kat_spur2][kat_spur1]==3)
+				if (array_gerade[kat_sg2][kat_sg1]==3)
 				{
-					verriegelung=2;
+					verriegelung=1;
 				}
 				else
 				{
-					verriegelung=array_gerade[kat_spur2][kat_spur1];
+					verriegelung=array_gerade[kat_sg2][kat_sg1];
 				}
 			}
 			else
 			{
-				verriegelung=array_gerade[kat_spur1][kat_spur2];
+				verriegelung=array_gerade[kat_sg1][kat_sg2];
 			}
 		}
-		else if ((id_spur1+id_spur2)%2==0)
+		else if ((id_sg1+id_sg2)%2==0)
 		{
-			if (array_ungerade[kat_spur1][kat_spur2]==3)
+			if (array_ungerade[kat_sg1][kat_sg2]==3)
 			{
-				if (array_ungerade[kat_spur2][kat_spur1]==3)
+				if (array_ungerade[kat_sg2][kat_sg1]==3)
 				{
-					verriegelung=2;
+					verriegelung=1;
 				}
 				else
 				{
-					verriegelung=array_ungerade[kat_spur2][kat_spur1];
+					verriegelung=array_ungerade[kat_sg2][kat_sg1];
 				}
 			}
 			else
 			{
-				verriegelung=array_ungerade[kat_spur1][kat_spur2];
+				verriegelung=array_ungerade[kat_sg1][kat_sg2];
 			}
 		}
 		
 		return verriegelung;
 	}
-	public int[][] getArray_gerade() {
-		return array_gerade;
-	}
-	public int[][] getArray_ungerade() {
-		return array_ungerade;
-	}
-	
 	public void create_matrix(Kreuzung kr){
 		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
 		int s=ll.size();
+		anz_zzb=s*s;
 		int rowCount = s;
         int columnCount = s;
         vr_array = new Zwischenzeitbeziehungen[s][s];
-        int x=0;
+        int x=0;	//Laufvariable für Zwischenzeitbeziehungen
+        //Nur wenn noch keine Zwischenzeitbeziehungen existieren die Objekte anlegen
         if (zzb == null) {
         	zzb = new Zwischenzeitbeziehungen[s*s];
         }
-        anz_zzb=s*s;
-        
         grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
         ObservableList<String> rowsHeaders = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders = FXCollections.observableArrayList();
-        
-        for (int i=0;i<ll.size();i++) {
+        //Äußere Schleife über alle Signalgeber
+        for (int i=0;i<s;i++) {
         	final ObservableList<SpreadsheetCell> data = FXCollections.observableArrayList();
 			rowsHeaders.add(ll.get(i).getBezeichnung());
 			columnsHeaders.add(ll.get(i).getBezeichnung());
-        	for (int j=0;j<ll.size();j++) {
+			//Innere Schleife über alle Signalgeber
+        	for (int j=0;j<s;j++) {
         		int pruef=0;
         		SpreadsheetCell cell;
+        		//wenn das Objekt der Zwischenzeitbeziehungen noch nicht existiert, dann anlegen und Verriegelung prüfen sowie Einträge in zzb tätigen
         		if (zzb[x]==null) {
         			pruef=pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp());
         			cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, pruef); 		 
@@ -148,45 +142,35 @@ class Verriegelungsmatrix extends SpreadsheetView {
 					zzb[x].setEinfahrend(ll.get(i));
 					zzb[x].setAusfahrend(ll.get(j));
 				}
+        		//sonst nur die Verriegelung aus der Zwischenzeitbeziehung auslesen
         		else {
         			cell = SpreadsheetCellType.INTEGER.createCell(i, j, 1, 1, zzb[x].getVerriegelung()); 		 
 				}
+        		//alles in ein Array zur Verriegelung schreiben, was dann in den Zwischenzeiten ausgelesen werden kann
 				vr_array[i][j]=zzb[x];
 				cell.setEditable(true);
 				data.add(cell);
 				x++;
         	}
         	rows.add(data);
-        	// DEBUG: System.out.println("Erzeugte Cols: "+data.size()+" geplante Cols: "+columnCount);
-        	// DEBUG: System.out.println("Erzeugte Rows: "+rows.size()+" geplante RowCount: "+rowCount);
         }
-        
-        
         grid.setRows(rows);
         setGrid(grid);
         grid.getRowHeaders().addAll(rowsHeaders);
 	    grid.getColumnHeaders().addAll(columnsHeaders);
 
-        getFixedRows().add(0);
-        
+	    //Alle Spalten auf Breite 50 setzen
         for (int i=0;i<getColumns().size();i++) {
         getColumns().get(i).setPrefWidth(50);
         }
 	}
 	public void SaveChanges(Kreuzung kr) {
 		int x=0;
-		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
+		//Schleife über alle Zeilen
 		for (int i=0;i<grid.getRowCount();i++) {
+			//Schleife über alle Zellen der Zeile
 			for (int j=0;j<grid.getColumnCount();j++) {
-				
-				String s_calc=Integer.toString(pruef_verriegelung(ll.get(i).getEigene_zufahrt().getNummer(), ll.get(j).getEigene_zufahrt().getNummer(), ll.get(i).getTyp(), ll.get(j).getTyp()),0);
-				String s_grid=grid.getRows().get(i).get(j).getText();
-				if (s_calc.equals(s_grid)) {
-					zzb[x].setVerriegelung(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
-				}
-				else {
-					zzb[x].setVerriegelung(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
-				}
+				zzb[x].setVerriegelung(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
 				x++;
 			}
 		}

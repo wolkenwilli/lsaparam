@@ -22,14 +22,10 @@ package de.tudresden.tls;
 import java.util.LinkedList;
 
 public class Phase {
-	
-	private double phasendauer;
 	LinkedList<Signalgeber> sg = new LinkedList<Signalgeber>();
-
 	public LinkedList<Signalgeber> getSignalgeber() {
 		return sg;
 	}
-	
 	public void putSignalgeber(Signalgeber s) {
 		sg.add(s);
 	}

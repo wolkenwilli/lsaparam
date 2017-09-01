@@ -34,23 +34,18 @@ public class Option {
 		this.name= new SimpleStringProperty(string);
 		this.wert= new SimpleFloatProperty(f);
 	}
-
 	public String getName() {
 		return name.get();
 	}
-	
 	public void setName(String n) {
 		this.name.set(n);
 	}
-
 	public Float getWert() {
 		return wert.get();
 	}
-	
 	public void setWert(Float w) {
 		this.wert.set(w);
 	}
-
 	public Integer getId() {
 		return id.get();
 	}

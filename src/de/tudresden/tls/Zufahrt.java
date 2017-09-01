@@ -25,7 +25,6 @@ import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -38,39 +37,37 @@ import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 public class Zufahrt {
-	int nummer;
+	int nummer; //zur Identifizierung der Zufahrt
 	Kreuzung kr;
 	Pane pane = new Pane();
-	public TableView<Signalgeber> table = new TableView<Signalgeber>();
-	public final ObservableList<Signalgeber> Signalgeberlist = FXCollections.observableArrayList();
-	LinkedList<Signalgeber> signal_geber = new LinkedList<Signalgeber>();
+	public TableView<Signalgeber> table = new TableView<Signalgeber>();	//Anzeige der Signalgeber je Zufahrt
+	public final ObservableList<Signalgeber> Signalgeberlist = FXCollections.observableArrayList();	//Array für Table
+	LinkedList<Signalgeber> signal_geber = new LinkedList<Signalgeber>(); //Speichert alle Signalgeber einer Zufahrt
     VBox v = new VBox();
 	
 	public Zufahrt(Kreuzung k, Pane p, VBox v) {
-		this.pane=p;
-		this.nummer=k.anz_Zufahrt()+1;
+		this.pane=p;	//Pane in der die Table erzeugt wird
+		this.nummer=k.anz_Zufahrt()+1;	
 		this.kr=k;
-		this.v=v;
-		k.putZufahrt(this);
+		this.v=v;	//VBox in der die Signalgeber erzeugt werden
+		k.putZufahrt(this);	//Zufahrt zur Kreuzung hinzufügen
 	}
 	public Signalgeber return_Signalgeber(int id) {
 		return signal_geber.get(id);
 	}
-	
-
 	public int getNummer() {
 		return nummer;
 	}
-
+	//Signalgeber zur Zufahrt hinzufügen
 	public void putSignalgeber (Signalgeber sg) {
 		signal_geber.add(sg);
 		kr.putSignalgeberInList(sg);
 	}
-	public int get_anzahl_signalgeber()
+	public int get_anzahl_signalgeber()	//in dieser Zufahrt
 	{
 		return signal_geber.size();
 	}
-	public int erzeugeSignalgeber(int kat)
+	public int erzeugeSignalgeber(int kat)	//Eingabewert Kategorie des Signalgebers
 	{
 		int check=0;
 		if (kr.checksignalgeber(this, kat)==1)
@@ -82,7 +79,6 @@ public class Zufahrt {
 			dialog.setContentText("q=");
 
 			try {
-				// Traditional way to get the response value.
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
 					//----------------------------
@@ -92,10 +88,9 @@ public class Zufahrt {
 					dialog2.setContentText("qs=");
 
 					try {
-						// Traditional way to get the response value.
 						Optional<String> result2 = dialog2.showAndWait();
 						if (result2.isPresent()) {
-								MainWindowController.s[kr.get_signalgeberlist().size()]=new Signalgeber(kr, this, kat, kr.get_signalgeberlist().size(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());
+							MainWindowController.getS()[kr.get_signalgeberlist().size()]=new Signalgeber(kr, this, kat, kr.get_signalgeberlist().size(),Float.parseFloat(result.get()),Float.parseFloat(result2.get()),kr.getF1(),kr.getF2());
 						}
 					} catch (Exception e) {
 					}
@@ -120,15 +115,11 @@ public class Zufahrt {
 		TableColumn<Signalgeber, String> BezeichnungCol = new TableColumn<Signalgeber, String>("Bez.");
 		BezeichnungCol.setMinWidth(10);
 		BezeichnungCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,String>("Bezeichnung"));
-		//Bild Typ
-//		TableColumn<Signalgeber, ImageView> imageCol = new TableColumn<Signalgeber, ImageView>("Typ2");
-//		imageCol.setMinWidth(10);
-//		imageCol.setMaxWidth(50);
-//		imageCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,ImageView>("view"));
 		//SumoID
 		TableColumn<Signalgeber, Integer> sumoidCol = new TableColumn<Signalgeber, Integer>("SID");
 		sumoidCol.setMinWidth(10);
 		sumoidCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Integer>("sumoid"));
+		//Änderungen zurückschreiben
 	    sumoidCol.setCellFactory(TextFieldTableCell.<Signalgeber, Integer>forTableColumn(new IntegerStringConverter()));
 	    sumoidCol.setOnEditCommit(
 			    new EventHandler<CellEditEvent<Signalgeber, Integer>>() {
@@ -143,6 +134,7 @@ public class Zufahrt {
 		TableColumn<Signalgeber, Float> qCol = new TableColumn<Signalgeber, Float>("q [Fzg/h]");
 		qCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("q"));
 		qCol.setMinWidth(10);
+		//Änderungen zurückschreiben
 		qCol.setCellFactory(TextFieldTableCell.<Signalgeber, Float>forTableColumn(new FloatStringConverter()));
 	    qCol.setOnEditCommit(
 			    new EventHandler<CellEditEvent<Signalgeber, Float>>() {
@@ -157,6 +149,7 @@ public class Zufahrt {
 	  	TableColumn<Signalgeber, Float> qsCol = new TableColumn<Signalgeber, Float>("qs [Fzg/h]");
 	  	qsCol.setMinWidth(10);
 	  	qsCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("qs"));
+	  	//Änderungen zurückschreiben
 	  	qsCol.setCellFactory(TextFieldTableCell.<Signalgeber, Float>forTableColumn(new FloatStringConverter()));
 	    qsCol.setOnEditCommit(
 			    new EventHandler<CellEditEvent<Signalgeber, Float>>() {
@@ -171,17 +164,10 @@ public class Zufahrt {
 		TableColumn<Signalgeber, Float> tfStundeCol = new TableColumn<Signalgeber, Float>("tF [s/h]");
 		tfStundeCol.setMinWidth(10);
 		tfStundeCol.setCellValueFactory(new PropertyValueFactory<Signalgeber,Float>("tfStunde"));
-	    
-	    
-		
+		//tableErstellen
 		table.setItems(Signalgeberlist);
-	    //table.getColumns().addAll(idCol, imageCol, sumoidCol, qCol, erftfCol); 	//mit Bild
 	    table.getColumns().addAll(BezeichnungCol, sumoidCol, qCol, qsCol, tfStundeCol);
-        v.setSpacing(5);
-        v.setPadding(new Insets(10, 0, 0, 10));
         v.getChildren().clear();
         v.getChildren().addAll(table);
-           
-        
 	}
 }

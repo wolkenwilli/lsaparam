@@ -38,25 +38,10 @@ public class Signalgeber {
 	private double g;
 	private double tp;
 	private Zufahrt eigene_zufahrt;
-	
-	public ImageView getView() {
-		return view;
-	}
-
-
-	public void setView(ImageView view) {
-		this.view = view;
-	}
-
-	ImageView view = new ImageView();
-	
+	private ImageView view = new ImageView();
 	Image p0 = new Image(Main.class.getResourceAsStream("0.png"));
 	Image p1 = new Image(Main.class.getResourceAsStream("1.png"));
 	Image p2 = new Image(Main.class.getResourceAsStream("2.png"));
-	//Image p0 = new Image("http://www.eventtechnik-schmidt.de/0.png");
-	//Image p1 = new Image("http://www.eventtechnik-schmidt.de/1.png");
-	//Image p2 = new Image("http://www.eventtechnik-schmidt.de/2.png");
-	
 		
 	public Signalgeber (Kreuzung kr, Zufahrt zf, int kat, int id, float q, float qs, float f1, float f2)
 	{
@@ -91,29 +76,22 @@ public class Signalgeber {
 		zf.pane.getChildren().addAll(view);
 		zf.Signalgeberlist.add(this);
 	}
-	
-
 	public Zufahrt getEigene_zufahrt() {
 		return eigene_zufahrt;
 	}
 	public float getTfUmlauf() {
 		return tfUmlauf.get();
 	}
-
 	public void calc_TfUmlauf(double g, double tp) {
 		setG(g);
 		setTp(tp);
 		double tf=0.0d;
 		tf=((q.get()*tp)/(qs.get()*g));
 		tfUmlauf.set((int) Math.ceil(tf));
-		//System.out.println("SG: "+this.bezeichnung.get()+" G: "+g+" TP: "+tp+ " tf-Umlauf: "+tfUmlauf);
 	}
-
 	public String getBezeichnung() {
 		return bezeichnung.get();
 	}
-
-
 	public int getTyp() {
 		return typ.get();
 	}
@@ -127,27 +105,21 @@ public class Signalgeber {
 	public float getQ() {
 		return q.get();
 	}
-	
 	public void setQS(float qs) {
 		this.qs.set(qs);
 	}
-
 	public Float getTfStunde() {
 		return tfStunde.get();
 	}
 	public int getId() {
 		return id.get();
 	}
-
 	public int getSumoid() {
 		return sumoid.get();
 	}
-
 	public void setSumoid(int sid) {
 		sumoid.set(sid);
 	}
-
-
 	public Float getQs() {
 		return qs.get();
 	}
@@ -157,13 +129,9 @@ public class Signalgeber {
 	public void setTp(double tp) {
 		this.tp=tp;
 	}
-
-
 	public double getG() {
 		return g;
 	}
-
-
 	public double getTp() {
 		return tp;
 	}

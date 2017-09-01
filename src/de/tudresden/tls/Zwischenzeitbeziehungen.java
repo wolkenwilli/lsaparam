@@ -19,7 +19,7 @@
 */
 package de.tudresden.tls;
 
-
+//Bildet alle Beziehungen über Zwischenzeiten ab
 public class Zwischenzeitbeziehungen {
 	
 	private Signalgeber einfahrend;

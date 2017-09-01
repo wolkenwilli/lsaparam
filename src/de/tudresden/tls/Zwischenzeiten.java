@@ -125,7 +125,12 @@ public class Zwischenzeiten extends SpreadsheetView {
 				else {
 					// DEBUG: System.out.println("Veränderung festgestellt: "+grid.getRows().get(i).get(j).getText());
 					//Wenn Veränderung festgestellt wurde, diese als Zwischenzeit in die Zwischenzeitbeziehungen zurück schreiben
-					vr_matrix[i][j].setZwischenzeit(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
+					try {
+						vr_matrix[i][j].setZwischenzeit(Integer.parseInt(grid.getRows().get(i).get(j).getText()));
+					} catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}

@@ -35,34 +35,24 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage=primaryStage;
 		mainWindow();
-		
 	}
-	
-	
 	public void mainWindow()
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("lsa.fxml"));
 			AnchorPane pane = loader.load();
-			
 			primaryStage.setMinHeight(500.00);
 			primaryStage.setMinWidth(500.00);
-			
 			MainWindowController mainWindowController = loader.getController();
 			mainWindowController.setMain(this);
-			
 			Scene scene = new Scene(pane);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("WILSA.calc");
 			primaryStage.show();
-
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
-	
-	
 	public static void main(String[] args) {
 		launch(args);
 	}

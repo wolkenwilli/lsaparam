@@ -34,9 +34,6 @@ public class Phasenplan extends SpreadsheetView {
 	public TableView<Signalgeber> table = new TableView<Signalgeber>();
 	public final ObservableList<Signalgeber> Phasenplanlist = FXCollections.observableArrayList();
 	
-	public Phasenplan() {
-	}
-	
 	public void create_fz_table(Kreuzung kr)  {
 		LinkedList<Signalgeber> ll = kr.get_signalgeberlist();
 		int s=ll.size();
@@ -50,7 +47,6 @@ public class Phasenplan extends SpreadsheetView {
         
         for (int i=0;i<ll.size();i++) {
         	final ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
-
 			rowsHeaders.add(ll.get(i).getBezeichnung());
        		SpreadsheetCell cell1 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) ll.get(i).getQ() );
        		SpreadsheetCell cell2 = SpreadsheetCellType.DOUBLE.createCell(i, 0, 0, 0, (double) ll.get(i).getQs());
@@ -68,12 +64,5 @@ public class Phasenplan extends SpreadsheetView {
         setGrid(grid);
         grid.getRowHeaders().addAll(rowsHeaders);
 	    grid.getColumnHeaders().addAll(columnsHeaders);
-
-        getFixedRows().add(0);
-	}
-	
-		
-		
+	}		
 }
-
-

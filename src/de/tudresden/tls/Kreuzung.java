@@ -42,9 +42,7 @@ class Kreuzung {
 			t_gelb=(int)Math.round(optionenlist.get(2).getWert());
 			t_rot_gelb=(int)Math.round(optionenlist.get(3).getWert());
 		}
-		
 	}
-	
 	public void putZufahrt (Zufahrt zf) {
 		zufahrten.add(zf);
 	}
@@ -54,8 +52,6 @@ class Kreuzung {
 	public LinkedList<Signalgeber> get_signalgeberlist() {
 		return signalgeberlist;
 	}
-	
-	
 	public int anz_Zufahrt () {
 		return (zufahrten.size());
 	}
@@ -63,7 +59,6 @@ class Kreuzung {
 	{
 		return zufahrten.get(i);
 	}
-	
 	public Zufahrt get_zufahrt(Object o)
 	{	
 		Zufahrt z = null;
@@ -79,19 +74,15 @@ class Kreuzung {
 	public float getF1() {
 		return f1;
 	}
-
 	public void setF1(float f1) {
 		this.f1 = f1;
 	}
-
 	public float getF2() {
 		return f2;
 	}
-
 	public void setF2(float f2) {
 		this.f2 = f2;
 	}
-	
 	int checksignalgeber(Zufahrt zf, int k)
 	{
 		int check = 0;
@@ -104,27 +95,26 @@ class Kreuzung {
 		else if (zf.get_anzahl_signalgeber()==4)
 		{
 			check=0;
-			System.out.println("4 Spuren ist das maximum!");
+			System.out.println("4 Signalgeber ist das maximum!");
 		}
 		else
 		{
-			
 			int rechte = (zf.signal_geber.get(zf.get_anzahl_signalgeber()-1)).getTyp();
-			//System.out.println("Neue Spur: "+neu+" Rechte Spur: "+rechte);
+			//System.out.println("Neuer Signalgeber: "+neu+" davon rechter Signalgeber: "+rechte);
 			if (rechte==1)
 			{
 				check=1;
-				//System.out.println("Rechte Spur hat Kategorie 2, alles ok!");	
+				//System.out.println("Rechter Signalgeber hat Kategorie 1, alles ok!");	
 			}
 			else if ((neu==2)&&(rechte==2))
 			{
 				check=1;
-				//System.out.println("Neue Spur hat Kategorie 3 und rechte davon >=3");
+				//System.out.println("Neuer Signalgeber hat Kategorie 2 und der Rechte davon 2");
 			}
-			else if (((neu==0)||(neu==2))&&(rechte<=0))
+			else if (((neu==0)||(neu==2))&&(rechte==0))
 			{
 				check=1;
-				//System.out.println("Neue Spur hat Kategorie 1 3 oder 5 und die Rechte <=1 also alles io!");
+				//System.out.println("Neuer Signalgeber hat Kategorie 0 oder 2 und der Rechte 0 also alles io!");
 			}
 			else
 			{

@@ -20,7 +20,6 @@
 
 package de.tudresden.tls;
 
-import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,13 +29,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 public class Export {
 
@@ -77,7 +71,6 @@ public class Export {
 		Element[] sg = new Element[kr.get_signalgeberlist().size()];
 		Element[] sg_bezeichnung = new Element[kr.get_signalgeberlist().size()];
 		Element[] sumoid = new Element[kr.get_signalgeberlist().size()];
-		Element[] id = new Element[kr.get_signalgeberlist().size()];
 		Element[] typ = new Element[kr.get_signalgeberlist().size()];
 		Element[] q = new Element[kr.get_signalgeberlist().size()];
 		Element[] qs = new Element[kr.get_signalgeberlist().size()];
@@ -85,10 +78,8 @@ public class Export {
 		Element[] tfUmlauf = new Element[kr.get_signalgeberlist().size()];
 		Element[] ZufahrtID = new Element[kr.get_signalgeberlist().size()];
 		Element[] tp = new Element[kr.get_signalgeberlist().size()];
-		Element[] g = new Element[kr.get_signalgeberlist().size()];
-		
+		//Schleife über alle Signalgeber
 		for (int i=0;i<kr.get_signalgeberlist().size();i++) {
-			
 			sg[i] = doc.createElement("Signalgeber");
 			sg[i].setAttribute("id", Integer.toString(kr.get_signalgeberlist().get(i).getId()));
 			signalgeber.appendChild(sg[i]);
@@ -121,14 +112,16 @@ public class Export {
 			tfUmlauf[i].appendChild(doc.createTextNode(Float.toString(kr.get_signalgeberlist().get(i).getTfUmlauf())));
 			tp[i].appendChild(tfUmlauf[i]);
 		}
+		//---Phasen----
 		rootElement.appendChild(phasen);
 		Element[] phase = new Element[anz_phasen];
-		
+		//Schleife über alle Phasen
 		for (int i=0; i<anz_phasen;i++) {
 			Element[] inhalt_sg = new Element[p[i].sg.size()];
 			phase[i] = doc.createElement("Phase");
 			phase[i].setAttribute("id", Integer.toString(i));
 			phasen.appendChild(phase[i]);
+			//Schleife über alle Signalgeber der Phase
 			for (int j=0;j<p[i].getSignalgeber().size();j++) {
 				inhalt_sg[j] = doc.createElement("Signalgeber");
 				inhalt_sg[j].appendChild(doc.createTextNode(Integer.toString(p[i].getSignalgeber().get(j).getId())));
