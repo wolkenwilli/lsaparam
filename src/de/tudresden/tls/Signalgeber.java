@@ -71,8 +71,8 @@ public class Signalgeber {
 		default:
 			view.setImage(p0);
 		}
-		view.setFitWidth(23);
-		view.setFitHeight(66);
+		view.setFitWidth(25);
+		view.setFitHeight(75);
 		zf.pane.getChildren().addAll(view);
 		zf.Signalgeberlist.add(this);
 	}

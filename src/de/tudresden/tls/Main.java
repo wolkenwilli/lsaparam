@@ -47,7 +47,7 @@ public class Main extends Application {
 			mainWindowController.setMain(this);
 			Scene scene = new Scene(pane);
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("WILSA.calc");
+			primaryStage.setTitle("openLSA");
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
