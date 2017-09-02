@@ -1,6 +1,6 @@
 /* 
 #    Copyright 2017 Willi Schmidt
-# 
+# 	 Icon made by Freepik from www.flaticon.com
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
 public class Main extends Application {
@@ -48,6 +49,7 @@ public class Main extends Application {
 			Scene scene = new Scene(pane);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("openLSA");
+			primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("ico.png")));
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

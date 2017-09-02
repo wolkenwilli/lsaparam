@@ -1,5 +1,6 @@
 /* 
 #    Copyright 2017 Willi Schmidt
+# 	 Icon made by Freepik from www.flaticon.com
 # 
 #
 #    This program is free software: you can redistribute it and/or modify
