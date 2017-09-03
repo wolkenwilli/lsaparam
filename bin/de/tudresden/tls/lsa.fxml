@@ -169,6 +169,39 @@
                      </children>
                   </AnchorPane>
                </content></Tab>
+               <Tab text="Info">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="477.0" prefWidth="425.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label text="openLSA">
+                                 <font>
+                                    <Font size="63.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="image_icon" fitHeight="226.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label text="© by Willi Schmidt 2017">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="60.0" prefWidth="257.0" text="Zschertnitzer Str. 62 - 01219 Dresden Willi.Schmidt@mailbox.tu-dresden.de" textAlignment="CENTER" wrapText="true" />
+                              <Label text="Lizenz: GNU GPLv3">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Icons made by www.freepik.com">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
          </tabs>
       </TabPane>
       <MenuBar layoutX="132.0" layoutY="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

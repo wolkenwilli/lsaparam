@@ -62,10 +62,10 @@ public class MainWindowController implements Initializable {
 	private Kreuzung kr = new Kreuzung();
 	private static Signalgeber[] s = new Signalgeber[16];		//Maximum 16 da 4x4 Signalgeber
 	private static Phase[] p = new Phase[10];	//Maximum 10 angenommen
-	int anz_phasen=0; 
+	int anz_phasen=0;
 	private Verriegelungsmatrix vm = new Verriegelungsmatrix();
 	private Zwischenzeiten zz;
-	private static MenuItem[] menuitem = new MenuItem[7];
+	private static MenuItem[] menuitem = new MenuItem[3];
 	private LinkedList<String> kats;
 	StackPane spane;
 	StackPane spane2;
@@ -74,17 +74,18 @@ public class MainWindowController implements Initializable {
 	@FXML Tab tab_ph;
 	@FXML Tab tab_pp;
 	@FXML Tab tab_exp;
+	@FXML ImageView image_icon;
 	
 	//Views
 	@FXML TableView<Option> table_options1;
 	ObservableList<Option> data1;
 	@FXML Label label_info;
 	//----
-	@FXML private Pane gui_zufahrt1;
+	@FXML private Pane gui_zufahrt1;	//Panes für Tabellen
 	@FXML private Pane gui_zufahrt2;
 	@FXML private Pane gui_zufahrt3;
 	@FXML private Pane gui_zufahrt4;
-	@FXML private VBox gui_vbox_z1;
+	@FXML private VBox gui_vbox_z1;		//VBox für Signalgeber
 	@FXML private VBox gui_vbox_z2;
 	@FXML private VBox gui_vbox_z3;
 	@FXML private VBox gui_vbox_z4;
@@ -149,7 +150,7 @@ public class MainWindowController implements Initializable {
 		new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
 		new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
 		kats = new LinkedList<String>();
-		kats.add("Standard");					//0
+		kats.add("Standard");						//0
 		kats.add("Rechts-Pfeil");					//1
 		kats.add("Links-Pfeil");					//2
 		tab_vm.setDisable(false);
@@ -162,6 +163,8 @@ public class MainWindowController implements Initializable {
 		
 		Image kreuzung = new Image(Main.class.getResourceAsStream("kreuzung.png"));
 		imageview_crossing.setImage(kreuzung);
+		Image ico_gross = new Image(Main.class.getResourceAsStream("ico_gross.png"));
+		image_icon.setImage(ico_gross);
 		
 		data1 = FXCollections.observableArrayList(
 		new Option(1, "Angleichsfaktor f1", 0.90f),
@@ -237,7 +240,6 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setTopAnchor(this.spane, 0.0);
 		AnchorPane.setLeftAnchor(this.spane, 0.0);
 		AnchorPane.setRightAnchor(this.spane, 0.0);
-		//AnchorPane.setBottomAnchor(this.spane, 0.0);
 		label_info.setText("Bitte überprüfen Sie die Verriegelungsmatrix - führen ggf. Änderungen durch und speichern.");
 		vm.create_matrix(kr);	
 		Button button_vm = new Button("veränderte Verriegelungsmatrix speichern");
