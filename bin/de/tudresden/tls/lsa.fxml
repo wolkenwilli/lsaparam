@@ -148,7 +148,10 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <HBox layoutX="163.0" layoutY="39.0" prefHeight="153.0" prefWidth="203.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#button_export_clicked" text="Export starten" />
+                           </children></HBox>
                      </children>
                   </AnchorPane>
                </content>

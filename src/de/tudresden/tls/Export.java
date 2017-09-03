@@ -20,6 +20,8 @@
 
 package de.tudresden.tls;
 
+import java.io.File;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -129,13 +131,11 @@ public class Export {
 			}
 		}
 		
-
-		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
-		//StreamResult result = new StreamResult(new File("D:\\file.xml"));
-		StreamResult result =  new StreamResult(System.out);
+		StreamResult result = new StreamResult(new File("D:\\file.xml"));
+		//StreamResult result =  new StreamResult(System.out);
 		transformer.transform(source, result);
 
 		System.out.println("File saved!");

@@ -320,7 +320,7 @@ public class MainWindowController implements Initializable {
 	
 	
 	@FXML
-	public void button_spur_phase_add(){		//TODO: Abprüfen, ob Signalgeber schon in Phase enthalten ist!
+	public void button_spur_phase_add(){
 		Signalgeber s = signalgeberbezeichnung.get(comboBox.getValue());
 		if (p[anz_phasen-1].sg_in_phase_vorhanden(s)==0) {
 			p[anz_phasen-1].putSignalgeber(s);
@@ -386,6 +386,10 @@ public class MainWindowController implements Initializable {
 	// ---------------------- Export ----------------------------
 	@FXML
 	public void tab_exp_clicked() {
+		
+	}
+	@FXML
+	public void button_export_clicked(){
 		export.do_export(kr, p, anz_phasen, vm, zz);
 	}
 	// ---------------------- Grundeinstellungen ----------------------------
