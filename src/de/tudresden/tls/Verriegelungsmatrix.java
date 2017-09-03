@@ -50,16 +50,17 @@ class Verriegelungsmatrix extends SpreadsheetView {
 			}
 		}
 		
-		//--- Array gerade ---	-->Signalgeber sind im rechten Winkel zueinander
+		//--- Array ungerade ---	-->Signalgeber liegen sich gegenüber
 		array_ungerade[0][0]=0;
 		array_ungerade[1][1]=0;
 		array_ungerade[2][2]=0;
 		array_ungerade[0][1]=0;
 		array_ungerade[1][0]=0;
 		
-		//--- Array Ungerade --- -->Signalgeber liegen sich gegenüber
+		//--- Array gerade --- 		-->Signalgeber sind im rechten Winkel zueinander
 		
 		array_gerade[1][1]=0;
+		array_gerade[1][0]=0;
 		array_gerade[1][2]=0;
 		array_gerade[2][1]=0;
 	}
@@ -111,14 +112,15 @@ class Verriegelungsmatrix extends SpreadsheetView {
 	public void create_matrix(Kreuzung kr){
 		LinkedList <Signalgeber> ll = kr.get_signalgeberlist();
 		int s=ll.size();
-		anz_zzb=s*s;
 		int rowCount = s;
         int columnCount = s;
+        anz_zzb=s*s;
         vr_array = new Zwischenzeitbeziehungen[s][s];
         int x=0;	//Laufvariable für Zwischenzeitbeziehungen
         //Nur wenn noch keine Zwischenzeitbeziehungen existieren die Objekte anlegen
-        if (zzb == null) {
+        if ((zzb == null)||(zzb.length!=(s*s)))  {
         	zzb = new Zwischenzeitbeziehungen[s*s];
+        	System.out.println("Neu");
         }
         grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();

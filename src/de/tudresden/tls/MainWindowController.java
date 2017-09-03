@@ -149,9 +149,9 @@ public class MainWindowController implements Initializable {
 		new Zufahrt(kr, gui_zufahrt3, gui_vbox_z3);
 		new Zufahrt(kr,gui_zufahrt4, gui_vbox_z4);
 		kats = new LinkedList<String>();
-		kats.add("Gerade");					//0
-		kats.add("Rechts");					//1
-		kats.add("Links");					//2
+		kats.add("Standard");					//0
+		kats.add("Rechts-Pfeil");					//1
+		kats.add("Links-Pfeil");					//2
 		tab_vm.setDisable(false);
 		tab_zz.setDisable(false);
 		slider_g.valueProperty().addListener(new ChangeListener<Number>() {
