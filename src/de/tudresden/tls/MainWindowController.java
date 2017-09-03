@@ -322,7 +322,12 @@ public class MainWindowController implements Initializable {
 	@FXML
 	public void button_spur_phase_add(){		//TODO: Abprüfen, ob Signalgeber schon in Phase enthalten ist!
 		Signalgeber s = signalgeberbezeichnung.get(comboBox.getValue());
-		p[anz_phasen-1].putSignalgeber(s);
+		if (p[anz_phasen-1].sg_in_phase_vorhanden(s)==0) {
+			p[anz_phasen-1].putSignalgeber(s);
+		}
+		else {
+			System.out.println("Signalgeber in Phase bereits vorhanden!");
+		}
 		update_tree_phase();
 		tab_pp.setDisable(false);
 	}

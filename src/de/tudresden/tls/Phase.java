@@ -29,4 +29,11 @@ public class Phase {
 	public void putSignalgeber(Signalgeber s) {
 		sg.add(s);
 	}
+	public int sg_in_phase_vorhanden(Signalgeber s) {
+		int v=0;
+		if (sg.contains(s)) {
+			v=1;
+		}
+		return v;
+	}
 }
