@@ -45,6 +45,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			Phase aphase=p[i];
 			Phase nphase;
 			int phase_zwischen=-100;	//maximale Zwischenzeit aller Signalgeber einer Phase
+			int phase_min_gruen=-100;
 			if (anz_phasen-i>1) {
 				nphase=p[i+1];	
 			}
@@ -69,6 +70,10 @@ public class Festzeitsteuerung extends SpreadsheetView {
 								sg_max_zwischen=zwischen;	
 							}
 						}
+						//Minimale Grünzeit der Phase ermitteln
+						if (phase_min_gruen<p[i].getSignalgeber().get(j).getTfUmlauf()) {
+							phase_min_gruen=(int) p[i].getSignalgeber().get(j).getTfUmlauf();
+						}
 						//Speichern, um die Maximale Zwischenzeit der Phase zu ermitteln!
 						if (phase_zwischen<sg_max_zwischen) {
 							phase_zwischen=sg_max_zwischen;
@@ -85,7 +90,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 							}
 						}
 						//Zellen mit Werten erstellen
-						cell[index]=SpreadsheetCellType.INTEGER.createCell(j, index, 1, 1, (int) p[i].getSignalgeber().get(j).getTfUmlauf()+gzv);		//Grünzeit
+						cell[index]=SpreadsheetCellType.INTEGER.createCell(j, index, 1, 1, (int) phase_min_gruen+gzv);		//Grünzeit
 						cell[index+1]=SpreadsheetCellType.INTEGER.createCell(j, index+1, 1, 1, (int) kr.getT_gelb());		//Gelbzeit
 						cell[index+2]=SpreadsheetCellType.INTEGER.createCell(j, index+2, 1, 1, (int) sg_max_zwischen);		//Rotzeit	TODO Rotzeit auslesen
 						cell[index+3]= SpreadsheetCellType.INTEGER.createCell(j, index+3, 1, 1, (int) kr.getT_rot_gelb());		//Rotzeit	TODO Rotzeit auslesen

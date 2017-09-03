@@ -237,7 +237,8 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setTopAnchor(this.spane, 0.0);
 		AnchorPane.setLeftAnchor(this.spane, 0.0);
 		AnchorPane.setRightAnchor(this.spane, 0.0);
-		//AnchorPane.setBottomAnchor(this.spane, 0.0);		
+		//AnchorPane.setBottomAnchor(this.spane, 0.0);
+		label_info.setText("Bitte überprüfen Sie die Verriegelungsmatrix - führen ggf. Änderungen durch und speichern.");
 		vm.create_matrix(kr);	
 		Button button_vm = new Button("veränderte Verriegelungsmatrix speichern");
         button_vm.setOnAction(new EventHandler<ActionEvent>() {
@@ -263,6 +264,7 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setLeftAnchor(this.spane2, 0.0);
 		AnchorPane.setRightAnchor(this.spane2, 0.0);
 		AnchorPane.setBottomAnchor(this.spane2, 0.0);
+		label_info.setText("Geben Sie bitte alle Zwischenzeiten in die Felder \"Wert\" ein und speichern anschließend!");
 		zz.pruef_zz(kr, vm);
 		tab_ph.setDisable(false);
 		Button button_zz = new Button("veränderte Zwischenzeitmatrix speichern");
@@ -280,7 +282,8 @@ public class MainWindowController implements Initializable {
 	}
 	// ---------------------- Phasenerstellung ----------------------------
 	@FXML
-	public void button_phase_add(){			//TODO: Abprüfen, ob Signalgeber schon in Phase enthalten ist!
+	public void button_phase_add(){		
+		label_info.setText("Fügen Sie der Phase bitte Signalgeber hinzu.");
 		anchor_left.getChildren().clear();
 		p[anz_phasen]=new Phase();
 		anz_phasen++;
@@ -335,6 +338,7 @@ public class MainWindowController implements Initializable {
 	// ---------------------- Phasenplan ----------------------------
 	@FXML
 	public void tab_pp_clicked() {
+		label_info.setText("Kontrollieren Sie die Freigabezeiten!");
 		this.pp_vbox.getChildren().clear();
         double g=slider_g.getValue();
 		double tp=slider_tp.getValue();
@@ -355,7 +359,7 @@ public class MainWindowController implements Initializable {
         this.pp_vbox.getChildren().add(button_fzs);
 	}
 	public void create_fsz() {
-
+		label_info.setText("Die Festzeitsteuerung wurde erstellt!");
         this.spane_fs = new StackPane(fezest);
 		this.pp_vbox.getChildren().add(this.spane_fs);
 		AnchorPane.setTopAnchor(this.spane_fs, 0.0);
@@ -386,7 +390,7 @@ public class MainWindowController implements Initializable {
 	// ---------------------- Export ----------------------------
 	@FXML
 	public void tab_exp_clicked() {
-		
+		label_info.setText("Export jetzt möglich.");
 	}
 	@FXML
 	public void button_export_clicked(){
@@ -396,7 +400,7 @@ public class MainWindowController implements Initializable {
 	@SuppressWarnings("unchecked")
 	@FXML
 	public void tab_ge_clicked() {
-		
+		label_info.setText("Grundeinstellungen");
 			table_options1.getColumns().clear();
 
 		table_options1.setEditable(true);

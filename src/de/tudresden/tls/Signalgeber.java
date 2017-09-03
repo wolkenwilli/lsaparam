@@ -54,7 +54,7 @@ public class Signalgeber {
 		this.qs=new SimpleFloatProperty(qs);
 		this.qsn=qs*f1*f2;
 		this.tfUmlauf=new SimpleFloatProperty(0.0f);
-		this.tfStunde=new SimpleFloatProperty(((q*3600)/this.qsn));
+		this.tfStunde=new SimpleFloatProperty((float) Math.ceil(((q*3600)/this.qsn)));
 		this.eigene_zufahrt=zf;
 		zf.putSignalgeber(this);	//Spur der Zufahrt hinzufügen
 				
