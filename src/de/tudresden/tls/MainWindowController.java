@@ -62,6 +62,7 @@ public class MainWindowController implements Initializable {
 	private Kreuzung kr = new Kreuzung();
 	private static Signalgeber[] s = new Signalgeber[16];		//Maximum 16 da 4x4 Signalgeber
 	private static Phase[] p = new Phase[10];	//Maximum 10 angenommen
+	private static SumoExport[] se = new SumoExport[121];	//Max Tp von 120s
 	int anz_phasen=0;
 	private Verriegelungsmatrix vm = new Verriegelungsmatrix();
 	private Zwischenzeiten zz;
@@ -342,8 +343,8 @@ public class MainWindowController implements Initializable {
 	public void tab_pp_clicked() {
 		label_info.setText("Kontrollieren Sie die Freigabezeiten!");
 		this.pp_vbox.getChildren().clear();
-        double g=slider_g.getValue();
-		double tp=slider_tp.getValue();
+        g=slider_g.getValue();
+		tp=slider_tp.getValue();
 		vb_calc_Signalgeber(g, tp);
 		this.spane_pp = new StackPane(pp);
 		this.pp_vbox.getChildren().add(this.spane_pp);
@@ -368,8 +369,18 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setLeftAnchor(this.spane_fs, 0.0);
 		AnchorPane.setRightAnchor(this.spane_fs, 0.0);
 		AnchorPane.setBottomAnchor(this.spane_fs, 0.0);
-		fezest.create_festzeitplan(kr, p, anz_phasen, vm, zz);
+		fezest.create_festzeitplan(kr, p, anz_phasen, vm, zz, tp);
 		tab_exp.setDisable(false);
+		Button button_sumoexpo = new Button("Export für Sumo generieren");
+        button_sumoexpo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                create_sumoexport();
+            }
+        });
+        this.pp_vbox.getChildren().add(button_sumoexpo);
+	}
+	public void create_sumoexport() {
+		fezest.create_export2sumo(kr, p, anz_phasen, signalgeberbezeichnung);
 	}
 	public void setG(double g) {
 		this.g=g;
