@@ -120,7 +120,6 @@ class Verriegelungsmatrix extends SpreadsheetView {
         //Nur wenn noch keine Zwischenzeitbeziehungen existieren die Objekte anlegen
         if ((zzb == null)||(zzb.length!=(s*s)))  {
         	zzb = new Zwischenzeitbeziehungen[s*s];
-        	System.out.println("Neu");
         }
         grid = new GridBase(rowCount, columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
