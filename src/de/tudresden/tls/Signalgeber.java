@@ -49,7 +49,7 @@ public class Signalgeber {
 		this.id = new SimpleIntegerProperty(id);
 		this.bezeichnung=new SimpleStringProperty("K"+(id+1));
 		this.typ = new SimpleIntegerProperty(kat);
-		this.sumoid = new SimpleIntegerProperty(0);
+		this.sumoid = new SimpleIntegerProperty(1);
 		this.q=new SimpleFloatProperty(q);
 		this.qs=new SimpleFloatProperty(qs);
 		this.qsn=qs*f1*f2;

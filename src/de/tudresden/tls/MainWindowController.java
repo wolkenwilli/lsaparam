@@ -62,7 +62,7 @@ public class MainWindowController implements Initializable {
 	private Kreuzung kr = new Kreuzung();
 	private static Signalgeber[] s = new Signalgeber[16];		//Maximum 16 da 4x4 Signalgeber
 	private static Phase[] p = new Phase[10];	//Maximum 10 angenommen
-	private static SumoExport[] se = new SumoExport[121];	//Max Tp von 120s
+	private static SumoExport[] se = new SumoExport[50];	//Maximum von 50 angenommen
 	int anz_phasen=0;
 	private Verriegelungsmatrix vm = new Verriegelungsmatrix();
 	private Zwischenzeiten zz;
@@ -360,6 +360,13 @@ public class MainWindowController implements Initializable {
             }
         });
         this.pp_vbox.getChildren().add(button_fzs);
+		Button button_sumoexpo = new Button("Export für Sumo generieren");
+        button_sumoexpo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                create_sumoexport();
+            }
+        });
+        this.pp_vbox.getChildren().add(button_sumoexpo);
 	}
 	public void create_fsz() {
 		label_info.setText("Die Festzeitsteuerung wurde erstellt!");
@@ -371,16 +378,9 @@ public class MainWindowController implements Initializable {
 		AnchorPane.setBottomAnchor(this.spane_fs, 0.0);
 		fezest.create_festzeitplan(kr, p, anz_phasen, vm, zz, tp);
 		tab_exp.setDisable(false);
-		Button button_sumoexpo = new Button("Export für Sumo generieren");
-        button_sumoexpo.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                create_sumoexport();
-            }
-        });
-        this.pp_vbox.getChildren().add(button_sumoexpo);
 	}
 	public void create_sumoexport() {
-		fezest.create_export2sumo(kr, p, anz_phasen, signalgeberbezeichnung);
+		fezest.create_export2sumo(signalgeberbezeichnung, se, tp);
 	}
 	public void setG(double g) {
 		this.g=g;

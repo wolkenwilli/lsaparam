@@ -1,9 +1,17 @@
 package de.tudresden.tls;
 
 public class SumoExport {
-	private String sumovar[]; 
+	private int duration=0;
+	private String sumostring;
 
-	public SumoExport(int sumoid, String zustand)  {
-		sumovar[sumoid] = zustand;
+	public SumoExport(int duration, String sumostring)  {
+		this.duration=duration;
+		this.sumostring=sumostring;
+	}
+	public int getDuration() {
+		return duration;
+	}
+	public String getSumoString() {
+		return sumostring;
 	}
 }

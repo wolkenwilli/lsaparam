@@ -19,12 +19,24 @@
 */
 package de.tudresden.tls;
 
+import java.io.File;
 import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,17 +47,20 @@ public class Festzeitsteuerung extends SpreadsheetView {
 	public void create_festzeitplan(Kreuzung kr, Phase[] p, int anz_phasen, Verriegelungsmatrix vm, Zwischenzeiten zz, double tp) 
 	{
 		int rowCount_fs = kr.get_signalgeberlist().size();
-        int columnCount_fs = (int)tp;
+        int columnCount_fs = (((int)tp)+3);
        
         grid_fs = new GridBase(rowCount_fs, columnCount_fs);
         ObservableList<ObservableList<SpreadsheetCell>> rows_fs = FXCollections.observableArrayList();
         rowsHeaders_fs = FXCollections.observableArrayList();
         ObservableList<String> columnsHeaders_fs = FXCollections.observableArrayList();
         SpreadsheetCell[] cell = new SpreadsheetCell [columnCount_fs];
-        
         for (int i=1;i<=tp;i++) {
         	columnsHeaders_fs.add(String.valueOf(i));	
         }
+        columnsHeaders_fs.add("TFA");
+        columnsHeaders_fs.add("TFE");
+        columnsHeaders_fs.add("TFD");
+                
 		int maxzeit=(int)tp;
 		int phase_beginn=0;
 		//Schleife über alle Phasen
@@ -105,17 +120,23 @@ public class Festzeitsteuerung extends SpreadsheetView {
 							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "u");		//Rot-Gelb-Zeit
 						}
 						zeit=zeit+kr.getT_rot_gelb();
-						
+						cell[(maxzeit)]=SpreadsheetCellType.INTEGER.createCell(j, (maxzeit), 1, 1, (phase_beginn+zeit+1));
 						for (int z=zeit;z<(zeit+phase_min_gruen+gzv);z++) {
 							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "G");		//Grünzeit
 						}
 						zeit=(zeit+phase_min_gruen+gzv);
+						cell[(maxzeit+1)]=SpreadsheetCellType.INTEGER.createCell(j, (maxzeit+1), 1, 1, (phase_beginn+zeit));
 						for (int z=zeit;z<(zeit+kr.getT_gelb());z++) {
 							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "y");		//Gelbzeit
 						}
 						zeit=(zeit+kr.getT_gelb());
-						for (int z=zeit;z<(zeit+sg_max_zwischen);z++) {
-							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "r");		//Rotzeit
+						try {
+							for (int z=zeit;z<(zeit+sg_max_zwischen);z++) {
+								cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "r");		//Rotzeit
+							}
+						} catch (Exception e) {
+							System.out.println("Phasenplanzeit überschreitet Umlaufzeit Tp!");
+							e.printStackTrace();
 						}
 						zeit=(zeit+sg_max_zwischen);		
 						//wenn es nicht die letzte Phase ist, mit leeren Zellen füllen
@@ -124,8 +145,9 @@ public class Festzeitsteuerung extends SpreadsheetView {
 							cell[(z)]=SpreadsheetCellType.STRING.createCell(j, (z), 1, 1, "r");
 							}
 						}
+						cell[(maxzeit+2)]=SpreadsheetCellType.INTEGER.createCell(j, (maxzeit+2), 1, 1, phase_min_gruen+gzv);
 						//alle Zellen der Zeile hinzufügen
-						for (int l=0; l<maxzeit;l++) {
+						for (int l=0; l<(maxzeit+3);l++) {
 							cell[l].setEditable(true);
 							Row.add(cell[l]);	
 						}
@@ -143,17 +165,83 @@ public class Festzeitsteuerung extends SpreadsheetView {
 	    grid_fs.getRowHeaders().addAll(rowsHeaders_fs);
 		grid_fs.getColumnHeaders().addAll(columnsHeaders_fs);
 		//Breite 50 für alle Spalten
-        for (int i=0;i<getColumns().size();i++) {
+        for (int i=0;i<(getColumns().size()-3);i++) {
             getColumns().get(i).setPrefWidth(25);
         }
+        for (int i=(getColumns().size()-3);i<(getColumns().size());i++) {
+            getColumns().get(i).setPrefWidth(30);
+        }
 	}
-	public void create_export2sumo(Kreuzung kr, Phase[] p, int anz_phasen, HashMap<String, Signalgeber> signalgeberbezeichnung) {
-		for (int i=0;i<rowsHeaders_fs.size();i++) {
+	public void create_export2sumo(HashMap<String, Signalgeber> signalgeberbezeichnung, SumoExport[] se, double ul) {
+		String[] sumostring = new String[(int)ul];
+		int asumoid=0;
+
+		//Schleife über alle Spalten
+		for (int i=0;i<grid_fs.getRowCount();i++) {
 			Signalgeber a = signalgeberbezeichnung.get(rowsHeaders_fs.get(i));
-			//Schleife über alle Zellen der Zeile
-			for (int j=0;j<grid_fs.getColumnCount();j++) {
-				
+			for (int j=0;j<(grid_fs.getColumnCount()-3);j++) {
+				for (int k=0;k<a.getSumoid();k++)
+				{
+					if (sumostring[j]==null) {
+						sumostring[j]=grid_fs.getRows().sorted().get(i).get(j).getText();
+					}
+					else {
+						sumostring[j]=sumostring[j].concat(grid_fs.getRows().get(i).get(j).getText());
+					}
+				}
 			}
 		}
+		int count_sumo=0;
+		int dur=0;
+		String vstring="";
+		String astring="";
+		for (int i=1;i<sumostring.length;i++) {
+			vstring=sumostring[i-1];
+			astring=sumostring[i];
+			if (vstring.equals(astring)) {
+				dur++;
+			}
+			else {
+				dur++;
+				se[count_sumo]=new SumoExport(dur,vstring);
+				System.out.println("dur: "+dur+" String: "+vstring);
+				count_sumo++;
+				dur=0;
+			}
+		}
+		try {
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+			Document doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("SUMO");
+			doc.appendChild(rootElement);
+			System.out.println(count_sumo);
+			Element[] ephase = new Element[count_sumo];
+			System.out.println(ephase);
+			//Schleife über alle SumoPhasen
+			for (int i=0; i<count_sumo;i++) {
+				System.out.println(se[i].getDuration());
+				System.out.println(ephase[i]);
+				ephase[i].setAttribute("duration", Integer.toString(10));
+			//	ephase[i].setAttribute("duration", Integer.toString(se[i].getDuration()));
+//				ephase[i].setAttribute("state", se[i].getSumoString());
+				rootElement.appendChild(ephase[i]);
+			}
+				
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			//StreamResult result = new StreamResult(new File("D:\\file.xml"));
+			StreamResult result =  new StreamResult(System.out);
+			transformer.transform(source, result);
+			System.out.println("File saved!");
+
+			  } catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+			  } catch (TransformerException tfe) {
+				tfe.printStackTrace();
+			  }
+			
 	}
 }
