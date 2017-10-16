@@ -61,6 +61,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
         columnsHeaders_fs.add("TFE");
         columnsHeaders_fs.add("TFD");
                 
+        int anz_sg=0;
 		int maxzeit=(int)tp;
 		int phase_beginn=0;
 		//Schleife über alle Phasen
@@ -84,7 +85,6 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			for (int m=0;m<2;m++) {
 				//Schleife über alle Signalgeber der Phase
 				for (int j=0;j<aphase.getSignalgeber().size();j++) {
-					System.out.println("J: "+j);
 					gzv=0;
 					ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
 					// Maximale Zwischenzeit des Signalgebers zu Signalgebern der nächsten Phase berechnen
@@ -108,34 +108,33 @@ public class Festzeitsteuerung extends SpreadsheetView {
 						gzv=phase_zwischen-sg_max_zwischen;
 					//beim 2. Durchlauf Ausgabe
 					if (m==1) {
-						System.out.println("---- New ----");
 						rowsHeaders_fs.add(aphase.getSignalgeber().get(j).getBezeichnung());
 						zeit=0;
 						//wenn es nicht die erste Phase ist, leere Zellen erstellen
 						if (phase_beginn > 0 ) {
 							for (int z=0;z<phase_beginn;z++) {
-							cell[(z)]=SpreadsheetCellType.STRING.createCell(j, (z), 1, 1, "r");
+							cell[(z)]=SpreadsheetCellType.STRING.createCell(anz_sg, (z), 1, 1, "r");
 							}
 						}
 						//Zellen mit Werten erstellen
 						for (int z=zeit;z<(zeit+kr.getT_rot_gelb());z++) {
-							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "u");		//Rot-Gelb-Zeit
-							//System.out.println("Cell: "+(phase_beginn+z)+ " x: "+j+" y: "+(phase_beginn+z)+" Wert: u");
+							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(anz_sg, (phase_beginn+z), 1, 1, "u");		//Rot-Gelb-Zeit
+							//System.out.println("Cell: "+(phase_beginn+z)+ " x: "+anz_sg+" y: "+(phase_beginn+z)+" Wert: u");
 						}
 						zeit=zeit+kr.getT_rot_gelb();
-						cell[(maxzeit)]=SpreadsheetCellType.INTEGER.createCell(j, (maxzeit), 1, 1, (phase_beginn+zeit+1));
+						cell[(maxzeit)]=SpreadsheetCellType.INTEGER.createCell(anz_sg, (maxzeit), 1, 1, (phase_beginn+zeit+1));
 						for (int z=zeit;z<(zeit+phase_min_gruen+gzv);z++) {
-							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "G");		//Grünzeit
+							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(anz_sg, (phase_beginn+z), 1, 1, "G");		//Grünzeit
 						}
 						zeit=(zeit+phase_min_gruen+gzv);
-						cell[(maxzeit+1)]=SpreadsheetCellType.INTEGER.createCell(j, (maxzeit+1), 1, 1, (phase_beginn+zeit));
+						cell[(maxzeit+1)]=SpreadsheetCellType.INTEGER.createCell(anz_sg, (maxzeit+1), 1, 1, (phase_beginn+zeit));
 						for (int z=zeit;z<(zeit+kr.getT_gelb());z++) {
-							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "y");		//Gelbzeit
+							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(anz_sg, (phase_beginn+z), 1, 1, "y");		//Gelbzeit
 						}
 						zeit=(zeit+kr.getT_gelb());
 						try {
 							for (int z=zeit;z<(zeit+sg_max_zwischen);z++) {
-								cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "r");		//Rotzeit
+								cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(anz_sg, (phase_beginn+z), 1, 1, "r");		//Rotzeit
 							}
 						} catch (Exception e) {
 							System.out.println("Phasenplanzeit überschreitet Umlaufzeit Tp!");
@@ -145,17 +144,17 @@ public class Festzeitsteuerung extends SpreadsheetView {
 						//wenn es nicht die letzte Phase ist, mit leeren Zellen füllen
 						if ((zeit+phase_beginn) < maxzeit) {
 							for (int z=(phase_beginn+zeit);z<maxzeit;z++) {
-							cell[(z)]=SpreadsheetCellType.STRING.createCell(j, (z), 1, 1, "r");
+							cell[(z)]=SpreadsheetCellType.STRING.createCell(anz_sg, (z), 1, 1, "r");
 							}
 						}
-						cell[(maxzeit+2)]=SpreadsheetCellType.INTEGER.createCell(j, (maxzeit+2), 1, 1, phase_min_gruen+gzv);
+						cell[(maxzeit+2)]=SpreadsheetCellType.INTEGER.createCell(anz_sg, (maxzeit+2), 1, 1, phase_min_gruen+gzv);
 						//alle Zellen der Zeile hinzufügen
 						for (int l=0; l<(maxzeit+3);l++) {
 							cell[l].setEditable(true);
 							Row.add(cell[l]);	
 						}
-						System.out.println(Row);
 						rows_fs.add(Row);
+						anz_sg++;
 					}
 					//Maximale Zwischenzeit der Signalgeber zurücksetzen
 					sg_max_zwischen=-998;
@@ -232,8 +231,8 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			//StreamResult result = new StreamResult(new File("D:\\file.xml"));
-			StreamResult result =  new StreamResult(System.out);
+			StreamResult result = new StreamResult(new File("D:\\file.xml"));
+			//StreamResult result =  new StreamResult(System.out);
 			transformer.transform(source, result);
 			System.out.println("File saved!");
 
