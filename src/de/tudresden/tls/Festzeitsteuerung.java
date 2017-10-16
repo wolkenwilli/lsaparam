@@ -207,11 +207,14 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			else {
 				dur++;
 				se[count_sumo]=new SumoExport(dur,vstring);
-				//System.out.println("dur: "+dur+" String: "+vstring);
 				count_sumo++;
 				dur=0;
 			}
 		}
+		dur++;
+		se[count_sumo]=new SumoExport(dur,vstring);
+		count_sumo++;
+		dur=0;
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
