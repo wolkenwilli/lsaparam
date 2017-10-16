@@ -381,6 +381,7 @@ public class MainWindowController implements Initializable {
 	}
 	public void create_sumoexport() {
 		fezest.create_export2sumo(signalgeberbezeichnung, se, tp);
+		System.out.println(se);
 	}
 	public void setG(double g) {
 		this.g=g;

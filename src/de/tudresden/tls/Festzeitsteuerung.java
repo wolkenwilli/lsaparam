@@ -84,6 +84,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			for (int m=0;m<2;m++) {
 				//Schleife über alle Signalgeber der Phase
 				for (int j=0;j<aphase.getSignalgeber().size();j++) {
+					System.out.println("J: "+j);
 					gzv=0;
 					ObservableList<SpreadsheetCell> Row = FXCollections.observableArrayList();
 					// Maximale Zwischenzeit des Signalgebers zu Signalgebern der nächsten Phase berechnen
@@ -107,6 +108,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 						gzv=phase_zwischen-sg_max_zwischen;
 					//beim 2. Durchlauf Ausgabe
 					if (m==1) {
+						System.out.println("---- New ----");
 						rowsHeaders_fs.add(aphase.getSignalgeber().get(j).getBezeichnung());
 						zeit=0;
 						//wenn es nicht die erste Phase ist, leere Zellen erstellen
@@ -118,6 +120,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 						//Zellen mit Werten erstellen
 						for (int z=zeit;z<(zeit+kr.getT_rot_gelb());z++) {
 							cell[(phase_beginn+z)]=SpreadsheetCellType.STRING.createCell(j, (phase_beginn+z), 1, 1, "u");		//Rot-Gelb-Zeit
+							//System.out.println("Cell: "+(phase_beginn+z)+ " x: "+j+" y: "+(phase_beginn+z)+" Wert: u");
 						}
 						zeit=zeit+kr.getT_rot_gelb();
 						cell[(maxzeit)]=SpreadsheetCellType.INTEGER.createCell(j, (maxzeit), 1, 1, (phase_beginn+zeit+1));
@@ -151,6 +154,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 							cell[l].setEditable(true);
 							Row.add(cell[l]);	
 						}
+						System.out.println(Row);
 						rows_fs.add(Row);
 					}
 					//Maximale Zwischenzeit der Signalgeber zurücksetzen
@@ -204,7 +208,7 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			else {
 				dur++;
 				se[count_sumo]=new SumoExport(dur,vstring);
-				System.out.println("dur: "+dur+" String: "+vstring);
+				//System.out.println("dur: "+dur+" String: "+vstring);
 				count_sumo++;
 				dur=0;
 			}
@@ -216,16 +220,12 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			Document doc = docBuilder.newDocument();
 			Element rootElement = doc.createElement("SUMO");
 			doc.appendChild(rootElement);
-			System.out.println(count_sumo);
 			Element[] ephase = new Element[count_sumo];
-			System.out.println(ephase);
 			//Schleife über alle SumoPhasen
 			for (int i=0; i<count_sumo;i++) {
-				System.out.println(se[i].getDuration());
-				System.out.println(ephase[i]);
-				ephase[i].setAttribute("duration", Integer.toString(10));
-			//	ephase[i].setAttribute("duration", Integer.toString(se[i].getDuration()));
-//				ephase[i].setAttribute("state", se[i].getSumoString());
+				ephase[i] = doc.createElement("phase");
+				ephase[i].setAttribute("duration", Integer.toString(se[i].getDuration()));
+				ephase[i].setAttribute("state", se[i].getSumoString());
 				rootElement.appendChild(ephase[i]);
 			}
 				
