@@ -195,26 +195,24 @@ public class Festzeitsteuerung extends SpreadsheetView {
 			}
 		}
 		int count_sumo=0;
-		int dur=0;
-		String vstring="";
-		String astring="";
-		for (int i=1;i<sumostring.length;i++) {
-			vstring=sumostring[i-1];
-			astring=sumostring[i];
-			if (vstring.equals(astring)) {
-				dur++;
+		int dur=1;
+		for (int i=0;i<sumostring.length;i++) {
+			if (sumostring.length-i==1 ) {
+				se[count_sumo]=new SumoExport(dur,sumostring[i]);
+				count_sumo++;
+				dur=1;
 			}
 			else {
-				dur++;
-				se[count_sumo]=new SumoExport(dur,vstring);
-				count_sumo++;
-				dur=0;
+				if (sumostring[i].equals(sumostring[i+1])) {
+					dur++;
+				}
+				else {
+					se[count_sumo]=new SumoExport(dur,sumostring[i]);
+					count_sumo++;
+					dur=1;
+				}
 			}
 		}
-		dur++;
-		se[count_sumo]=new SumoExport(dur,vstring);
-		count_sumo++;
-		dur=0;
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
